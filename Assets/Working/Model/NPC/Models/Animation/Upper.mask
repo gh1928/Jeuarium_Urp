@@ -1,0 +1,189 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Upper
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Active Camera
+    m_Weight: 0
+  - m_Path: Default
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract1_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract1_low/Extract1_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract1_low/Extract1_low1/Extract1_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract2_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract2_low/Extract2_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract2_low/Extract2_low1/Extract2_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract7_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract7_low/Extract7_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/Extract7_low/Extract7_low1/Extract7_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cube3D1_1_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cube3D1_1_low/PM3D_Cube3D1_1_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cube3D1_1_low/PM3D_Cube3D1_1_low1/PM3D_Cube3D1_1_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cube3D1_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cube3D1_low/PM3D_Cube3D1_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cube3D1_low/PM3D_Cube3D1_low1/PM3D_Cube3D1_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_1_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_1_low/PM3D_Cylinder3D1_1_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_1_low/PM3D_Cylinder3D1_1_low1/PM3D_Cylinder3D1_1_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_2_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_2_low/PM3D_Cylinder3D1_2_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_2_low/PM3D_Cylinder3D1_2_low1/PM3D_Cylinder3D1_2_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_low/PM3D_Cylinder3D1_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Cylinder3D1_low/PM3D_Cylinder3D1_low1/PM3D_Cylinder3D1_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_2_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_2_low/PM3D_Sphere3D1_2_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_2_low/PM3D_Sphere3D1_2_low1/PM3D_Sphere3D1_2_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_3_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_3_low/PM3D_Sphere3D1_3_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_3_low/PM3D_Sphere3D1_3_low1/PM3D_Sphere3D1_3_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_4_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_4_low/PM3D_Sphere3D1_4_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_4_low/PM3D_Sphere3D1_4_low1/PM3D_Sphere3D1_4_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_5_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_5_low/PM3D_Sphere3D1_5_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_5_low/PM3D_Sphere3D1_5_low1/PM3D_Sphere3D1_5_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_6_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_6_low/PM3D_Sphere3D1_6_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_6_low/PM3D_Sphere3D1_6_low1/PM3D_Sphere3D1_6_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_7_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_7_low/PM3D_Sphere3D1_7_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_7_low/PM3D_Sphere3D1_7_low1/PM3D_Sphere3D1_7_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_8_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_8_low/PM3D_Sphere3D1_8_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_8_low/PM3D_Sphere3D1_8_low1/PM3D_Sphere3D1_8_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_9_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_9_low/PM3D_Sphere3D1_9_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D1_9_low/PM3D_Sphere3D1_9_low1/PM3D_Sphere3D1_9_low2
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D2_low
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D2_low/PM3D_Sphere3D2_low1
+    m_Weight: 0
+  - m_Path: Default/character_5_low (1)/RootNode1/PM3D_Sphere3D2_low/PM3D_Sphere3D2_low1/PM3D_Sphere3D2_low2
+    m_Weight: 0
+  - m_Path: mixamorig:Hips
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg/mixamorig:LeftFoot
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg/mixamorig:LeftFoot/mixamorig:LeftToeBase
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg/mixamorig:LeftFoot/mixamorig:LeftToeBase/mixamorig:LeftToe_End
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:RightUpLeg
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg/mixamorig:RightFoot
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg/mixamorig:RightFoot/mixamorig:RightToeBase
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg/mixamorig:RightFoot/mixamorig:RightToeBase/mixamorig:RightToe_End
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine
+    m_Weight: 1
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/mixamorig:LeftHandIndex1
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/mixamorig:LeftHandIndex1/mixamorig:LeftHandIndex2
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/mixamorig:LeftHandIndex1/mixamorig:LeftHandIndex2/mixamorig:LeftHandIndex3
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/mixamorig:LeftHandIndex1/mixamorig:LeftHandIndex2/mixamorig:LeftHandIndex3/mixamorig:LeftHandIndex4
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head/mixamorig:HeadTop_End
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/mixamorig:RightHandIndex1
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/mixamorig:RightHandIndex1/mixamorig:RightHandIndex2
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/mixamorig:RightHandIndex1/mixamorig:RightHandIndex2/mixamorig:RightHandIndex3
+    m_Weight: 0
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/mixamorig:RightHandIndex1/mixamorig:RightHandIndex2/mixamorig:RightHandIndex3/mixamorig:RightHandIndex4
+    m_Weight: 0
