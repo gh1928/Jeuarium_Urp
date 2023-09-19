@@ -1,0 +1,102 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using BNG;
+public class LetterController : GrabbableEvents
+{
+    //편지이동을 제어하는 클래스. 
+    
+    //편지는 원을그리며 아래로 이동함
+
+    //총 이벤트 시간
+    public float totalTime;
+
+    //회전 속도 관련 변수
+    public float ControllerMaxRotSpeed;
+    public float ControllerMinRotSpeed;
+
+    //얼마나 아래로 내려갈지 정하는 변수
+    public float ControllerDescentDistance;
+
+    //편지 이동이 끝난 후 편지 자체 회전 속도
+    public float letterRotSpeed;
+
+    public GameObject letter;
+
+    public RingHelper ringHelper;
+
+    private Grabbable grabbable;
+
+    private Coroutine rotateCoroutine;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        grabbable = GetComponent<Grabbable>();
+    }
+    public void EnableLetter()
+    {
+        letter.SetActive(true);
+    }
+    public void StartLetterRotation()
+    {
+        rotateCoroutine = StartCoroutine(LetterRotateCoroutine());
+    }
+
+    public override void OnGrab(Grabber grabber)
+    {
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);        
+
+        base.OnGrab(grabber);
+    }
+    IEnumerator LetterRotateCoroutine()
+    {
+        float timer = 0;
+        float inverseTotalTime = 1 / totalTime;
+
+        float currHeight = transform.position.y;
+        float targetHeigth = transform.position.y - ControllerDescentDistance;
+        Vector3 newControllerPos = transform.position;
+
+        Transform letterTransform = letter.transform;
+        Vector3 newLetterPos = Vector3.zero;
+        float startRadius = letterTransform.localPosition.z;
+
+        while (timer < totalTime)
+        {
+            
+            timer += Time.deltaTime;
+
+            //0 ~ 1사이 값
+            float timerNormalized = timer * inverseTotalTime;
+
+            //처음엔 빠르게 회전하다가 갈수록 느리게 회전
+            float t = Mathf.Sin(timerNormalized * Mathf.PI * 0.5f);
+            float rotateSpeed = Mathf.Lerp(ControllerMaxRotSpeed, ControllerMinRotSpeed, t) * Time.deltaTime;
+            transform.Rotate(0, rotateSpeed, 0);
+
+            //원 크기가 점점 줄어듬
+            newLetterPos.z = Mathf.Lerp(startRadius, 0, timerNormalized);
+            letterTransform.localPosition = newLetterPos;
+
+            //점점 아래로 내려감
+            newControllerPos.y = Mathf.Lerp(currHeight, targetHeigth, timerNormalized);
+            transform.position = newControllerPos;
+
+            yield return null;
+        }
+
+        //이동이 끝나면 편지를 잡을 수 있도록함
+        ringHelper.gameObject.SetActive(true);
+        grabbable.enabled = true;
+
+        //편지가 둥둥 떠다니며 제자리에서 회전
+        while (true)
+        {
+            transform.Translate(0.05f * Time.deltaTime * Mathf.Cos(Time.time) * Vector3.up);
+            transform.Rotate(0, letterRotSpeed * Time.deltaTime, 0);
+            yield return null;
+        }
+    }
+}
