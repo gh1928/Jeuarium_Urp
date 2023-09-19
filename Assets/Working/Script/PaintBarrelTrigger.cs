@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PaintBarrelTrigger : BNG.GrabbableEvents
+public partial class PaintBarrelTrigger : BNG.GrabbableEvents
 {
     public GameObject paint;
     public GameObject obj;
@@ -41,27 +41,9 @@ public class PaintBarrelTrigger : BNG.GrabbableEvents
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Canvas") && !isDone)
+        if (other.CompareTag("Canvas"))
         {
-            trigger.SwitchOn();
-            GetComponent<AudioSource>().Play();
-
-            paint.SetActive(true);
-            if (!isSky)
-            {
-                foreach (MeshRenderer mr in obj.transform.GetComponentsInChildren<MeshRenderer>())
-                {
-                    mr.materials = list_Mat.GetRange(i, mr.materials.Length).ToArray();
-                    i += mr.materials.Length;
-                }
-            }
-            else
-            {
-                StartCoroutine(SkyColor());
-            }
-
-            isDone = true;
-            enabled = false;
+            ANM_Brush_Painting();
         }
     }
 
@@ -82,4 +64,44 @@ public class PaintBarrelTrigger : BNG.GrabbableEvents
             yield return null;
         }
     }
+}
+
+// 황영재 추가
+partial class PaintBarrelTrigger
+{
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+    // 캔버스에 칠하는 작업을 외부에서도 접근할 수 있게 OnTriggerEnter에서 분리
+    public void ANM_Brush_Painting()
+    {
+        if (!isDone)
+        {
+            trigger.SwitchOn();
+            if (GetComponent<AudioSource>() != null)
+            {
+                GetComponent<AudioSource>().Play();
+            }
+
+            paint.SetActive(true);
+            if (!isSky)
+            {
+                foreach (MeshRenderer mr in obj.transform.GetComponentsInChildren<MeshRenderer>())
+                {
+                    mr.materials = list_Mat.GetRange(i, mr.materials.Length).ToArray();
+                    i += mr.materials.Length;
+                }
+            }
+            else
+            {
+                StartCoroutine(SkyColor());
+            }
+
+            isDone = true;
+            enabled = false;
+        }
+    }
+
+    ////////// Unity            //////////
 }

@@ -13,6 +13,8 @@ TagManager:
   - Star
   - Obstacle
   - Marbling
+  - Brush
+  - Paint
   layers:
   - Default
   - TransparentFX
