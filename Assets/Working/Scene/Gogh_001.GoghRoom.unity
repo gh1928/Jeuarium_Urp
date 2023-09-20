@@ -40131,7 +40131,7 @@ MonoBehaviour:
   eventWaitTime:
   - 1
   - 1
-  letterMover: {fileID: 1848045508}
+  letterController: {fileID: 1848045508}
 --- !u!114 &1776025337
 MonoBehaviour:
   m_ObjectHideFlags: 0
