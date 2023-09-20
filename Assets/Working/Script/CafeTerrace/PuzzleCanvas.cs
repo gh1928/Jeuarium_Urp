@@ -22,8 +22,6 @@ public class PuzzleCanvas : MonoBehaviour
     }
     public void MouseTest()
     {
-        Debug.Log(Input.mousePosition);
-
         pointerEventData.position = Input.mousePosition;
 
         // Raycast를 실행하여 클릭된 UI 요소를 찾습니다.
@@ -35,6 +33,7 @@ public class PuzzleCanvas : MonoBehaviour
         {
             Debug.Log(result.worldPosition);
 
+            
             testCube.transform.position = result.worldPosition;
         }
     }
