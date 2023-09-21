@@ -44,6 +44,8 @@ public partial class LetterController : GrabbableEvents
             StopCoroutine(rotateCoroutine);
 
         base.OnGrab(grabber);
+
+        ANM_Manager_OnGrab(grabber);
     }
 
     public void StartLetterRotation()
@@ -123,7 +125,6 @@ public partial class LetterController : GrabbableEvents
 
     protected void Update()
     {
-        ANM_HC_Update();
     }
 }
 
@@ -132,22 +133,15 @@ partial class LetterController
 {
     // 손에 잡혔는지 체크하고 다음으로 넘어갑시다.
     [Header("HAND_CONTROLLERS ==================================================")]
-    [SerializeField] List<HandController> ANM_HC_controllers;
+    [SerializeField] ANM_Manager ANM_Manager_manager;
 
     ////////// Getter & Setter  //////////
 
     ////////// Method           //////////
+    void ANM_Manager_OnGrab(Grabber _grabber)
+    {
+        ANM_Manager_manager.ANM_Event_Trigger(this.gameObject);
+    }
 
     ////////// Unity            //////////
-    void ANM_HC_Update()
-    {
-        for(int i = 0; i < ANM_HC_controllers.Count; i++)
-        {
-            if((ANM_HC_controllers[i].PreviousHeldObject != null) && (ANM_HC_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
-            {
-                ANM_HC_controllers[i].grabber.TryRelease();
-                this.gameObject.SetActive(false);
-            }
-        }
-    }
 }

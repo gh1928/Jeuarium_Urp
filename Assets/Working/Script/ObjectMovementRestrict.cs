@@ -104,7 +104,7 @@ namespace BNG
             bool isCatch = false;
             for (int i = 0; i < ANM_Check_controllers.Count; i++)
             {
-                if ((ANM_Check_controllers[i].PreviousHeldObject == null) && (ANM_Check_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
+                if ((ANM_Check_controllers[i].PreviousHeldObject != null) && (ANM_Check_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
                 {
                     isCatch = true;
                     break;
