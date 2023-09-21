@@ -62,24 +62,25 @@ public class PuzzleMaker : MonoBehaviour
             {
                 Vector3 nodePos = new Vector3(j, i, 0) * intervalAdjust + startPos;
                 var node = SetNode(nodePos);
+                node.Pos = (j,i);
 
                 if (i == lastIdx)
                 {
                     node.DisableTopPath();
-                    node.SetPathable(PuzzleLineDir.Top, false);
+                    node.SetPathable(PuzzleDir.Top, false);
                 }
 
                 if (j == lastIdx)
                 {
                     node.DisableRightPath();
-                    node.SetPathable(PuzzleLineDir.Right, false);
+                    node.SetPathable(PuzzleDir.Right, false);
                 }
 
                 if (i == 0)
-                    node.SetPathable(PuzzleLineDir.Bottom, false);
+                    node.SetPathable(PuzzleDir.Bottom, false);
 
                 if (j == 0)
-                    node.SetPathable(PuzzleLineDir.Left, false);
+                    node.SetPathable(PuzzleDir.Left, false);
 
                 puzzle[i, j] = node;
             }
@@ -91,11 +92,10 @@ public class PuzzleMaker : MonoBehaviour
         node.transform.localPosition = nodePos;
         node.SetPathAndLine(intervalAdjust);
         node.SetPlayerColor(Data.playerColor);
-        node.Init();
+        node.SetColor();
 
         return node;
-    }
-    
+    }    
     private void SetStartAndEndPoint()
     {
         startPoint = Instantiate(startPointPrefab, puzzleHolder);
@@ -124,20 +124,20 @@ public class PuzzleMaker : MonoBehaviour
             {
                 targetNode.DisableTopPath();
 
-                targetNode.SetPathable(PuzzleLineDir.Top, false);
+                targetNode.SetPathable(PuzzleDir.Top, false);
 
                 if(posY < lastIdx)
-                    puzzle[posY + 1, posX].SetPathable(PuzzleLineDir.Bottom, false);                
+                    puzzle[posY + 1, posX].SetPathable(PuzzleDir.Bottom, false);                
             }
 
             if(target.offRight)
             {
                 targetNode.DisableRightPath();
 
-                targetNode.SetPathable(PuzzleLineDir.Right, false);
+                targetNode.SetPathable(PuzzleDir.Right, false);
 
                 if(posX < lastIdx)
-                    puzzle[posY, posX + 1].SetPathable(PuzzleLineDir.Left, false);
+                    puzzle[posY, posX + 1].SetPathable(PuzzleDir.Left, false);
             }
         }
     }

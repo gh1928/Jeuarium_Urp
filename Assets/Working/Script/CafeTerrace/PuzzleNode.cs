@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PuzzleLineDir
+public enum PuzzleDir
 {
     Top = 0, Right = 1, Bottom = 2, Left = 3
 }
 
 public class PuzzleNode : MonoBehaviour
 {
+    public (int posY, int posX) Pos;
+
     private RectTransform rect;
 
     public RectTransform topPath;
@@ -29,12 +31,15 @@ public class PuzzleNode : MonoBehaviour
     }
     public void SetPlayerColor(Color color) => playerColor = color;
 
-    public void Init()
+    public void SetColor()
     {
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             lines[i].color = playerColor;
     }
     
+    public void SetCurrLine(PuzzleDir dir) => currLine = lines[(int)dir];
+    public Image GetLineByDir(PuzzleDir dir) => lines[(int)dir];
+
     public void SetPathAndLine(float interval)
     {
         float currSize = rect.sizeDelta.y;
@@ -59,8 +64,8 @@ public class PuzzleNode : MonoBehaviour
             lines[i].rectTransform.sizeDelta = new Vector2(isVertical ? currSize : interval, isVertical ? interval : currSize);
         }
     }
-    public void SetPathable(PuzzleLineDir dir, bool pathable) => pathUseable[(int)dir] = pathable;
-    public bool GetPathable(PuzzleLineDir dir) => pathUseable[(int)dir];
+    public void SetPathable(PuzzleDir dir, bool pathable) => pathUseable[(int)dir] = pathable;
+    public bool GetPathable(PuzzleDir dir) => pathUseable[(int)dir];
     public void DisableTopPath() => topPath.gameObject.SetActive(false);
     public void DisableRightPath() => rightPath.gameObject.SetActive(false);
 }
