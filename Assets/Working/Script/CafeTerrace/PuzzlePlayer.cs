@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PuzzlePlay : MonoBehaviour
+public class PuzzlePlayer : MonoBehaviour
 {
     public GameObject checkPoint;
     public Image line;
