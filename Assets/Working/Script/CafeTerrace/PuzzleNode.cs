@@ -1,37 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+public enum PuzzleLineDir
+{
+    Top = 0, Right = 1, Bottom = 2, Left = 3
+}
 
 public class PuzzleNode : MonoBehaviour
 {
     private RectTransform rect;
 
-    public RectTransform topLine;
-    public RectTransform rightLine;
+    public RectTransform topPath;
+    public RectTransform rightPath;
+
+    public Image nodeImage;
+    public Image[] lines = new Image[4];
+    private bool[] pathUseable = { true, true, true, true };
+
+    private Image currLine;
+
+    private Color playerColor;
 
     private void Awake()
     {
-        rect = GetComponent<RectTransform>();
+        rect = GetComponent<RectTransform>();        
     }
-    public void SetLine(float interval)
+    public void SetPlayerColor(Color color) => playerColor = color;
+
+    public void Init()
+    {
+        for(int i = 0; i < 4; i++)
+            lines[i].color = playerColor;
+    }
+    
+    public void SetPathAndLine(float interval)
     {
         float currSize = rect.sizeDelta.y;
 
-        topLine.transform.position = transform.position + 0.5f * interval * Vector3.up;        
-        topLine.sizeDelta = new Vector2 (currSize, interval);
+        topPath.transform.position = transform.position + 0.5f * interval * Vector3.up;        
+        topPath.sizeDelta = new Vector2 (currSize, interval);
 
-        rightLine.transform.position = transform.position + 0.5f * interval * Vector3.right;
-        rightLine.sizeDelta = new Vector2 (interval, currSize);
+        rightPath.transform.position = transform.position + 0.5f * interval * Vector3.right;
+        rightPath.sizeDelta = new Vector2 (interval, currSize);
+
+        Vector3[] dirs = new Vector3[4];
+        dirs[0] = Vector3.up;
+        dirs[1] = Vector3.right; 
+        dirs[2] = Vector3.down;
+        dirs[3] = Vector3.left;
+
+        for(int i = 0; i < 4;i++)
+        {
+            bool isVertical = i % 2 == 0;
+
+            lines[i].transform.position = transform.position + 0.5f * interval * dirs[i];
+            lines[i].rectTransform.sizeDelta = new Vector2(isVertical ? currSize : interval, isVertical ? interval : currSize);
+        }
     }
-    public void DisableLine(bool offTop, bool offRight)
-    {
-        if (offTop) 
-            DisableTopLine();
-        if (offRight) 
-            DisableRightLine();
-    }
-
-    public void DisableTopLine() => topLine.gameObject.SetActive(false);
-    public void DisableRightLine() => rightLine.gameObject.SetActive(false);
-
+    public void SetPathable(PuzzleLineDir dir, bool pathable) => pathUseable[(int)dir] = pathable;
+    public bool GetPathable(PuzzleLineDir dir) => pathUseable[(int)dir];
+    public void DisableTopPath() => topPath.gameObject.SetActive(false);
+    public void DisableRightPath() => rightPath.gameObject.SetActive(false);
 }
