@@ -240,7 +240,6 @@ namespace BNG {
         /// Dropped our held item - nothing currently in our hands
         /// </summary>
         public virtual void OnGrabDrop() {
-
             // Should we use auto pose when nothing in the hand?
             if (IdlePoseType == HandPoserType.AutoPoser) {
                 EnableAutoPoser(true);
@@ -620,7 +619,8 @@ namespace BNG {
             }
         }
 
-        public virtual void OnGrabberReleased(Grabbable released) {
+        public virtual void OnGrabberReleased(Grabbable released)
+        {
             OnGrabDrop();
         }
     }
