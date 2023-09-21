@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BNG
 {
-    public class ObjectMovementRestrict : GrabbableEvents
+    public partial class ObjectMovementRestrict : GrabbableEvents
     {
         public bool move_Position = false;
         public Vector3 dest_Pos;
@@ -75,11 +75,50 @@ namespace BNG
 
             }
             else transform.position = pos;
+
+            //
+            ANM_Check_Update();
         }
 
         public void TestLog()
         {
             Debug.Log("OK");
+        }
+    }
+
+    // 황영재 추가.
+    // clamp와 연동된 값을 체크하여, max_Clamp와 위치값이 같을 때, 다음 단계로 진행하도록 한다.
+    partial class ObjectMovementRestrict
+    {
+        [Header("CHECK ==================================================")]
+        [SerializeField] List<HandController> ANM_Check_controllers;
+        [SerializeField] Grabbable ANM_Check_Next;
+
+        ////////// Getter & Setter  //////////
+
+        ////////// Method           //////////
+
+        ////////// Unity            //////////
+        void ANM_Check_Update()
+        {
+            bool isCatch = false;
+            for (int i = 0; i < ANM_Check_controllers.Count; i++)
+            {
+                if ((ANM_Check_controllers[i].PreviousHeldObject == null) && (ANM_Check_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
+                {
+                    isCatch = true;
+                    break;
+                }
+            }
+
+            if(!isCatch)
+            {
+                if(isClamp && transform.localPosition.Equals(max_Clamp))
+                {
+                    this.GetComponent<Grabbable>().enabled = false;
+                    ANM_Check_Next.enabled = true;
+                }
+            }
         }
     }
 };
