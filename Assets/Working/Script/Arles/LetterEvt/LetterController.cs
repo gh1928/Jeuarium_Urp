@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BNG;
-public class LetterController : GrabbableEvents
+public partial class LetterController : GrabbableEvents
 {
     //편지이동을 제어하는 클래스. 
     
@@ -29,27 +29,28 @@ public class LetterController : GrabbableEvents
 
     private Coroutine rotateCoroutine;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        grabbable = GetComponent<Grabbable>();
-    }
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
     public void EnableLetter()
     {
         letter.SetActive(true);
     }
+
+    //
+    public override void OnGrab(Grabber grabber)
+    {
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
+
+        base.OnGrab(grabber);
+    }
+
     public void StartLetterRotation()
     {
         rotateCoroutine = StartCoroutine(LetterRotateCoroutine());
     }
 
-    public override void OnGrab(Grabber grabber)
-    {
-        if (rotateCoroutine != null)
-            StopCoroutine(rotateCoroutine);        
-
-        base.OnGrab(grabber);
-    }
     IEnumerator LetterRotateCoroutine()
     {
         float timer = 0;
@@ -65,7 +66,7 @@ public class LetterController : GrabbableEvents
 
         while (timer < totalTime)
         {
-            
+
             timer += Time.deltaTime;
 
             //0 ~ 1사이 값
@@ -97,6 +98,56 @@ public class LetterController : GrabbableEvents
             transform.Translate(0.05f * Time.deltaTime * Mathf.Cos(Time.time) * Vector3.up);
             transform.Rotate(0, letterRotSpeed * Time.deltaTime, 0);
             yield return null;
+
+            // 황영재 추가. 재자리 돌기할 때 눈아파서 추가했습니다.
+            TrailRenderer tr = letter.GetComponent<TrailRenderer>();
+            if (tr.enabled)
+            {
+                tr.time -= Time.deltaTime;
+                if (tr.time <= 0.0f)
+                {
+                    tr.time = 0.0f;
+                    tr.enabled = false;
+                }
+            }
+        }
+    }
+
+    ////////// Unity            //////////
+
+    protected override void Awake()
+    {
+        base.Awake();
+        grabbable = GetComponent<Grabbable>();
+    }
+
+    protected void Update()
+    {
+        ANM_HC_Update();
+    }
+}
+
+// 황영재 추가.
+partial class LetterController
+{
+    // 손에 잡혔는지 체크하고 다음으로 넘어갑시다.
+    [Header("HAND_CONTROLLERS ==================================================")]
+    [SerializeField] List<HandController> ANM_HC_controllers;
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+
+    ////////// Unity            //////////
+    void ANM_HC_Update()
+    {
+        for(int i = 0; i < ANM_HC_controllers.Count; i++)
+        {
+            if((ANM_HC_controllers[i].PreviousHeldObject != null) && (ANM_HC_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
+            {
+                ANM_HC_controllers[i].grabber.TryRelease();
+                this.gameObject.SetActive(false);
+            }
         }
     }
 }
