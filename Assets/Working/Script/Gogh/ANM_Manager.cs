@@ -219,7 +219,6 @@ partial class ANM_Manager
 
     [Header("EVENT ==================================================")]
     [SerializeField] List<ANM_Event> Event_list;
-    [SerializeField] List<BNG.HandController> Event_hands;
 
     [Header("RUNNING")]
     [SerializeField] int Event_num; // 현재 실행중인 이벤트 번호
@@ -264,7 +263,7 @@ partial class ANM_Manager
             case ANM_Event.TYPE.TRIGGER:    { isNext = Event_list[Event_num].ANM_Basic_TriggerCheck();  }   break;
 
             // ACTION
-            case ANM_Event.TYPE.ACTION__GRAB_RELEASE:   { isNext = Event_list[Event_num].ANM_Basic_GrabRelease(Event_hands);    }   break;
+            case ANM_Event.TYPE.ACTION__GRAB_RELEASE:   { isNext = Event_list[Event_num].ANM_Basic_GrabRelease(Hand_hands); }   break;
 
             // UI
 
@@ -284,4 +283,26 @@ partial class ANM_Manager
             }
         }
     }
+}
+
+partial class ANM_Manager
+{
+    [Header("HAND_CONTROLLER ==================================================")]
+    [SerializeField] List<BNG.HandController> Hand_hands;
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+    public void ANM_Hand_GrabRelease(GameObject _obj)
+    {
+        for (int i = 0; i < Hand_hands.Count; i++)
+        {
+            if ((Hand_hands[i].PreviousHeldObject != null) && (Hand_hands[i].PreviousHeldObject.Equals(_obj)))
+            {
+                Hand_hands[i].grabber.TryRelease();
+            }
+        }
+    }
+
+    ////////// Unity            //////////
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CupFilling : MonoBehaviour
+public partial class CupFilling : MonoBehaviour
 {
     public Slider slider_Red;
     public Slider slider_Green;
@@ -131,6 +131,10 @@ public class CupFilling : MonoBehaviour
         //yield return new WaitUntil(() => { return Mathf.Abs(mt.color.r - 0.9f) < 0.01f && Mathf.Abs(mt.color.g - 0.7f) < 0.01f && Mathf.Abs(mt.color.b - 0.4f) < 0.01f && !isOK; });
 
         isOK = true;
+
+        //
+        ANM_CheckColor_ActiveBrush();
+
         yield return null;
     }
 
@@ -162,4 +166,21 @@ public class CupFilling : MonoBehaviour
         cor = StartCoroutine(Filling());
         yield return null;
     }
+}
+
+partial class CupFilling
+{
+    [Header("HYJ_ADD ==================================================")]
+    [SerializeField] GameObject Basic_brush;
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+    void ANM_CheckColor_ActiveBrush()
+    {
+        Basic_brush.SetActive(true);
+    }
+
+    ////////// Unity            //////////
+
 }
