@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public enum PuzzleDir
 {
-    Top = 0, Right = 1, Bottom = 2, Left = 3
+    None = -1, Top = 0, Right = 1, Bottom = 2, Left = 3
 }
 
 public class PuzzleNode : MonoBehaviour
 {
+    public int NodeNumber;
+
     public (int posY, int posX) Pos;
 
     private RectTransform rect;
@@ -21,7 +23,7 @@ public class PuzzleNode : MonoBehaviour
     public Image[] lines = new Image[4];
     private bool[] pathUseable = { true, true, true, true };
 
-    private Image currLine;
+    private bool visited = false;
 
     private Color playerColor;
 
@@ -35,10 +37,8 @@ public class PuzzleNode : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
             lines[i].color = playerColor;
-    }
-    
-    public void SetCurrLine(PuzzleDir dir) => currLine = lines[(int)dir];
-    public Image GetLineByDir(PuzzleDir dir) => lines[(int)dir];
+    }    
+    public Image GetDirLine(PuzzleDir dir) => lines[(int)dir];
 
     public void SetPathAndLine(float interval)
     {
@@ -64,6 +64,12 @@ public class PuzzleNode : MonoBehaviour
             lines[i].rectTransform.sizeDelta = new Vector2(isVertical ? currSize : interval, isVertical ? interval : currSize);
         }
     }
+    public void OnVisited()
+    {
+        visited = true;
+        nodeImage.color = playerColor;
+    }
+    public bool IsVisited() => visited;
     public void SetPathable(PuzzleDir dir, bool pathable) => pathUseable[(int)dir] = pathable;
     public bool GetPathable(PuzzleDir dir) => pathUseable[(int)dir];
     public void DisableTopPath() => topPath.gameObject.SetActive(false);

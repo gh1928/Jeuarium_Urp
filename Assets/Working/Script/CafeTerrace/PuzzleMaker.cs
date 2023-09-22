@@ -25,6 +25,8 @@ public class PuzzleMaker : MonoBehaviour
     private GameObject startPoint;
     private GameObject endPoint;
 
+    private int currNodeNumber = 0;
+
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
@@ -61,8 +63,8 @@ public class PuzzleMaker : MonoBehaviour
             for (int j = 0; j < puzzleSize; j++)
             {
                 Vector3 nodePos = new Vector3(j, i, 0) * intervalAdjust + startPos;
-                var node = SetNode(nodePos);
-                node.Pos = (j,i);
+                var node = InstantiateNode(nodePos);
+                node.Pos = (i,j);
 
                 if (i == lastIdx)
                 {
@@ -86,13 +88,15 @@ public class PuzzleMaker : MonoBehaviour
             }
         }
     }
-    private PuzzleNode SetNode(Vector3 nodePos)
+    private PuzzleNode InstantiateNode(Vector3 nodePos)
     {
         var node = Instantiate(nodePrefab, puzzleHolder);
         node.transform.localPosition = nodePos;
         node.SetPathAndLine(intervalAdjust);
         node.SetPlayerColor(Data.playerColor);
         node.SetColor();
+
+        node.NodeNumber = currNodeNumber++;
 
         return node;
     }    

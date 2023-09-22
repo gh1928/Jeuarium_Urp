@@ -25,12 +25,19 @@ public class PuzzlePlayer : MonoBehaviour
     private PuzzleDir currLineDir;
     private PuzzleNode destNode;
 
-    private Stack<PuzzleNode> pathStack;
+    private Stack<PuzzleNode> pathStack = new Stack<PuzzleNode>();
 
-    Vector2 lastPointPos;
+    private Vector2 lastPointPos;
 
-    int[] yDir = { 1, 0, -1, 0 };
-    int[] xDir = { 0, 1, 0, -1 };
+    private int[] yDir = { 1, 0, -1, 0 };
+    private int[] xDir = { 0, 1, 0, -1 };
+
+    private struct PathInfo
+    {
+        public PuzzleNode visitedNode;
+        public Image lastLine;
+        public PuzzleDir lastDir;
+    }
 
     private void Start()
     {
@@ -50,6 +57,7 @@ public class PuzzlePlayer : MonoBehaviour
         SetColorBeforePlay(puzzleMaker.Data.playerColor);
 
         sourNode = puzzle[0, 0];
+        sourNode.OnVisited();
         pathStack.Push(sourNode);
 
         Vector3 screenPointPosition = UseVR ?
@@ -84,13 +92,15 @@ public class PuzzlePlayer : MonoBehaviour
         if (destNode == null)
         {
             var dir = GetMaxDeltaDir(pointDelta);
+            if (dir == PuzzleDir.None)
+                return;
 
             if(sourNode.GetPathable(dir))
             {
                 int dirIdx = (int)dir;
                 destNode = puzzle[sourNode.Pos.posY + yDir[dirIdx], sourNode.Pos.posX + xDir[dirIdx]];
                 currLineDir = dir;
-                currLine = sourNode.GetLineByDir(dir);
+                currLine = sourNode.GetDirLine(dir);
             }
             return;
         }
@@ -114,16 +124,36 @@ public class PuzzlePlayer : MonoBehaviour
 
         currLine.fillAmount += lineSizeChanger * speed;
 
+        if (destNode.IsVisited() && currLine.fillAmount > 0.9f)
+            currLine.fillAmount = 0.9f;
+
         if(currLine.fillAmount <= 0)
         {
             destNode = null;
+
+            if(pathStack.Count > 0)
+            {
+                destNode = pathStack.Pop();
+                sourNode = pathStack.Peek();
+            }
         }    
 
-        //Debug.Log(localPointPosition);        
+        if(currLine.fillAmount >= 1)
+        {
+            pathStack.Push(destNode);
+            destNode.OnVisited();
+            sourNode = destNode;
+            destNode = null;
+        }
+
+        //Debug.Log(currLine.fillAmount);        
     }
 
     private PuzzleDir GetMaxDeltaDir(Vector2 delta)
     {
+        if (delta == Vector2.zero)
+            return PuzzleDir.None;
+
         if(Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
         {
             return delta.x > 0 ? PuzzleDir.Right : PuzzleDir.Left;
