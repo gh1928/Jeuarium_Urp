@@ -2,84 +2,149 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
-[System.Serializable]
-public struct NodeNumLinePair
-{
-    public int nodeNumber;
-    public bool offNode;
-    public bool offTop;
-    public bool offRight;
-}
 public class PuzzleMaker : MonoBehaviour
-{
-    [Range(2, 5)]
-    public int PuzzleSize;
+{    
+    private int puzzleSize;
     public PuzzleNode nodePrefab;    
     public GameObject startPointPrefab;
     public GameObject endPointPrefab;
+    public GameObject puzzleHolderPrafab;
     public float intervalAdjust;
+    public PuzzleData Data;
     
-    public NodeNumLinePair[] disconnectTarget;
-
+    private NodeNumLinePair[] disconnectTarget;
     private PuzzleNode[,] puzzle;
     private int lastIdx;
 
+    private RectTransform rect;
+    private LookAtConstraint lookAtConstraints;
+    private Transform puzzleHolder;
+
+    private GameObject startPoint;
+    private GameObject endPoint;
+
+    private void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+        lookAtConstraints = GetComponent<LookAtConstraint>();
+    }
+
     public void MakePuzzle()
     {
+        lookAtConstraints.enabled = false;
+        rect.localEulerAngles = Vector3.zero;
+
+        puzzleHolder = Instantiate(puzzleHolderPrafab, transform).transform;
+
+        ReadData();
         SetNodeAndLine();
         SetStartAndEndPoint();
         DisableNodeAndLine();
+
+        lookAtConstraints.enabled = true;
+    }
+    public void ReadData()
+    {
+        puzzleSize = Data.PuzzleSize;
+        lastIdx = puzzleSize - 1;
+        puzzle = new PuzzleNode[puzzleSize, puzzleSize];
     }
     public void SetNodeAndLine()
     {
-        float temp = (PuzzleSize - 1) * intervalAdjust * 0.5f;
+        float temp = (puzzleSize - 1) * intervalAdjust * 0.5f;
         Vector3 startPos = new Vector3(-temp, -temp, 0);
 
-        puzzle = new PuzzleNode[PuzzleSize, PuzzleSize];
-        lastIdx = PuzzleSize - 1;
-
-        for (int i = 0; i < PuzzleSize; i++)
+        for (int i = 0; i < puzzleSize; i++)
         {
-            for (int j = 0; j < PuzzleSize; j++)
+            for (int j = 0; j < puzzleSize; j++)
             {
                 Vector3 nodePos = new Vector3(j, i, 0) * intervalAdjust + startPos;
-
-                var node = Instantiate(nodePrefab, transform);
-                node.transform.localPosition = nodePos;
-                puzzle[i, j] = node;
-
-                node.SetLine(intervalAdjust);
+                var node = SetNode(nodePos);
+                node.Pos = (j,i);
 
                 if (i == lastIdx)
-                    node.DisableTopLine();
+                {
+                    node.DisableTopPath();
+                    node.SetPathable(PuzzleDir.Top, false);
+                }
 
                 if (j == lastIdx)
-                    node.DisableRightLine();
+                {
+                    node.DisableRightPath();
+                    node.SetPathable(PuzzleDir.Right, false);
+                }
+
+                if (i == 0)
+                    node.SetPathable(PuzzleDir.Bottom, false);
+
+                if (j == 0)
+                    node.SetPathable(PuzzleDir.Left, false);
+
+                puzzle[i, j] = node;
             }
         }
     }
+    private PuzzleNode SetNode(Vector3 nodePos)
+    {
+        var node = Instantiate(nodePrefab, puzzleHolder);
+        node.transform.localPosition = nodePos;
+        node.SetPathAndLine(intervalAdjust);
+        node.SetPlayerColor(Data.playerColor);
+        node.SetColor();
+
+        return node;
+    }    
     private void SetStartAndEndPoint()
     {
-        var startPoint = Instantiate(startPointPrefab, transform);
+        startPoint = Instantiate(startPointPrefab, puzzleHolder);
         startPoint.transform.position = puzzle[0, 0].transform.position;
 
-        var endPoint = Instantiate(endPointPrefab, transform);
+        endPoint = Instantiate(endPointPrefab, puzzleHolder);
         endPoint.transform.position = puzzle[lastIdx, lastIdx].transform.position;
     }
     public void DisableNodeAndLine()
     {
-        foreach(var target in disconnectTarget)
+        disconnectTarget = Data.disconnectTarget;
+
+        foreach (var target in disconnectTarget)
         {
-            if (target.nodeNumber >= PuzzleSize * PuzzleSize)
+            if (target.nodeNumber >= puzzleSize * puzzleSize)
                 continue;
 
-            var targetNode = puzzle[target.nodeNumber / PuzzleSize, target.nodeNumber % PuzzleSize];
+            int posY = target.nodeNumber / puzzleSize;
+            int posX = target.nodeNumber % puzzleSize;
 
-            if(target.offNode)
-                targetNode.gameObject.SetActive(false);
+            var targetNode = puzzle[posY, posX];
 
-            targetNode.DisableLine(target.offTop, target.offRight);
+            targetNode.gameObject.SetActive(!target.offNode);
+            
+            if(target.offTop)
+            {
+                targetNode.DisableTopPath();
+
+                targetNode.SetPathable(PuzzleDir.Top, false);
+
+                if(posY < lastIdx)
+                    puzzle[posY + 1, posX].SetPathable(PuzzleDir.Bottom, false);                
+            }
+
+            if(target.offRight)
+            {
+                targetNode.DisableRightPath();
+
+                targetNode.SetPathable(PuzzleDir.Right, false);
+
+                if(posX < lastIdx)
+                    puzzle[posY, posX + 1].SetPathable(PuzzleDir.Left, false);
+            }
         }
     }
+
+    public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
+    public PuzzleNode[,] GetPuzzle() => puzzle;
+    public GameObject GetStartPoint() => startPoint;
+    public GameObject GetEndPoint() => endPoint;
+    public Transform GetPuzzleHolder() => puzzleHolder;
 }
