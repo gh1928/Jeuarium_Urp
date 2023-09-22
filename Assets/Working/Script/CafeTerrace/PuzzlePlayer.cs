@@ -25,7 +25,7 @@ public class PuzzlePlayer : MonoBehaviour
     private PuzzleDir currLineDir;
     private PuzzleNode destNode;
 
-    private Stack<PuzzleNode> nodeStack;
+    private Stack<PuzzleNode> pathStack;
 
     Vector2 lastPointPos;
 
@@ -50,6 +50,7 @@ public class PuzzlePlayer : MonoBehaviour
         SetColorBeforePlay(puzzleMaker.Data.playerColor);
 
         sourNode = puzzle[0, 0];
+        pathStack.Push(sourNode);
 
         Vector3 screenPointPosition = UseVR ?
             eventData.pointerCurrentRaycast.screenPosition : RectTransformUtility.WorldToScreenPoint(null, Input.mousePosition);

@@ -124,7 +124,7 @@ MonoBehaviour:
   puzzleHolderPrafab: {fileID: 7691245136063957342, guid: 89a2ec7554909654c8e049c21fa1be45,
     type: 3}
   intervalAdjust: 1
-  data: {fileID: 11400000, guid: d13cde1c29fecf149a23a9ded682e8a6, type: 2}
+  Data: {fileID: 0}
 --- !u!1183024399 &107224957997567322
 LookAtConstraint:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indicatorPrefab: {fileID: 618620692662840283, guid: 5ef6fa38f1f8da449a986ba13ad7278f,
     type: 3}
-  indicator: {fileID: 0}
+  speed: 1
   UseVR: 0
 --- !u!1 &5099332582311602708
 GameObject:
