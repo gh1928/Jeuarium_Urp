@@ -46,6 +46,8 @@ namespace BNG
             scale = transform.localScale;
 
             dist = (dest_Pos - pos).magnitude;
+
+            ANM_Check_Start();
         }
 
         void Update()
@@ -94,29 +96,42 @@ namespace BNG
         [SerializeField] List<HandController> ANM_Check_controllers;
         [SerializeField] Grabbable ANM_Check_Next;
 
+        [Header("RUNNING")]
+        [SerializeField] bool ANM_Check_isCheck;
+
         ////////// Getter & Setter  //////////
 
         ////////// Method           //////////
 
         ////////// Unity            //////////
+        void ANM_Check_Start()
+        {
+            ANM_Check_isCheck = true;
+        }
+
         void ANM_Check_Update()
         {
-            bool isCatch = false;
-            for (int i = 0; i < ANM_Check_controllers.Count; i++)
+            if (ANM_Check_isCheck)
             {
-                if ((ANM_Check_controllers[i].PreviousHeldObject != null) && (ANM_Check_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
+                bool isCatch = false;
+                for (int i = 0; i < ANM_Check_controllers.Count; i++)
                 {
-                    isCatch = true;
-                    break;
+                    if ((ANM_Check_controllers[i].PreviousHeldObject != null) && (ANM_Check_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
+                    {
+                        isCatch = true;
+                        break;
+                    }
                 }
-            }
 
-            if(!isCatch)
-            {
-                if(isClamp && transform.localPosition.Equals(max_Clamp))
+                if (!isCatch)
                 {
-                    this.GetComponent<Grabbable>().enabled = false;
-                    ANM_Check_Next.enabled = true;
+                    if (isClamp && transform.localPosition.Equals(max_Clamp))
+                    {
+                        this.GetComponent<Grabbable>().enabled = false;
+                        ANM_Check_Next.enabled = true;
+
+                        ANM_Check_isCheck = false;
+                    }
                 }
             }
         }

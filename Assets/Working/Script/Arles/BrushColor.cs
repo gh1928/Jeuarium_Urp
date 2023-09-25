@@ -30,10 +30,6 @@ public partial class BrushColor : MonoBehaviour
         //{
         //    trigger.SwitchOn();
         //}
-        else
-        {
-            ANM_Basic_OnTriggerEnter(_other);
-        }
     }
 
     public void SetTrigger(TriggerSet t)
@@ -41,23 +37,4 @@ public partial class BrushColor : MonoBehaviour
         t.AddTrigger();
         trigger = t;
     }
-}
-
-partial class BrushColor
-{
-    [Header("HYJ_ADD ==================================================")]
-    [SerializeField] GameObject Basic_brush;
-
-    ////////// Getter & Setter  //////////
-
-    ////////// Method           //////////
-    void ANM_Basic_OnTriggerEnter(Collider _other)
-    {
-        if (_other.CompareTag("Paint"))
-        {
-            _other.GetComponent<ANM_ColorPainting>();
-        }
-    }
-
-    ////////// Unity            //////////
 }

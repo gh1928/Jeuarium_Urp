@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PuzzleGame : MonoBehaviour
+public partial class PuzzleGame : MonoBehaviour
 {
     public List<Transform> pieces;
     private List<Transform> pieces_Shuffle = new List<Transform>();
@@ -74,8 +74,28 @@ public class PuzzleGame : MonoBehaviour
 
             if (pieces.SequenceEqual(pieces_Shuffle))
             {
-                trigger.SwitchOn();
+                //trigger.SwitchOn();
+
+                // 황영재 추가.
+                ANM_Basic_SwapPieces();
             }
         }
     }
+}
+
+partial class PuzzleGame
+{
+    [Header("BASIC ==================================================")]
+    [SerializeField] ANM_Manager Basic_Manager;
+
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+    void ANM_Basic_SwapPieces()
+    {
+        Basic_Manager.ANM_Event_Trigger(this.gameObject);
+    }
+
+    ////////// Unity            //////////
 }

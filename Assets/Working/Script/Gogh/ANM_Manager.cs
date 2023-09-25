@@ -80,13 +80,16 @@ partial class ANM_Manager
 
             // ACTION
             ACTION__GRAB_RELEASE    = 20000,
+            ACTION__GRAB_ON,
+            ACTION__GRAB_OFF,
+            ACTION__DOOR_OPEN,
 
             // UI
             UI__TEXT    = 30000,
 
             // ANIMATION
             ANIMATION__NEXT = 40000,
-            ANIMATION__END
+            ANIMATION__END,
         }
 
         [SerializeField] TYPE               Basic_type;
@@ -169,6 +172,27 @@ partial class ANM_Manager
             return res;
         }
 
+        public void ANM_Basic_GrabbableOn()
+        {
+            for (int i = 0; i < Basic_objs.Count; i++)
+            {
+                Basic_objs[i].GetComponent<BNG.Grabbable>().enabled = true;
+            }
+        }
+
+        public void ANM_Basic_GrabbableOff()
+        {
+            for (int i = 0; i < Basic_objs.Count; i++)
+            {
+                Basic_objs[i].GetComponent<BNG.Grabbable>().enabled = false;
+            }
+        }
+
+        public void ANM_Basic_DoorOpen()
+        {
+            Basic_objs[0].GetComponent<DoorController>().TryMoveDoor(float.Parse(Basic_values[0]), float.Parse(Basic_values[1]), true);
+        }
+
         // UI
         public bool ANM_Basic_BtnNextText()
         {
@@ -204,7 +228,6 @@ partial class ANM_Manager
             bool res = false;
 
             //
-            Debug.Log(Basic_objs[0].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime);
             if(Basic_objs[0].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 res = true;
@@ -226,12 +249,18 @@ partial class ANM_Manager
     ////////// Getter & Setter  //////////
 
     ////////// Method           //////////
-    public void ANM_Event_Trigger(GameObject _obj)
+    public bool ANM_Event_Trigger(GameObject _obj)
     {
+        bool res = false;
+
+        //
         if(Event_list[Event_num].ANM_Basic_type.Equals(ANM_Event.TYPE.TRIGGER))
         {
             Event_list[Event_num].ANM_Basic_TriggerEnter(_obj);
+            res = true;
         }
+
+        return res;
     }
 
     public void ANM_Event_BtnNextText()
@@ -250,36 +279,42 @@ partial class ANM_Manager
     ////////// Unity            //////////
     void ANM_Event_Update()
     {
-        bool isNext = false;
-
-        switch (Event_list[Event_num].ANM_Basic_type)
+        if(Event_num < Event_list.Count)
         {
-            // OBJECT
-            case ANM_Event.TYPE.OBJECT__ABLE:       { Event_list[Event_num].ANM_Basic_SetActive(true);  isNext = true;  }   break;
-            case ANM_Event.TYPE.OBJECT__DISABLE:    { Event_list[Event_num].ANM_Basic_SetActive(false); isNext = true;  }   break;
-            case ANM_Event.TYPE.OBJECT__POSITION:   { Event_list[Event_num].ANM_Basic_Position();       isNext = true;  }   break;
+            bool isNext = false;
 
-            // TRIGGER
-            case ANM_Event.TYPE.TRIGGER:    { isNext = Event_list[Event_num].ANM_Basic_TriggerCheck();  }   break;
-
-            // ACTION
-            case ANM_Event.TYPE.ACTION__GRAB_RELEASE:   { isNext = Event_list[Event_num].ANM_Basic_GrabRelease(Hand_hands); }   break;
-
-            // UI
-
-            // ANIMATION
-            case ANM_Event.TYPE.ANIMATION__NEXT:    { Event_list[Event_num].ANM_Basic_AnimationNext();  isNext = true;  }   break;
-            case ANM_Event.TYPE.ANIMATION__END:     { isNext = Event_list[Event_num].ANM_Basic_AnimationEnd();          }   break;
-        }
-
-        //
-        if (isNext)
-        {
-            Event_num++;
-
-            if(Event_num < Event_list.Count)
+            switch (Event_list[Event_num].ANM_Basic_type)
             {
-                Event_list[Event_num].ANM_Basic_SceneStart();
+                // OBJECT
+                case ANM_Event.TYPE.OBJECT__ABLE:       { Event_list[Event_num].ANM_Basic_SetActive(true);  isNext = true;  }   break;
+                case ANM_Event.TYPE.OBJECT__DISABLE:    { Event_list[Event_num].ANM_Basic_SetActive(false); isNext = true;  }   break;
+                case ANM_Event.TYPE.OBJECT__POSITION:   { Event_list[Event_num].ANM_Basic_Position();       isNext = true;  }   break;
+
+                // TRIGGER
+                case ANM_Event.TYPE.TRIGGER:    { isNext = Event_list[Event_num].ANM_Basic_TriggerCheck();  }   break;
+
+                // ACTION
+                case ANM_Event.TYPE.ACTION__GRAB_RELEASE:   { isNext = Event_list[Event_num].ANM_Basic_GrabRelease(Hand_hands); }   break;
+                case ANM_Event.TYPE.ACTION__GRAB_ON:        { Event_list[Event_num].ANM_Basic_GrabbableOn();    isNext = true;  }   break;
+                case ANM_Event.TYPE.ACTION__GRAB_OFF:       { Event_list[Event_num].ANM_Basic_GrabbableOff();   isNext = true;  }   break;
+                case ANM_Event.TYPE.ACTION__DOOR_OPEN:      { Event_list[Event_num].ANM_Basic_DoorOpen();       isNext = true;  }   break;
+
+                // UI
+
+                // ANIMATION
+                case ANM_Event.TYPE.ANIMATION__NEXT:    { Event_list[Event_num].ANM_Basic_AnimationNext();  isNext = true;  }   break;
+                case ANM_Event.TYPE.ANIMATION__END:     { isNext = Event_list[Event_num].ANM_Basic_AnimationEnd();          }   break;
+            }
+
+            //
+            if (isNext)
+            {
+                Event_num++;
+
+                if(Event_num < Event_list.Count)
+                {
+                    Event_list[Event_num].ANM_Basic_SceneStart();
+                }
             }
         }
     }

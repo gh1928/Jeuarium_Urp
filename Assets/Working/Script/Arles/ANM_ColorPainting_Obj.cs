@@ -29,6 +29,7 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
 
     [Header("RUNNING")]
     [SerializeField] PHASE Basic_phase;
+    [SerializeField] int Basic_transformDesNum;
     [SerializeField] List<Vector3> Basic_vec3s;
 
     ////////// Getter & Setter  //////////
@@ -61,6 +62,7 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
         GetComponent<Grabbable>().enabled = false;
 
         //
+        Basic_transformDesNum = 0;
         Basic_phase = PHASE.TRANSFORM__INIT;
     }
 
@@ -76,24 +78,29 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     {
         switch (Basic_phase)
         {
-            case PHASE.TRANSFORM__INIT: { ANM_Update_TRANSFORM__INIT(); }   break;
-            case PHASE.TRANSFORM:       { ANM_Update_TRANSFORM();       }   break;
+            case PHASE.TRANSFORM__INIT: { ANM_Update__TRANSFORM__INIT();    }   break;
+            case PHASE.TRANSFORM:       { ANM_Update__TRANSFORM();          }   break;
+            case PHASE.TRANSFORM__END:  { ANM_Update__TRANSFORM__END();     }   break;
 
             //
-            case PHASE.ANIMATION__START:        { ANM_Update_ANIMATION__START();        }   break;
-            case PHASE.AMIMATION__END_CHECK:    { ANM_Update_AMIMATION__END_CHECK();    }   break;
+            case PHASE.ANIMATION__START:        { ANM_Update__ANIMATION__START();       }   break;
+            case PHASE.AMIMATION__END_CHECK:    { ANM_Update__AMIMATION__END_CHECK();   }   break;
         }
     }
 
     //
-    void ANM_Update_TRANSFORM__INIT()
+    void ANM_Update__TRANSFORM__INIT()
     {
         if (Basic_vec3s == null)
         {
             Basic_vec3s = new List<Vector3>();
         }
-        Basic_vec3s.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
-        Basic_vec3s.Add(new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z));
+        while(Basic_vec3s.Count < 2)
+        {
+            Basic_vec3s.Add(new Vector3());
+        }
+        Basic_vec3s[0] = new Vector3(   this.transform.position.x,              this.transform.position.y,              this.transform.position.z               );
+        Basic_vec3s[1] = new Vector3(   this.transform.rotation.eulerAngles.x,  this.transform.rotation.eulerAngles.y,  this.transform.rotation.eulerAngles.z   );
 
         Basic_floats[0] = 0.0f;
 
@@ -101,7 +108,7 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
         Basic_phase = PHASE.TRANSFORM;
     }
 
-    void ANM_Update_TRANSFORM()
+    void ANM_Update__TRANSFORM()
     {
         Basic_floats[0] += Time.deltaTime;
         if (Basic_floats[0] >= Basic_floats[1])
@@ -111,12 +118,20 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
             Basic_phase = PHASE.TRANSFORM__END;
         }
 
-        this.transform.position = Vector3.Lerp(Basic_vec3s[0], Basic_objs[0].transform.position, Basic_floats[0] / Basic_floats[1]);
-        this.transform.rotation = Quaternion.Euler(Vector3.Lerp(Basic_vec3s[1], Basic_objs[0].transform.rotation.eulerAngles, Basic_floats[0] / Basic_floats[1]));
+        this.transform.position = Vector3.Lerp(                     Basic_vec3s[0], Basic_objs[Basic_transformDesNum].transform.position,               Basic_floats[0] / Basic_floats[1]);
+        this.transform.rotation = Quaternion.Euler( Vector3.Lerp(   Basic_vec3s[1], Basic_objs[Basic_transformDesNum].transform.rotation.eulerAngles,   Basic_floats[0] / Basic_floats[1]));
+    }
+
+    void ANM_Update__TRANSFORM__END()
+    {
+        if (Basic_Manager.ANM_Event_Trigger(this.gameObject))
+        {
+            Basic_phase = PHASE.NONE;
+        }
     }
 
     //
-    void ANM_Update_ANIMATION__START()
+    void ANM_Update__ANIMATION__START()
     {
         Basic_animator.SetTrigger("isOpen");
 
@@ -124,7 +139,7 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
         Basic_phase = PHASE.AMIMATION__END_CHECK;
     }
 
-    void ANM_Update_AMIMATION__END_CHECK()
+    void ANM_Update__AMIMATION__END_CHECK()
     {
         if( (Basic_animator.GetCurrentAnimatorStateInfo(0).IsName(Basic_strs[0])) &&
             (Basic_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f))
@@ -142,5 +157,24 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
             //
             Basic_phase = PHASE.AMIMATION__END;
         }
+    }
+
+    //
+    private void OnTriggerEnter(Collider _other)
+    {
+        switch (_other.tag)
+        {
+            case "Brush":   { ANM_OnTriggerEnter_Brush();   }   break;
+        }
+    }
+
+    void ANM_OnTriggerEnter_Brush()
+    {
+        this.transform.Find("Gray"  ).gameObject.SetActive(false    );
+        this.transform.Find("Color" ).gameObject.SetActive(true     );
+
+        //
+        Basic_transformDesNum = 1;
+        Basic_phase = PHASE.TRANSFORM__INIT;
     }
 }
