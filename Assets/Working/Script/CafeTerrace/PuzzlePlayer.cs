@@ -14,30 +14,18 @@ public class PuzzlePlayer : MonoBehaviour
     private bool isPlaying = false;
     private Camera mainCam;
 
-    public GameObject indicatorPrefab;
-    private GameObject indicator;
-
     public float speed = 0.5f;
 
     public bool UseVR;    
     private PuzzleNode sourNode;
-    private Image currLine;
-    private PuzzleDir currLineDir;
     private PuzzleNode destNode;
-
+ 
     private Stack<PuzzleNode> pathStack = new Stack<PuzzleNode>();
 
-    private Vector2 lastPointPos;
+    private Vector2 lastInputPos;
 
     private int[] yDir = { 1, 0, -1, 0 };
     private int[] xDir = { 0, 1, 0, -1 };
-
-    private struct PathInfo
-    {
-        public PuzzleNode visitedNode;
-        public Image lastLine;
-        public PuzzleDir lastDir;
-    }
 
     private void Start()
     {
@@ -57,7 +45,7 @@ public class PuzzlePlayer : MonoBehaviour
         SetColorBeforePlay(puzzleMaker.Data.playerColor);
 
         sourNode = puzzle[0, 0];
-        sourNode.OnVisited();
+        sourNode.OnVisitAction();
         pathStack.Push(sourNode);
 
         Vector3 screenPointPosition = UseVR ?
@@ -65,91 +53,76 @@ public class PuzzlePlayer : MonoBehaviour
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, screenPointPosition, mainCam, out Vector2 localPointPosition);
 
-        lastPointPos = localPointPosition;
+        lastInputPos = localPointPosition;
     }
-
     public void SetColorBeforePlay(Color playerColor)
     {
         var startPoint = puzzleMaker.GetStartPoint();
         startPoint.GetComponent<RawImage>().color = playerColor;
-
-        indicator = Instantiate(indicatorPrefab, startPoint.transform.position, Quaternion.Euler(startPoint.transform.localEulerAngles), puzzleMaker.GetPuzzleHolder());
-        indicator.GetComponent<Image>().color = playerColor;
     }
     private void Update()
     {
         if (!isPlaying)
             return;
 
-        Vector3 screenPointPosition = UseVR ?
-            eventData.pointerCurrentRaycast.screenPosition : RectTransformUtility.WorldToScreenPoint(null, Input.mousePosition);
-        
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, screenPointPosition, mainCam, out Vector2 localPointPosition);
+        Vector2 currInputPos = GetCurrInputPos();
+        Vector2 inputMoveDelta = currInputPos - lastInputPos;
 
-        Vector2 pointDelta = localPointPosition - lastPointPos;
-        lastPointPos = localPointPosition;
+        lastInputPos = currInputPos;
 
-        if (destNode == null)
+        if(destNode == null)
         {
-            var dir = GetMaxDeltaDir(pointDelta);
-            if (dir == PuzzleDir.None)
-                return;
-
-            if(sourNode.GetPathable(dir))
-            {
-                int dirIdx = (int)dir;
-                destNode = puzzle[sourNode.Pos.posY + yDir[dirIdx], sourNode.Pos.posX + xDir[dirIdx]];
-                currLineDir = dir;
-                currLine = sourNode.GetDirLine(dir);
-            }
+            SetDest(inputMoveDelta);
             return;
         }
 
-        float lineSizeChanger = 0;
-        switch (currLineDir)
-        {
-            case PuzzleDir.Top:
-                lineSizeChanger = pointDelta.y;
-                break;
-            case PuzzleDir.Right:
-                lineSizeChanger = pointDelta.x;
-                break;
-            case PuzzleDir.Bottom:
-                lineSizeChanger = - pointDelta.y;
-                break;
-            case PuzzleDir.Left:
-                lineSizeChanger = - pointDelta.x;
-                break;
-        }
+        sourNode.UpdateLine(inputMoveDelta * speed, destNode.IsVisited());
 
-        currLine.fillAmount += lineSizeChanger * speed;
-
-        if (destNode.IsVisited() && currLine.fillAmount > 0.9f)
-            currLine.fillAmount = 0.9f;
-
-        if(currLine.fillAmount <= 0)
+        if(sourNode.GetProgress() <= 0)
         {
             destNode = null;
 
-            if(pathStack.Count > 0)
+            if(pathStack.Count >= 2)
             {
                 destNode = pathStack.Pop();
                 sourNode = pathStack.Peek();
             }
         }    
 
-        if(currLine.fillAmount >= 1)
+        if(sourNode.GetProgress() >= 1)
         {
             pathStack.Push(destNode);
-            destNode.OnVisited();
             sourNode = destNode;
+            destNode.OnVisitAction();
             destNode = null;
         }
+    }
+    private Vector2 GetCurrInputPos()
+    {
+        Vector3 screenPointPosition = UseVR ?
+            eventData.pointerCurrentRaycast.screenPosition : RectTransformUtility.WorldToScreenPoint(null, Input.mousePosition);
 
-        //Debug.Log(currLine.fillAmount);        
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, screenPointPosition, mainCam, out Vector2 currInputPos);
+
+        return currInputPos;
     }
 
-    private PuzzleDir GetMaxDeltaDir(Vector2 delta)
+    private void SetDest(Vector2 inputMoveDelta)
+    {
+        var dir = GetLargeDelta(inputMoveDelta);
+
+        if (dir == PuzzleDir.None)
+            return;
+
+        if (!sourNode.GetPathable(dir))
+            return;
+
+        int Idx = (int)dir;
+        destNode = puzzle[sourNode.Pos.posY + yDir[Idx], sourNode.Pos.posX + xDir[Idx]];
+
+        sourNode.SetDestDir(dir);
+    }
+    private PuzzleDir GetLargeDelta(Vector2 delta)
     {
         if (delta == Vector2.zero)
             return PuzzleDir.None;

@@ -7,7 +7,6 @@ public enum PuzzleDir
 {
     None = -1, Top = 0, Right = 1, Bottom = 2, Left = 3
 }
-
 public class PuzzleNode : MonoBehaviour
 {
     public int NodeNumber;
@@ -21,11 +20,15 @@ public class PuzzleNode : MonoBehaviour
 
     public Image nodeImage;
     public Image[] lines = new Image[4];
+    private Image currLine;
+
     private bool[] pathUseable = { true, true, true, true };
 
     private bool visited = false;
 
     private Color playerColor;
+
+    private PuzzleDir currDir = PuzzleDir.None;
 
     private void Awake()
     {
@@ -38,7 +41,13 @@ public class PuzzleNode : MonoBehaviour
         for (int i = 0; i < 4; i++)
             lines[i].color = playerColor;
     }    
-    public Image GetDirLine(PuzzleDir dir) => lines[(int)dir];
+    public void SetDestDir(PuzzleDir dir)
+    {
+        currDir = dir;
+        currLine = lines[(int)currDir];
+    }
+
+    public float GetProgress() => currLine.fillAmount;
 
     public void SetPathAndLine(float interval)
     {
@@ -64,12 +73,45 @@ public class PuzzleNode : MonoBehaviour
             lines[i].rectTransform.sizeDelta = new Vector2(isVertical ? currSize : interval, isVertical ? interval : currSize);
         }
     }
-    public void OnVisited()
+    public void OnVisitAction()
     {
         visited = true;
         nodeImage.color = playerColor;
     }
+
     public bool IsVisited() => visited;
+
+    public void UpdateLine(Vector2 inputMoveDelta, bool destVisited)
+    {
+        if (currDir == PuzzleDir.None)
+            return;
+
+        float lineSizeChanger = 0;
+        switch (currDir)
+        {
+            case PuzzleDir.Top:
+                lineSizeChanger = inputMoveDelta.y;
+                break;
+            case PuzzleDir.Right:
+                lineSizeChanger = inputMoveDelta.x;
+                break;
+            case PuzzleDir.Bottom:
+                lineSizeChanger = -inputMoveDelta.y;
+                break;
+            case PuzzleDir.Left:
+                lineSizeChanger = -inputMoveDelta.x;
+                break;
+        }
+
+        currLine.fillAmount += lineSizeChanger;
+
+        if (!destVisited)
+            return;
+
+        if (currLine.fillAmount > 90f)
+            currLine.fillAmount = 90f;
+    }
+
     public void SetPathable(PuzzleDir dir, bool pathable) => pathUseable[(int)dir] = pathable;
     public bool GetPathable(PuzzleDir dir) => pathUseable[(int)dir];
     public void DisableTopPath() => topPath.gameObject.SetActive(false);
