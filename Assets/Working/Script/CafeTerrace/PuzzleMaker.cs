@@ -47,6 +47,16 @@ public class PuzzleMaker : MonoBehaviour
 
         lookAtConstraints.enabled = true;
     }
+    public void StopPuzzle()
+    {
+        GetComponent<PuzzlePlayer>().StopPlay();
+        Destroy(puzzleHolder.gameObject);
+    }
+    public void ResetPuzzle()
+    {
+        StopPuzzle();
+        MakePuzzle();
+    }
     public void ReadData()
     {
         puzzleSize = Data.PuzzleSize;

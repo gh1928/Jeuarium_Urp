@@ -162,4 +162,6 @@ public class PuzzlePlayer : MonoBehaviour
 
         return delta.y > 0 ? PuzzleDir.Top : PuzzleDir.Bottom;
     }
+
+    public void StopPlay() => isPlaying = false;
 }
