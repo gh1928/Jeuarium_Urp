@@ -8,8 +8,8 @@ public class PuzzleMaker : MonoBehaviour
 {    
     private int puzzleSize;
     public PuzzleNode nodePrefab;    
-    public GameObject startPointPrefab;
-    public GameObject endPointPrefab;
+    public GameObject entAndExitPrefab;
+    
     public GameObject puzzleHolderPrafab;
     public float intervalAdjust;
     public PuzzleData Data;
@@ -22,8 +22,8 @@ public class PuzzleMaker : MonoBehaviour
     private LookAtConstraint lookAtConstraints;
     private Transform puzzleHolder;
 
-    private GameObject startPoint;
-    private GameObject endPoint;
+    private GameObject enterPoint;
+    private GameObject exitPoint;
 
     private int currNodeNumber = 0;
 
@@ -102,11 +102,11 @@ public class PuzzleMaker : MonoBehaviour
     }    
     private void SetStartAndEndPoint()
     {
-        startPoint = Instantiate(startPointPrefab, puzzleHolder);
-        startPoint.transform.position = puzzle[0, 0].transform.position;
+        enterPoint = Instantiate(entAndExitPrefab, puzzleHolder);
+        enterPoint.transform.position = puzzle[0, 0].transform.position;
 
-        endPoint = Instantiate(endPointPrefab, puzzleHolder);
-        endPoint.transform.position = puzzle[lastIdx, lastIdx].transform.position;
+        exitPoint = Instantiate(entAndExitPrefab, puzzleHolder);
+        exitPoint.transform.position = puzzle[lastIdx, lastIdx].transform.position;
     }
     public void DisableNodeAndLine()
     {
@@ -148,7 +148,10 @@ public class PuzzleMaker : MonoBehaviour
 
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
     public PuzzleNode[,] GetPuzzle() => puzzle;
-    public GameObject GetStartPoint() => startPoint;
-    public GameObject GetEndPoint() => endPoint;
+    public GameObject GetEnterPoint() => enterPoint;
+    public GameObject GetExitPoint() => exitPoint;
     public Transform GetPuzzleHolder() => puzzleHolder;
+    public PuzzleNode GetEnterNode() => puzzle[0,0];
+    public PuzzleNode GetExitNode() => puzzle[puzzleSize - 1, puzzleSize - 1];
+
 }
