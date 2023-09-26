@@ -71,9 +71,9 @@ public class PuzzlePlayer : MonoBehaviour
         if (eventData.pointerCurrentRaycast.gameObject == null)
             return;
 
-        var cullTarget = eventData.pointerCurrentRaycast.module;
+        var currTarget = eventData.pointerCurrentRaycast.module;
 
-        if (cullTarget == null || cullTarget.GetType() != typeof(GraphicRaycaster))
+        if (currTarget == null || currTarget.GetType() != typeof(GraphicRaycaster))
             return;
 
         Vector3 currInputPos = eventData.pointerCurrentRaycast.worldPosition;            
@@ -97,7 +97,10 @@ public class PuzzlePlayer : MonoBehaviour
         if (destNode == null)
             return;
 
-        currNode.UpdateLine(pointerDir, speed * Time.deltaTime);
+        //currNode.UpdateLine(pointerDir, speed * Time.deltaTime);
+
+        currNode.UpdateLine(speed * Time.deltaTime * pointerDir);
+
         indicator.transform.position = Vector3.Lerp(currNode.transform.position, destNode.transform.position, currProgress);
 
         if (destNode.IsVisited())

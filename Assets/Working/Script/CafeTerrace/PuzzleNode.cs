@@ -108,6 +108,7 @@ public class PuzzleNode : MonoBehaviour
 
     public bool IsVisited() => visited;
 
+    //고정 속도
     public void UpdateLine(Vector2 pointerDir, float value)
     {
         if (currDir == PuzzleDir.None)
@@ -135,6 +136,36 @@ public class PuzzleNode : MonoBehaviour
         }
 
         currLine.fillAmount += valuePositive ? value : - value;
+    }
+
+    //포인터 거리 비례 속도 증가
+    public void UpdateLine(Vector2 moveValue)
+    {
+        if (currDir == PuzzleDir.None)
+            return;
+
+        if (moveValue == Vector2.zero)
+            return;
+
+        float lineSizeChanger = 0f;
+
+        switch (currDir)
+        {
+            case PuzzleDir.Top:
+                lineSizeChanger = moveValue.y;
+                break;
+            case PuzzleDir.Bottom:
+                lineSizeChanger = - moveValue.y;                
+                break;
+            case PuzzleDir.Right:
+                lineSizeChanger = -moveValue.x;
+                break;
+            case PuzzleDir.Left:
+                lineSizeChanger =  moveValue.x;
+                break;
+        }
+
+        currLine.fillAmount += lineSizeChanger;
     }
 
     public void SetPathable(PuzzleDir dir, bool pathable) => pathUseable[(int)dir] = pathable;
