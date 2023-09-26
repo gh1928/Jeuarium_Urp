@@ -1,17 +1,20 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UI;
 
 public class PuzzleMaker : MonoBehaviour
 {    
     private int puzzleSize;
     public PuzzleNode nodePrefab;    
-    public GameObject entAndExitPrefab;
+    public RawImage entAndExitPrefab;
+
+    private GameObject indicator;
+    public GameObject indicatorPrefab;
     
-    public GameObject puzzleHolderPrafab;
-    public float intervalAdjust;
+    public Transform puzzleHolderPrafab;
+    private float intervalAdjust;
     public PuzzleData Data;
     
     private NodeNumLinePair[] disconnectTarget;
@@ -22,8 +25,8 @@ public class PuzzleMaker : MonoBehaviour
     private LookAtConstraint lookAtConstraints;
     private Transform puzzleHolder;
 
-    private GameObject enterPoint;
-    private GameObject exitPoint;
+    private RawImage enterPoint;
+    private RawImage exitPoint;
 
     private int currNodeNumber = 0;
 
@@ -38,12 +41,12 @@ public class PuzzleMaker : MonoBehaviour
         lookAtConstraints.enabled = false;
         rect.localEulerAngles = Vector3.zero;
 
-        puzzleHolder = Instantiate(puzzleHolderPrafab, transform).transform;
+        puzzleHolder = Instantiate(puzzleHolderPrafab, transform);
 
-        ReadData();
+        MakePuzzleArray();
         SetNodeAndLine();
-        SetStartAndEndPoint();
-        DisableNodeAndLine();
+        SetEnterAndExitPoint();
+        ReadPuzzleInfo();  
 
         lookAtConstraints.enabled = true;
     }
@@ -54,17 +57,21 @@ public class PuzzleMaker : MonoBehaviour
     }
     public void ResetPuzzle()
     {
+        currNodeNumber = 0;
+
         StopPuzzle();
         MakePuzzle();
     }
-    public void ReadData()
+    private void MakePuzzleArray()
     {
         puzzleSize = Data.PuzzleSize;
         lastIdx = puzzleSize - 1;
         puzzle = new PuzzleNode[puzzleSize, puzzleSize];
     }
-    public void SetNodeAndLine()
+    private void SetNodeAndLine()
     {
+        intervalAdjust = Data.nodeInterval;
+
         float temp = (puzzleSize - 1) * intervalAdjust * 0.5f;
         Vector3 startPos = new Vector3(-temp, -temp, 0);
 
@@ -104,23 +111,32 @@ public class PuzzleMaker : MonoBehaviour
         node.transform.localPosition = nodePos;
         node.SetPathAndLine(intervalAdjust);
         node.SetPlayerColor(Data.playerColor);
+        node.SetBaseColor(Data.baseColor);
         node.SetColor();
 
         node.NodeNumber = currNodeNumber++;
 
         return node;
     }    
-    private void SetStartAndEndPoint()
+    private void SetEnterAndExitPoint()
     {
+        var enterPos = Data.enterPos;
         enterPoint = Instantiate(entAndExitPrefab, puzzleHolder);
-        enterPoint.transform.position = puzzle[0, 0].transform.position;
+        enterPoint.transform.position = puzzle[enterPos.y, enterPos.x].transform.position;
+        enterPoint.color = Data.playerColor;
 
+        indicator = Instantiate(indicatorPrefab, puzzleHolder);
+        indicator.transform.position = enterPoint.transform.position;
+        indicator.GetComponent<Image>().color = Data.playerColor;
+
+        var exitPos = Data.exitPos;
         exitPoint = Instantiate(entAndExitPrefab, puzzleHolder);
-        exitPoint.transform.position = puzzle[lastIdx, lastIdx].transform.position;
+        exitPoint.transform.position = puzzle[exitPos.y, exitPos.x].transform.position;
+        exitPoint.color = Data.baseColor;
     }
-    public void DisableNodeAndLine()
+    public void ReadPuzzleInfo()
     {
-        disconnectTarget = Data.disconnectTarget;
+        disconnectTarget = Data.puzzleInfo;
 
         foreach (var target in disconnectTarget)
         {
@@ -134,7 +150,7 @@ public class PuzzleMaker : MonoBehaviour
 
             targetNode.gameObject.SetActive(!target.offNode);
             
-            if(target.offTop)
+            if(target.offTopPath)
             {
                 targetNode.DisableTopPath();
 
@@ -144,7 +160,7 @@ public class PuzzleMaker : MonoBehaviour
                     puzzle[posY + 1, posX].SetPathable(PuzzleDir.Bottom, false);                
             }
 
-            if(target.offRight)
+            if(target.offRightPath)
             {
                 targetNode.DisableRightPath();
 
@@ -158,10 +174,11 @@ public class PuzzleMaker : MonoBehaviour
 
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
     public PuzzleNode[,] GetPuzzle() => puzzle;
-    public GameObject GetEnterPoint() => enterPoint;
-    public GameObject GetExitPoint() => exitPoint;
+    public RawImage GetEnterPoint() => enterPoint;
+    public RawImage GetExitPoint() => exitPoint;
     public Transform GetPuzzleHolder() => puzzleHolder;
-    public PuzzleNode GetEnterNode() => puzzle[0,0];
-    public PuzzleNode GetExitNode() => puzzle[puzzleSize - 1, puzzleSize - 1];
+    public PuzzleNode GetEnterNode() => puzzle[Data.enterPos.y,Data.enterPos.x];
+    public PuzzleNode GetExitNode() => puzzle[Data.exitPos.y, Data.exitPos.y];
+    public GameObject GetIndicator()=> indicator;
 
 }

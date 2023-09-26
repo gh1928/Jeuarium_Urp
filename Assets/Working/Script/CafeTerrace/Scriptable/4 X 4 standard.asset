@@ -13,5 +13,13 @@ MonoBehaviour:
   m_Name: 4 X 4 standard
   m_EditorClassIdentifier: 
   PuzzleSize: 4
-  disconnectTarget: []
+  puzzleInfo: []
+  enterPos:
+    y: 0
+    x: 1
+  exitPos:
+    y: 3
+    x: 3
+  baseColor: {r: 1, g: 1, b: 1, a: 0.5686275}
   playerColor: {r: 1, g: 0.6795065, b: 0, a: 1}
+  nodeInterval: 1

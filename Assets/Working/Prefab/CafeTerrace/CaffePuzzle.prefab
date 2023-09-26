@@ -543,9 +543,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 6084099233226495998, guid: d22319fe9fbeb794da5131c7f3b22bb0,
     type: 3}
-  entAndExitPrefab: {fileID: 8603143665416425310, guid: e3aa8e098c8c76d4eb58418ddd9e6270,
+  entAndExitPrefab: {fileID: 8603143665416425308, guid: e3aa8e098c8c76d4eb58418ddd9e6270,
     type: 3}
-  puzzleHolderPrafab: {fileID: 7691245136063957342, guid: 89a2ec7554909654c8e049c21fa1be45,
+  indicatorPrefab: {fileID: 618620692662840283, guid: 5ef6fa38f1f8da449a986ba13ad7278f,
+    type: 3}
+  puzzleHolderPrafab: {fileID: 7691245136063957337, guid: 89a2ec7554909654c8e049c21fa1be45,
     type: 3}
   intervalAdjust: 1
   Data: {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b, type: 2}
@@ -581,7 +583,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  UseVR: 0
+  UseVR: 1
+  minDistanceToMove: 0.05
+  minDistanceToExitNode: 0.1
 --- !u!1 &5099332582311602708
 GameObject:
   m_ObjectHideFlags: 0
