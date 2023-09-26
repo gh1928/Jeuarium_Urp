@@ -14,40 +14,37 @@ public class PuzzlePlayer : MonoBehaviour
     private bool isPlaying = false;    
 
     public float speed = 0.5f;
-
-    public bool UseVR;    
+    
     private PuzzleNode currNode;
     private PuzzleNode destNode;
+    private Transform indicator;
 
     private int exitNodeNum;
  
     private Stack<PuzzleNode> pathStack = new Stack<PuzzleNode>();
 
-    private Vector2 lastInputPos;
-
     private int[] yDir = { 1, 0, -1, 0 };
     private int[] xDir = { 0, 1, 0, -1 };
+
+    public float minDistanceToMove = 1f;
+    public float minDistanceToExitNode = 1f;
 
     private void Start()
     {   
         puzzleMaker = GetComponent<PuzzleMaker>();
-
-        if (UseVR)
-            eventData = VRUISystem.Instance.EventData;
+        eventData = VRUISystem.Instance.EventData;
     }
     public void StartPlay()
     {        
         puzzle = puzzleMaker.GetPuzzle();
-        isPlaying = true;
-
         ActivePoint(puzzleMaker.GetEnterPoint());
-
+        indicator = puzzleMaker.GetIndicator().transform;
         currNode = puzzleMaker.GetEnterNode();
-        currNode.OnVisitAction();
-
         exitNodeNum = puzzleMaker.GetExitNode().NodeNumber;
 
-        lastInputPos = eventData.pointerCurrentRaycast.worldPosition;
+        currNode.OnVisitAction();
+
+        isPlaying = true;
     }
     public void ActivePoint(RawImage point) => point.color = puzzleMaker.Data.playerColor;
 
@@ -56,36 +53,48 @@ public class PuzzlePlayer : MonoBehaviour
         if (!isPlaying)
             return;
 
-        if (eventData.pointerCurrentRaycast.module.GetType() != typeof(GraphicRaycaster))
+        if (eventData.pointerCurrentRaycast.gameObject == null)
             return;
-        
-        Vector2 currInputPos = eventData.pointerCurrentRaycast.worldPosition;
-        Vector2 inputDelta = currInputPos - lastInputPos;        
-        
 
+        var cullTarget = eventData.pointerCurrentRaycast.module;
 
-        lastInputPos = currInputPos;
+        if (cullTarget == null || cullTarget.GetType() != typeof(GraphicRaycaster))
+            return;
 
-        if (currNode.GetProgress() <= 0f)
-            SetDest(inputDelta);
+        Vector3 currInputPos = eventData.pointerCurrentRaycast.worldPosition;            
+
+        Vector3 pointerDir = currInputPos - indicator.position;
+
+        if (Vector3.SqrMagnitude(pointerDir) < minDistanceToMove)
+            return;
+
+        var puzzleDir = GetLargeDirValue(pointerDir);
+        float currProgress = currNode.GetProgress();
+
+        if (currProgress <= 0f)
+        {
+            if (Vector3.SqrMagnitude(pointerDir) < minDistanceToExitNode)
+                return;
+
+            SetDest(puzzleDir);
+        }
 
         if (destNode == null)
             return;
 
-        currNode.UpdateLine(inputDelta * speed);
+        currNode.UpdateLine(pointerDir, speed * Time.deltaTime);
+        indicator.transform.position = Vector3.Lerp(currNode.transform.position, destNode.transform.position, currProgress);
 
         if (destNode.IsVisited())
-            currNode.ClampProgress(0.9f);            
+            currNode.ClampProgress(0.85f);
 
-        if (currNode.GetProgress() >= 1f)
+        if (currProgress >= 1f)
             VisitDest();
     }
 
-    private void SetDest(Vector2 inputMoveDelta)
+    private void SetDest(PuzzleDir dir)
     {
         destNode = null;
-
-        var dir = GetLargeDelta(inputMoveDelta);
 
         if (dir == PuzzleDir.None)
             return;        
@@ -124,17 +133,17 @@ public class PuzzlePlayer : MonoBehaviour
         pathStack.Push(currNode);
         currNode = destNode;        
     }
-    private PuzzleDir GetLargeDelta(Vector2 delta)
+    private PuzzleDir GetLargeDirValue(Vector2 look)
     {
-        if (delta == Vector2.zero)
+        if (look == Vector2.zero)
             return PuzzleDir.None;
 
-        if(Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+        if(Mathf.Abs(look.x) > Mathf.Abs(look.y))
         {
-            return delta.x > 0 ? PuzzleDir.Right : PuzzleDir.Left;
+            return look.x > 0 ? PuzzleDir.Left : PuzzleDir.Right;
         }
 
-        return delta.y > 0 ? PuzzleDir.Top : PuzzleDir.Bottom;
+        return look.y > 0 ? PuzzleDir.Top : PuzzleDir.Bottom;
     }
 
     public void StopPlay() => isPlaying = false;

@@ -28,6 +28,7 @@ public class PuzzleNode : MonoBehaviour
     private bool visited = false;
 
     private Color playerColor;
+    private Color baseColor;
 
     private PuzzleDir currDir = PuzzleDir.None;
 
@@ -36,9 +37,14 @@ public class PuzzleNode : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
     public void SetPlayerColor(Color color) => playerColor = color;
+    public void SetBaseColor(Color color) => baseColor = color;
 
     public void SetColor()
     {
+        nodeImage.color = baseColor;
+        topPath.GetComponent<RawImage>().color = baseColor;
+        rightPath.GetComponent<RawImage>().color = baseColor;
+
         for (int i = 0; i < 4; i++)
             lines[i].color = playerColor;
     }
@@ -57,8 +63,7 @@ public class PuzzleNode : MonoBehaviour
         _ => PuzzleDir.None,
     };
 
-    public float GetProgress() => currLine == null ? 0f : currLine.fillAmount;
-    
+    public float GetProgress() => currLine == null ? 0f : currLine.fillAmount;    
     public void SetProgress(float value) => currLine.fillAmount = value;
     public void ClampProgress(float maxValue)
     {
@@ -98,34 +103,38 @@ public class PuzzleNode : MonoBehaviour
     public void CancleVisit()
     {
         visited = false;
-        nodeImage.color = Color.white;
+        nodeImage.color = baseColor;
     }
 
     public bool IsVisited() => visited;
 
-    public void UpdateLine(Vector2 inputMoveDelta)
+    public void UpdateLine(Vector2 pointerDir, float value)
     {
         if (currDir == PuzzleDir.None)
             return;
 
-        float lineSizeChanger = 0;
+        if(pointerDir == Vector2.zero) 
+            return;
+
+        bool valuePositive = true;
+
         switch (currDir)
         {
             case PuzzleDir.Top:
-                lineSizeChanger = inputMoveDelta.y;
-                break;
-            case PuzzleDir.Right:
-                lineSizeChanger = inputMoveDelta.x;
+                valuePositive = pointerDir.y > 0;
                 break;
             case PuzzleDir.Bottom:
-                lineSizeChanger = -inputMoveDelta.y;
+                valuePositive = pointerDir.y < 0;
+                break;
+            case PuzzleDir.Right:
+                valuePositive = pointerDir.x < 0;
                 break;
             case PuzzleDir.Left:
-                lineSizeChanger = -inputMoveDelta.x;
+                valuePositive = pointerDir.x > 0;
                 break;
         }
 
-        currLine.fillAmount += lineSizeChanger;
+        currLine.fillAmount += valuePositive ? value : - value;
     }
 
     public void SetPathable(PuzzleDir dir, bool pathable) => pathUseable[(int)dir] = pathable;

@@ -9,6 +9,9 @@ public class PuzzleMaker : MonoBehaviour
     private int puzzleSize;
     public PuzzleNode nodePrefab;    
     public RawImage entAndExitPrefab;
+
+    private GameObject indicator;
+    public GameObject indicatorPrefab;
     
     public Transform puzzleHolderPrafab;
     public float intervalAdjust;
@@ -106,6 +109,7 @@ public class PuzzleMaker : MonoBehaviour
         node.transform.localPosition = nodePos;
         node.SetPathAndLine(intervalAdjust);
         node.SetPlayerColor(Data.playerColor);
+        node.SetBaseColor(Data.baseColor);
         node.SetColor();
 
         node.NodeNumber = currNodeNumber++;
@@ -116,9 +120,15 @@ public class PuzzleMaker : MonoBehaviour
     {
         enterPoint = Instantiate(entAndExitPrefab, puzzleHolder);
         enterPoint.transform.position = puzzle[0, 0].transform.position;
+        enterPoint.color = Data.playerColor;
+
+        indicator = Instantiate(indicatorPrefab, puzzleHolder);
+        indicator.transform.position = enterPoint.transform.position;
+        indicator.GetComponent<Image>().color = Data.playerColor;
 
         exitPoint = Instantiate(entAndExitPrefab, puzzleHolder);
         exitPoint.transform.position = puzzle[lastIdx, lastIdx].transform.position;
+        exitPoint.color = Data.baseColor;
     }
     public void DisableNodeAndLine()
     {
@@ -165,5 +175,6 @@ public class PuzzleMaker : MonoBehaviour
     public Transform GetPuzzleHolder() => puzzleHolder;
     public PuzzleNode GetEnterNode() => puzzle[0,0];
     public PuzzleNode GetExitNode() => puzzle[puzzleSize - 1, puzzleSize - 1];
+    public GameObject GetIndicator()=> indicator;
 
 }

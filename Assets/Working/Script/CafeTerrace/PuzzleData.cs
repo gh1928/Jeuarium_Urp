@@ -19,5 +19,6 @@ public class PuzzleData : ScriptableObject
 
     public NodeNumLinePair[] disconnectTarget;
 
+    public Color baseColor;
     public Color playerColor;
 }
