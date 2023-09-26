@@ -19,12 +19,16 @@ public class PuzzlePlayer : MonoBehaviour
     private PuzzleNode destNode;
     private Transform indicator;
 
+    private int enterNodeNum;
     private int exitNodeNum;
  
     private Stack<PuzzleNode> pathStack = new Stack<PuzzleNode>();
 
     private int[] yDir = { 1, 0, -1, 0 };
     private int[] xDir = { 0, 1, 0, -1 };
+
+    private float clampValue;
+    private float enterClampValue;
 
     public float minDistanceToMove = 1f;
     public float minDistanceToExitNode = 1f;
@@ -37,14 +41,25 @@ public class PuzzlePlayer : MonoBehaviour
     public void StartPlay()
     {        
         puzzle = puzzleMaker.GetPuzzle();
+
+        SetClampValue();
         ActivePoint(puzzleMaker.GetEnterPoint());
         indicator = puzzleMaker.GetIndicator().transform;
         currNode = puzzleMaker.GetEnterNode();
+        enterNodeNum = currNode.NodeNumber;
         exitNodeNum = puzzleMaker.GetExitNode().NodeNumber;
 
         currNode.OnVisitAction();
 
         isPlaying = true;
+    }
+    private void SetClampValue()
+    {
+        float interval = puzzleMaker.Data.nodeInterval;
+
+        clampValue = (interval - 0.15f) / interval;
+
+        enterClampValue = (interval - 0.225f) / interval;
     }
     public void ActivePoint(RawImage point) => point.color = puzzleMaker.Data.playerColor;
 
@@ -86,7 +101,10 @@ public class PuzzlePlayer : MonoBehaviour
         indicator.transform.position = Vector3.Lerp(currNode.transform.position, destNode.transform.position, currProgress);
 
         if (destNode.IsVisited())
-            currNode.ClampProgress(0.85f);
+            currNode.ClampProgress(clampValue);
+
+        if(destNode.NodeNumber == enterNodeNum)
+            currNode.ClampProgress(enterClampValue);
 
         if (currProgress >= 1f)
             VisitDest();
@@ -145,6 +163,5 @@ public class PuzzlePlayer : MonoBehaviour
 
         return look.y > 0 ? PuzzleDir.Top : PuzzleDir.Bottom;
     }
-
     public void StopPlay() => isPlaying = false;
 }

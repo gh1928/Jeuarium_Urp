@@ -13,22 +13,29 @@ MonoBehaviour:
   m_Name: Hourglass
   m_EditorClassIdentifier: 
   PuzzleSize: 3
-  disconnectTarget:
-  - nodeNumber: 1
-    offNode: 0
-    offTop: 0
-    offRight: 1
+  puzzleInfo:
   - nodeNumber: 2
     offNode: 1
-    offTop: 1
-    offRight: 0
-  - nodeNumber: 3
-    offNode: 0
-    offTop: 1
-    offRight: 0
+    offTopPath: 1
+    offRightPath: 0
   - nodeNumber: 6
     offNode: 1
-    offTop: 0
-    offRight: 1
-  baseColor: {r: 1, g: 1, b: 1, a: 0}
-  playerColor: {r: 1, g: 0.6795065, b: 0, a: 1}
+    offTopPath: 0
+    offRightPath: 1
+  - nodeNumber: 1
+    offNode: 0
+    offTopPath: 0
+    offRightPath: 1
+  - nodeNumber: 3
+    offNode: 0
+    offTopPath: 1
+    offRightPath: 0
+  enterPos:
+    y: 0
+    x: 0
+  exitPos:
+    y: 2
+    x: 2
+  baseColor: {r: 1, g: 0.65449643, b: 0, a: 0.5882353}
+  playerColor: {r: 0.98210716, g: 1, b: 0, a: 1}
+  nodeInterval: 1
