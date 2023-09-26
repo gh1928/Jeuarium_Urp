@@ -129,9 +129,7 @@ public class PuzzleNode : MonoBehaviour
     }
 
     public void SetPathable(PuzzleDir dir, bool pathable) => pathUseable[(int)dir] = pathable;
-
     public bool GetPathable(PuzzleDir dir) => pathUseable[(int)dir];
     public void DisableTopPath() => topPath.gameObject.SetActive(false);
     public void DisableRightPath() => rightPath.gameObject.SetActive(false);
-    public PuzzleDir GetCurrDir() => currDir;
 }

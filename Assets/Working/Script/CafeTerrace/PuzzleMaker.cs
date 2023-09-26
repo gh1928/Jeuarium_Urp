@@ -1,16 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UI;
 
 public class PuzzleMaker : MonoBehaviour
 {    
     private int puzzleSize;
     public PuzzleNode nodePrefab;    
-    public GameObject entAndExitPrefab;
+    public RawImage entAndExitPrefab;
     
-    public GameObject puzzleHolderPrafab;
+    public Transform puzzleHolderPrafab;
     public float intervalAdjust;
     public PuzzleData Data;
     
@@ -22,8 +22,8 @@ public class PuzzleMaker : MonoBehaviour
     private LookAtConstraint lookAtConstraints;
     private Transform puzzleHolder;
 
-    private GameObject enterPoint;
-    private GameObject exitPoint;
+    private RawImage enterPoint;
+    private RawImage exitPoint;
 
     private int currNodeNumber = 0;
 
@@ -38,9 +38,9 @@ public class PuzzleMaker : MonoBehaviour
         lookAtConstraints.enabled = false;
         rect.localEulerAngles = Vector3.zero;
 
-        puzzleHolder = Instantiate(puzzleHolderPrafab, transform).transform;
+        puzzleHolder = Instantiate(puzzleHolderPrafab, transform);
 
-        ReadData();
+        ReadScriptableData();
         SetNodeAndLine();
         SetStartAndEndPoint();
         DisableNodeAndLine();
@@ -54,10 +54,12 @@ public class PuzzleMaker : MonoBehaviour
     }
     public void ResetPuzzle()
     {
+        currNodeNumber = 0;
+
         StopPuzzle();
         MakePuzzle();
     }
-    public void ReadData()
+    public void ReadScriptableData()
     {
         puzzleSize = Data.PuzzleSize;
         lastIdx = puzzleSize - 1;
@@ -158,8 +160,8 @@ public class PuzzleMaker : MonoBehaviour
 
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
     public PuzzleNode[,] GetPuzzle() => puzzle;
-    public GameObject GetEnterPoint() => enterPoint;
-    public GameObject GetExitPoint() => exitPoint;
+    public RawImage GetEnterPoint() => enterPoint;
+    public RawImage GetExitPoint() => exitPoint;
     public Transform GetPuzzleHolder() => puzzleHolder;
     public PuzzleNode GetEnterNode() => puzzle[0,0];
     public PuzzleNode GetExitNode() => puzzle[puzzleSize - 1, puzzleSize - 1];
