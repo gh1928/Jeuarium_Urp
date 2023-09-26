@@ -2141,7 +2141,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31658
+  m_Name: pb_Mesh31656
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2394,7 +2394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 0, a: 0.47058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4542,7 +4542,7 @@ GameObject:
   - component: {fileID: 384818044}
   - component: {fileID: 384818048}
   - component: {fileID: 384818047}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Picture_Grab_1
   m_TagString: Paint
   m_Icon: {fileID: 0}
@@ -4596,7 +4596,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 0
+  RemoteGrabbable: 1
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   ThrowForceMultiplier: 2
@@ -4799,7 +4799,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979b7ad82682eb046ba68fcace936f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Basic_ColorPaint: {fileID: 0}
   Basic_Manager: {fileID: 1929098115}
   Basic_objs:
   - {fileID: 2138060218}
@@ -4812,6 +4811,7 @@ MonoBehaviour:
   Basic_phase: 0
   Basic_transformDesNum: 0
   Basic_vec3s: []
+  isCatch: 0
 --- !u!1 &385296385
 GameObject:
   m_ObjectHideFlags: 0
@@ -11209,7 +11209,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 0
+  RemoteGrabbable: 1
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   ThrowForceMultiplier: 2
@@ -32854,7 +32854,7 @@ GameObject:
   - component: {fileID: 1242315257}
   - component: {fileID: 1242315258}
   m_Layer: 5
-  m_Name: Slider_Green
+  m_Name: Slider_Cyan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33308,7 +33308,7 @@ GameObject:
   - component: {fileID: 1330778164}
   - component: {fileID: 1330778165}
   m_Layer: 5
-  m_Name: Slider_Blue
+  m_Name: Slider_Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39827,13 +39827,14 @@ GameObject:
   - component: {fileID: 1453077749}
   - component: {fileID: 1453077753}
   - component: {fileID: 1453077752}
+  - component: {fileID: 1453077756}
   - component: {fileID: 1453077751}
   - component: {fileID: 1453077750}
   - component: {fileID: 1453077754}
   - component: {fileID: 1453077755}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Picture_Grab_5
-  m_TagString: Untagged
+  m_TagString: Paint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39890,7 +39891,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453077748}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb107ffc56d90124d8735c3f80c7fbf9, type: 3}
   m_Name: 
@@ -39914,7 +39915,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 0
+  RemoteGrabbable: 1
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   ThrowForceMultiplier: 2
@@ -40076,6 +40077,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1453077756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453077748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979b7ad82682eb046ba68fcace936f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Basic_Manager: {fileID: 1929098115}
+  Basic_objs:
+  - {fileID: 914279219}
+  Basic_strs: []
+  Basic_floats:
+  - 0
+  - 1
+  Basic_animator: {fileID: 0}
+  Basic_phase: 0
+  Basic_transformDesNum: 0
+  Basic_vec3s: []
+  isCatch: 0
 --- !u!1 &1476118941
 GameObject:
   m_ObjectHideFlags: 0
@@ -41090,7 +41115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.78431374}
+  m_Color: {r: 1, g: 0, b: 1, a: 0.47058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -42971,7 +42996,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &1848045511
 MonoBehaviour:
@@ -43092,7 +43117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 0.78431374}
+  m_Color: {r: 0, g: 1, b: 1, a: 0.39607844}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -44150,111 +44175,121 @@ MonoBehaviour:
   - {fileID: 1177699234}
   UI_CanvasIsInit: 1
   Event_list:
-  - Basic_type: 10000
-    Basic_objs:
-    - {fileID: 1848045506}
-    Basic_values:
-    - False
-  - Basic_type: 20000
-    Basic_objs:
-    - {fileID: 1848045506}
-    Basic_values: []
-  - Basic_type: 40000
-    Basic_objs:
-    - {fileID: 1842510495}
-    Basic_values: []
-  - Basic_type: 40001
-    Basic_objs:
-    - {fileID: 1842510495}
-    Basic_values:
-    - 0
-    - "\uD0DC\uC624\uC5D0\uAC8C\\n'\uB09C \uB0B4 \uBC29 \uBCBD\uBA74\uC744\\n\uADF8\uB9BC\uC73C\uB85C
-      \uCC44\uC6B0\uACE0 \uC2F6\uC5B4..'"
-  - Basic_type: 1
-    Basic_objs:
-    - {fileID: 1848045506}
-    Basic_values: []
-  - Basic_type: 2
-    Basic_objs:
-    - {fileID: 1177699229}
-    - {fileID: 1848045506}
-    Basic_values: []
-  - Basic_type: 0
-    Basic_objs:
-    - {fileID: 1177699229}
-    Basic_values: []
-  - Basic_type: 30000
-    Basic_objs:
-    - {fileID: 1024941536}
-    Basic_values:
-    - 0
-    - "\uD0DC\uC624\uC5D0\uAC8C\\n'\uB09C \uB0B4 \uBC29 \uBCBD\uBA74\uC744\\n\uADF8\uB9BC\uC73C\uB85C
-      \uCC44\uC6B0\uACE0 \uC2F6\uC5B4..'"
-  - Basic_type: 1
-    Basic_objs:
-    - {fileID: 1177699229}
-    Basic_values: []
-  - Basic_type: 20001
-    Basic_objs:
-    - {fileID: 1036297589}
-    - {fileID: 8204707763992371495}
-    Basic_values: []
-  - Basic_type: 10000
-    Basic_objs:
-    - {fileID: 1982413010}
-    - {fileID: 384818040}
-    Basic_values:
-    - False
-    - False
-  - Basic_type: 20001
-    Basic_objs:
-    - {fileID: 919132149195872206}
-    - {fileID: 1180665102}
-    - {fileID: 415062277}
-    Basic_values: []
-  - Basic_type: 10000
-    Basic_objs:
-    - {fileID: 1982413010}
-    - {fileID: 384818040}
-    Basic_values:
-    - False
-    - False
-  - Basic_type: 20002
-    Basic_objs:
-    - {fileID: 919132149195872206}
-    - {fileID: 1180665102}
-    - {fileID: 415062277}
-    Basic_values: []
-  - Basic_type: 20003
-    Basic_objs:
-    - {fileID: 385296385}
-    Basic_values:
-    - 135
-    - 1
-  - Basic_type: 0
-    Basic_objs:
-    - {fileID: 1437964717}
-    Basic_values: []
-  - Basic_type: 10000
-    Basic_objs:
-    - {fileID: 1437964717}
-    Basic_values:
-    - False
-  - Basic_type: 1
-    Basic_objs:
-    - {fileID: 1437964717}
-    Basic_values: []
-  - Basic_type: 0
-    Basic_objs:
-    - {fileID: 408304383}
-    - {fileID: 1790764026}
-    Basic_values: []
-  - Basic_type: 20003
-    Basic_objs:
-    - {fileID: 1306629692}
-    Basic_values:
-    - -90
-    - 1
+  - Basic_parts:
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 1848045506}
+      Basic_values:
+      - False
+    - Basic_type: 20000
+      Basic_objs:
+      - {fileID: 1848045506}
+      Basic_values: []
+    - Basic_type: 40000
+      Basic_objs:
+      - {fileID: 1842510495}
+      Basic_values: []
+    - Basic_type: 40001
+      Basic_objs:
+      - {fileID: 1842510495}
+      Basic_values: []
+    - Basic_type: 1
+      Basic_objs:
+      - {fileID: 1848045506}
+      Basic_values: []
+    - Basic_type: 2
+      Basic_objs:
+      - {fileID: 1177699229}
+      - {fileID: 1848045506}
+      Basic_values: []
+    - Basic_type: 0
+      Basic_objs:
+      - {fileID: 1177699229}
+      Basic_values: []
+    - Basic_type: 30000
+      Basic_objs:
+      - {fileID: 1024941536}
+      Basic_values:
+      - 0
+      - "\uD0DC\uC624\uC5D0\uAC8C\\n'\uB09C \uB0B4 \uBC29 \uBCBD\uBA74\uC744\\n\uADF8\uB9BC\uC73C\uB85C
+        \uCC44\uC6B0\uACE0 \uC2F6\uC5B4..'"
+    - Basic_type: 1
+      Basic_objs:
+      - {fileID: 1177699229}
+      Basic_values: []
+    Basic_num: 0
+  - Basic_parts:
+    - Basic_type: 20001
+      Basic_objs:
+      - {fileID: 1036297589}
+      - {fileID: 8204707763992371495}
+      - {fileID: 1453077748}
+      Basic_values: []
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 1036297589}
+      - {fileID: 8204707763992371495}
+      - {fileID: 1453077748}
+      Basic_values:
+      - False
+      - False
+      - False
+    Basic_num: 0
+  - Basic_parts:
+    - Basic_type: 20001
+      Basic_objs:
+      - {fileID: 919132149195872206}
+      - {fileID: 1180665102}
+      - {fileID: 415062277}
+      Basic_values: []
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 1982413010}
+      - {fileID: 384818040}
+      Basic_values:
+      - False
+      - False
+    - Basic_type: 20002
+      Basic_objs:
+      - {fileID: 919132149195872206}
+      - {fileID: 1180665102}
+      - {fileID: 415062277}
+      Basic_values: []
+    Basic_num: 0
+  - Basic_parts:
+    - Basic_type: 20003
+      Basic_objs:
+      - {fileID: 385296385}
+      Basic_values:
+      - 135
+      - 1
+    - Basic_type: 0
+      Basic_objs:
+      - {fileID: 1437964717}
+      Basic_values: []
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 1437964717}
+      Basic_values:
+      - False
+    - Basic_type: 1
+      Basic_objs:
+      - {fileID: 1437964717}
+      - {fileID: 1402595047}
+      Basic_values: []
+    - Basic_type: 0
+      Basic_objs:
+      - {fileID: 408304383}
+      - {fileID: 1790764026}
+      - {fileID: 262012783214170133}
+      Basic_values: []
+    - Basic_type: 20003
+      Basic_objs:
+      - {fileID: 1306629692}
+      Basic_values:
+      - -90
+      - 1
+    Basic_num: 0
   Event_num: 0
   Hand_hands:
   - {fileID: 8320362180651893677}
@@ -44372,7 +44407,7 @@ GameObject:
   - component: {fileID: 1972437986}
   - component: {fileID: 1972437987}
   m_Layer: 5
-  m_Name: Slider_Red
+  m_Name: Slider_Magenta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44467,7 +44502,7 @@ GameObject:
   - component: {fileID: 1982413012}
   - component: {fileID: 1982413018}
   - component: {fileID: 1982413017}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Picture_Grab_3
   m_TagString: Paint
   m_Icon: {fileID: 0}
@@ -44550,7 +44585,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 0
+  RemoteGrabbable: 1
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   ThrowForceMultiplier: 2
@@ -44724,7 +44759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979b7ad82682eb046ba68fcace936f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Basic_ColorPaint: {fileID: 0}
   Basic_Manager: {fileID: 1929098115}
   Basic_objs:
   - {fileID: 2006498315}
@@ -44737,6 +44771,7 @@ MonoBehaviour:
   Basic_phase: 0
   Basic_transformDesNum: 0
   Basic_vec3s: []
+  isCatch: 0
 --- !u!1 &1995463262
 GameObject:
   m_ObjectHideFlags: 0
@@ -78025,6 +78060,7 @@ MonoBehaviour:
   FadeInSpeed: 2
   FadeOutSpeed: 2
   SceneFadeInDelay: 1
+  Basic_isOn: 0
 --- !u!23 &4282916765732687590
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -107440,7 +107476,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &8204707763992371499
 MonoBehaviour:
@@ -107454,7 +107490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979b7ad82682eb046ba68fcace936f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Basic_ColorPaint: {fileID: 0}
   Basic_Manager: {fileID: 1929098115}
   Basic_objs:
   - {fileID: 1982413010}
@@ -107465,6 +107500,7 @@ MonoBehaviour:
   Basic_phase: 0
   Basic_transformDesNum: 0
   Basic_vec3s: []
+  isCatch: 0
 --- !u!114 &8204707763992371500
 MonoBehaviour:
   m_ObjectHideFlags: 0

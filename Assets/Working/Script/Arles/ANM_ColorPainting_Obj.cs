@@ -19,7 +19,6 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
         AMIMATION__END
     }
 
-    [SerializeField] ANM_ColorPainting Basic_ColorPaint;
     [SerializeField] ANM_Manager Basic_Manager;
     [SerializeField] List<GameObject> Basic_objs;
     [SerializeField] List<string> Basic_strs;
@@ -31,6 +30,7 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     [SerializeField] PHASE Basic_phase;
     [SerializeField] int Basic_transformDesNum;
     [SerializeField] List<Vector3> Basic_vec3s;
+    [SerializeField] bool isCatch;
 
     ////////// Getter & Setter  //////////
 
@@ -38,19 +38,19 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     // OnGrab
     public override void OnGrab(BNG.Grabber _grabber)
     {
-        switch(this.tag)
+        base.OnGrab(_grabber);
+
+        switch (this.tag)
         {
             case "Ball":    { OnGrab_Ball();    }   break;
             case "Paint":   { ObGrab_Paint();   }   break;
         }
-
-        base.OnGrab(_grabber);
     }
 
     void OnGrab_Ball()
     {
-        Basic_Manager.ANM_Hand_GrabRelease(this.gameObject);
         GetComponent<Grabbable>().enabled = false;
+        isCatch = true;
 
         //
         Basic_phase = PHASE.ANIMATION__START;
@@ -58,8 +58,8 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
 
     void ObGrab_Paint()
     {
-        Basic_Manager.ANM_Hand_GrabRelease(this.gameObject);
         GetComponent<Grabbable>().enabled = false;
+        isCatch = true;
 
         //
         Basic_transformDesNum = 0;
@@ -71,6 +71,7 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     void Start()
     {
         Basic_phase = PHASE.NONE;
+        isCatch = false;
     }
 
     // Update is called once per frame
@@ -85,6 +86,11 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
             //
             case PHASE.ANIMATION__START:        { ANM_Update__ANIMATION__START();       }   break;
             case PHASE.AMIMATION__END_CHECK:    { ANM_Update__AMIMATION__END_CHECK();   }   break;
+        }
+
+        if(isCatch)
+        {
+            isCatch = !Basic_Manager.ANM_Hand_GrabRelease(this.gameObject);
         }
     }
 
