@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum Elements
+{
+    None = -1,
+    Lantern = 0
+}
 public abstract class PuzzleElement : MonoBehaviour
 {
     public Image mainImage;
