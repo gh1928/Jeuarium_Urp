@@ -110,6 +110,25 @@ public class PuzzleNode : MonoBehaviour
         }
 
         colliderBaseSize = Vector3.one * lineWidth;
+
+        SetLineCollider();
+    }
+    private void SetLineCollider()
+    {
+        float startPos = lineLength * 0.5f;
+        Vector3 center;
+
+        for (int i = 0; i < 4; i++)
+        {
+            center = Vector3.zero;
+
+            if (i % 2 == 0)
+                center.y = (i == 0) ? -startPos : startPos;
+            else
+                center.x = (i == 1) ? -startPos : startPos;
+
+            lineColliders[i].center = center;
+        }
     }
     public void OnVisitAction()
     {
