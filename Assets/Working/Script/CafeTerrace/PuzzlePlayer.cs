@@ -13,7 +13,7 @@ public class PuzzlePlayer : MonoBehaviour
     private PuzzleNode[,] puzzle;
     private bool isPlaying = false;    
 
-    public float speed = 0.5f;
+    public float speedMult = 0.5f;    
     
     private PuzzleNode currNode;
     private PuzzleNode destNode;
@@ -41,6 +41,7 @@ public class PuzzlePlayer : MonoBehaviour
     public void StartPlay()
     {        
         puzzle = puzzleMaker.GetPuzzle();
+        pathStack.Clear();
 
         SetClampValue();
         ActivePoint(puzzleMaker.GetEnterPoint());
@@ -71,9 +72,9 @@ public class PuzzlePlayer : MonoBehaviour
         if (eventData.pointerCurrentRaycast.gameObject == null)
             return;
 
-        var cullTarget = eventData.pointerCurrentRaycast.module;
+        var currTarget = eventData.pointerCurrentRaycast.module;
 
-        if (cullTarget == null || cullTarget.GetType() != typeof(GraphicRaycaster))
+        if (currTarget == null || currTarget.GetType() != typeof(GraphicRaycaster))
             return;
 
         Vector3 currInputPos = eventData.pointerCurrentRaycast.worldPosition;            
@@ -91,13 +92,16 @@ public class PuzzlePlayer : MonoBehaviour
             if (Vector3.SqrMagnitude(pointerDir) < minDistanceToExitNode)
                 return;
 
-            SetDest(puzzleDir);
+            SetDestNode(puzzleDir);
         }
 
         if (destNode == null)
             return;
 
-        currNode.UpdateLine(pointerDir, speed * Time.deltaTime);
+        //currNode.UpdateLine(pointerDir, speed * Time.deltaTime);
+
+        currNode.UpdateProgress(speedMult * Time.deltaTime * pointerDir);
+
         indicator.transform.position = Vector3.Lerp(currNode.transform.position, destNode.transform.position, currProgress);
 
         if (destNode.IsVisited())
@@ -107,10 +111,10 @@ public class PuzzlePlayer : MonoBehaviour
             currNode.ClampProgress(enterClampValue);
 
         if (currProgress >= 1f)
-            VisitDest();
+            VisitDestNode();
     }
 
-    private void SetDest(PuzzleDir dir)
+    private void SetDestNode(PuzzleDir dir)
     {
         destNode = null;
 
@@ -136,7 +140,7 @@ public class PuzzlePlayer : MonoBehaviour
         currNode.SetDestDir(dir);        
     }
 
-    private void VisitDest()
+    private void VisitDestNode()
     {
         destNode.OnVisitAction();
 
@@ -161,7 +165,7 @@ public class PuzzlePlayer : MonoBehaviour
             return look.x > 0 ? PuzzleDir.Left : PuzzleDir.Right;
         }
 
-        return look.y > 0 ? PuzzleDir.Top : PuzzleDir.Bottom;
+        return look.y > 0 ? PuzzleDir.Up : PuzzleDir.Down;
     }
     public void StopPlay() => isPlaying = false;
 }

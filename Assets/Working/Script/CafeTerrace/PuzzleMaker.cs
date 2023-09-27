@@ -86,7 +86,7 @@ public class PuzzleMaker : MonoBehaviour
                 if (i == lastIdx)
                 {
                     node.DisableTopPath();
-                    node.SetPathable(PuzzleDir.Top, false);
+                    node.SetPathable(PuzzleDir.Up, false);
                 }
 
                 if (j == lastIdx)
@@ -96,7 +96,7 @@ public class PuzzleMaker : MonoBehaviour
                 }
 
                 if (i == 0)
-                    node.SetPathable(PuzzleDir.Bottom, false);
+                    node.SetPathable(PuzzleDir.Down, false);
 
                 if (j == 0)
                     node.SetPathable(PuzzleDir.Left, false);
@@ -109,7 +109,7 @@ public class PuzzleMaker : MonoBehaviour
     {
         var node = Instantiate(nodePrefab, puzzleHolder);
         node.transform.localPosition = nodePos;
-        node.SetPathAndLine(intervalAdjust);
+        node.SetPathAndProgressLine(intervalAdjust);
         node.SetPlayerColor(Data.playerColor);
         node.SetBaseColor(Data.baseColor);
         node.SetColor();
@@ -154,10 +154,10 @@ public class PuzzleMaker : MonoBehaviour
             {
                 targetNode.DisableTopPath();
 
-                targetNode.SetPathable(PuzzleDir.Top, false);
+                targetNode.SetPathable(PuzzleDir.Up, false);
 
                 if(posY < lastIdx)
-                    puzzle[posY + 1, posX].SetPathable(PuzzleDir.Bottom, false);                
+                    puzzle[posY + 1, posX].SetPathable(PuzzleDir.Down, false);                
             }
 
             if(target.offRightPath)
@@ -171,7 +171,6 @@ public class PuzzleMaker : MonoBehaviour
             }
         }
     }
-
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
     public PuzzleNode[,] GetPuzzle() => puzzle;
     public RawImage GetEnterPoint() => enterPoint;
@@ -180,5 +179,4 @@ public class PuzzleMaker : MonoBehaviour
     public PuzzleNode GetEnterNode() => puzzle[Data.enterPos.y,Data.enterPos.x];
     public PuzzleNode GetExitNode() => puzzle[Data.exitPos.y, Data.exitPos.y];
     public GameObject GetIndicator()=> indicator;
-
 }
