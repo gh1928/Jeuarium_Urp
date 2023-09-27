@@ -2,25 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum PuzzleDir
 {
-    None = -1, Top = 0, Right = 1, Bottom = 2, Left = 3
+    None = -1, Up = 0, Right = 1, Down = 2, Left = 3
 }
 
 public class PuzzleNode : MonoBehaviour
 {
     public int NodeNumber;
+    public float  minProgressSpeed = 0.1f;
 
     public (int posY, int posX) Pos;
 
     private RectTransform rect;
+    private float lineWidth;
+    private float lineLength;
 
     public RectTransform topPath;
     public RectTransform rightPath;
 
     public Image nodeImage;
     public Image[] lines = new Image[4];
+    private BoxCollider[] lineColliders = new BoxCollider[4];
+    private Vector3 colliderBaseSize;
+
     private Image currLine;
 
     private bool[] pathUseable = { true, true, true, true };
@@ -35,6 +42,9 @@ public class PuzzleNode : MonoBehaviour
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+
+        for(int i = 0; i < 4; i++)
+            lineColliders[i] = lines[i].GetComponent<BoxCollider>();
     }
     public void SetPlayerColor(Color color) => playerColor = color;
     public void SetBaseColor(Color color) => baseColor = color;
@@ -56,9 +66,9 @@ public class PuzzleNode : MonoBehaviour
     public PuzzleDir GetOppositeDirection() => currDir switch
     {
         PuzzleDir.None => PuzzleDir.None,
-        PuzzleDir.Top => PuzzleDir.Bottom,
+        PuzzleDir.Up => PuzzleDir.Down,
         PuzzleDir.Right => PuzzleDir.Left,
-        PuzzleDir.Bottom => PuzzleDir.Top,
+        PuzzleDir.Down => PuzzleDir.Up,
         PuzzleDir.Left => PuzzleDir.Right,
         _ => PuzzleDir.None,
     };
@@ -71,15 +81,16 @@ public class PuzzleNode : MonoBehaviour
             currLine.fillAmount = maxValue;
     }
 
-    public void SetPathAndLine(float interval)
+    public void SetPathAndProgressLine(float interval)
     {
-        float currSize = rect.sizeDelta.y;
+        lineWidth = rect.sizeDelta.y;
+        lineLength = interval;
 
-        topPath.transform.position = transform.position + 0.5f * interval * Vector3.up;
-        topPath.sizeDelta = new Vector2(currSize, interval);
+        topPath.transform.position = transform.position + 0.5f * lineLength * Vector3.up;
+        topPath.sizeDelta = new Vector2(lineWidth, lineLength);
 
-        rightPath.transform.position = transform.position + 0.5f * interval * Vector3.right;
-        rightPath.sizeDelta = new Vector2(interval, currSize);
+        rightPath.transform.position = transform.position + 0.5f * lineLength * Vector3.right;
+        rightPath.sizeDelta = new Vector2(lineLength, lineWidth);
 
         Vector3[] dirs = new Vector3[4];
         dirs[0] = Vector3.up;
@@ -92,8 +103,10 @@ public class PuzzleNode : MonoBehaviour
             bool isVertical = i % 2 == 0;
 
             lines[i].transform.position = transform.position + 0.5f * interval * dirs[i];
-            lines[i].rectTransform.sizeDelta = new Vector2(isVertical ? currSize : interval, isVertical ? interval : currSize);
+            lines[i].rectTransform.sizeDelta = new Vector2(isVertical ? lineWidth : interval, isVertical ? interval : lineWidth);
         }
+
+        colliderBaseSize = Vector3.one * lineWidth;
     }
     public void OnVisitAction()
     {
@@ -109,7 +122,7 @@ public class PuzzleNode : MonoBehaviour
     public bool IsVisited() => visited;
 
     //고정 속도
-    public void UpdateLine(Vector2 pointerDir, float value)
+    public void UpdateProgress(Vector2 pointerDir, float value)
     {
         if (currDir == PuzzleDir.None)
             return;
@@ -121,10 +134,10 @@ public class PuzzleNode : MonoBehaviour
 
         switch (currDir)
         {
-            case PuzzleDir.Top:
+            case PuzzleDir.Up:
                 valuePositive = pointerDir.y > 0;
                 break;
-            case PuzzleDir.Bottom:
+            case PuzzleDir.Down:
                 valuePositive = pointerDir.y < 0;
                 break;
             case PuzzleDir.Right:
@@ -135,11 +148,18 @@ public class PuzzleNode : MonoBehaviour
                 break;
         }
 
+        float minSpeed = minProgressSpeed * Time.deltaTime;
+
+        if(value < minSpeed)
+            value = minSpeed;        
+
         currLine.fillAmount += valuePositive ? value : - value;
+
+        UpdateCollider();
     }
 
     //포인터 거리 비례 속도 증가
-    public void UpdateLine(Vector2 moveValue)
+    public void UpdateProgress(Vector2 moveValue)
     {
         if (currDir == PuzzleDir.None)
             return;
@@ -151,21 +171,59 @@ public class PuzzleNode : MonoBehaviour
 
         switch (currDir)
         {
-            case PuzzleDir.Top:
-                lineSizeChanger = moveValue.y;
+            case PuzzleDir.Up:                
+            case PuzzleDir.Down:
+                lineSizeChanger =  moveValue.y;                
                 break;
-            case PuzzleDir.Bottom:
-                lineSizeChanger = - moveValue.y;                
-                break;
-            case PuzzleDir.Right:
-                lineSizeChanger = -moveValue.x;
-                break;
+            case PuzzleDir.Right:                
             case PuzzleDir.Left:
                 lineSizeChanger =  moveValue.x;
                 break;
         }
 
+        bool axisPositive = (currDir == PuzzleDir.Up || currDir == PuzzleDir.Right);
+
+        float minSpeed = minProgressSpeed * Time.deltaTime;
+
+        if (lineSizeChanger < minSpeed)
+            lineSizeChanger = minSpeed;
+
+        Debug.Log(axisPositive);
+
         currLine.fillAmount += lineSizeChanger;
+
+        UpdateCollider();
+    }
+    public void UpdateCollider()
+    {
+        Vector3 newSize = colliderBaseSize;
+        float progress = currLine.fillAmount;
+
+        Vector3 newCenter = Vector3.zero;        
+
+        switch (currDir)
+        {
+            case PuzzleDir.Up:
+                newSize.y = lineLength * progress;
+                newCenter.y = Mathf.Lerp(-lineLength * 0.5f, 0f, progress);
+                break;
+            case PuzzleDir.Down:
+                newSize.y = lineLength * progress; 
+                newCenter.y = Mathf.Lerp(lineLength * 0.5f, 0f, progress);
+                break;
+            case PuzzleDir.Right:
+                newSize.x = lineLength * progress;
+                newCenter.x = Mathf.Lerp(- lineLength * 0.5f, 0f, progress);                
+                break;
+            case PuzzleDir.Left:
+                newSize.x = lineLength * progress;
+                newCenter.x = Mathf.Lerp(lineLength * 0.5f, 0f, progress);
+                break;
+        }
+
+        BoxCollider targetCollider = lineColliders[(int)currDir];
+        targetCollider.size = newSize;
+        targetCollider.center = newCenter;
     }
 
     public void SetPathable(PuzzleDir dir, bool pathable) => pathUseable[(int)dir] = pathable;

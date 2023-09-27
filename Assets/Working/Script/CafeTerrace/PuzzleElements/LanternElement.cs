@@ -10,19 +10,15 @@ public class LanternElement : PuzzleElement
     public Color workedColor;
     public Color failedColor;
     public Color baseColor;
-
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnWorked()
     {
-        Debug.Log("Trigger Enter");
-
-        base.OnTriggerEnter(other);
+        base.OnWorked();
         mainImage.color = workedColor;
         lanternLight.color = workedColor;
     }
-
-    protected override void OnTriggerExit(Collider other)
+    protected override void OffWorked()
     {
-        base.OnTriggerExit(other);
+        base.OffWorked();
         mainImage.color = baseColor;
         lanternLight.color = baseColor;
     }
