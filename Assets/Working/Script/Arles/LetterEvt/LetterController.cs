@@ -38,15 +38,13 @@ public partial class LetterController : GrabbableEvents
     }
 
     //
-    public override void OnGrab(Grabber grabber)
-    {
-        if (rotateCoroutine != null)
-            StopCoroutine(rotateCoroutine);
-
-        base.OnGrab(grabber);
-
-        ANM_Manager_OnGrab(grabber);
-    }
+    //public override void OnGrab(Grabber grabber)
+    //{
+    //    if (rotateCoroutine != null)
+    //        StopCoroutine(rotateCoroutine);
+    //
+    //    base.OnGrab(grabber);
+    //}
 
     public void StartLetterRotation()
     {
@@ -131,16 +129,13 @@ public partial class LetterController : GrabbableEvents
 // 황영재 추가.
 partial class LetterController
 {
-    // 손에 잡혔는지 체크하고 다음으로 넘어갑시다.
-    [Header("HAND_CONTROLLERS ==================================================")]
-    [SerializeField] ANM_Manager ANM_Manager_manager;
-
     ////////// Getter & Setter  //////////
 
     ////////// Method           //////////
-    void ANM_Manager_OnGrab(Grabber _grabber)
+    public void ANM_Basic_StopRotateCoroutine()
     {
-        ANM_Manager_manager.ANM_Event_Trigger(this.gameObject);
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
     }
 
     ////////// Unity            //////////

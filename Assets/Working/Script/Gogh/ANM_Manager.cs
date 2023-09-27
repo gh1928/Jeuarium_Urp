@@ -87,6 +87,7 @@ partial class ANM_Manager
                 ACTION__GRAB_ON,
                 ACTION__GRAB_OFF,
                 ACTION__DOOR_OPEN,
+                ACTION__LETTER_FLY,
 
                 // UI
                 UI__TEXT = 30000,
@@ -170,6 +171,12 @@ partial class ANM_Manager
                         _hands[i].grabber.TryRelease();
                         res = true;
                     }
+
+                    if ((_hands[i].grabber.RemoteGrabbingGrabbable != null) && (_hands[i].grabber.RemoteGrabbingGrabbable.Equals(Basic_objs[0].GetComponent<BNG.Grabbable>())))
+                    {
+                        _hands[i].grabber.resetFlyingGrabbable();
+                        res = true;
+                    }
                 }
 
                 //
@@ -195,6 +202,11 @@ partial class ANM_Manager
             public void ANM_Basic_DoorOpen()
             {
                 Basic_objs[0].GetComponent<DoorController>().TryMoveDoor(float.Parse(Basic_values[0]), float.Parse(Basic_values[1]), true);
+            }
+
+            public void ANM_Basic_LetterFly()
+            {
+                Basic_objs[0].GetComponent<LetterEvtHandler>().ANM_Basic_LetterFly();
             }
 
             // UI
@@ -308,6 +320,7 @@ partial class ANM_Manager
                     case ANM_Part.TYPE.ACTION__GRAB_ON:         { Basic_parts[Basic_num].ANM_Basic_GrabbableOn();   isNext = true;  }   break;
                     case ANM_Part.TYPE.ACTION__GRAB_OFF:        { Basic_parts[Basic_num].ANM_Basic_GrabbableOff();  isNext = true;  }   break;
                     case ANM_Part.TYPE.ACTION__DOOR_OPEN:       { Basic_parts[Basic_num].ANM_Basic_DoorOpen();      isNext = true;  }   break;
+                    case ANM_Part.TYPE.ACTION__LETTER_FLY:      { Basic_parts[Basic_num].ANM_Basic_LetterFly();     isNext = true;  }   break;
 
                     // UI
 
@@ -400,10 +413,19 @@ partial class ANM_Manager
         //
         for (int i = 0; i < Hand_hands.Count; i++)
         {
-            if ((Hand_hands[i].PreviousHeldObject != null) && (Hand_hands[i].PreviousHeldObject.Equals(_obj)))
+            if (Hand_hands[i].GripAmount > 0)
             {
-                Hand_hands[i].grabber.TryRelease();
-                res = true;
+                if ((Hand_hands[i].PreviousHeldObject != null) && (Hand_hands[i].PreviousHeldObject.Equals(_obj)))
+                {
+                    Hand_hands[i].grabber.TryRelease();
+                    res = true;
+                }
+
+                if ((Hand_hands[i].grabber.RemoteGrabbingGrabbable != null) && (Hand_hands[i].grabber.RemoteGrabbingGrabbable.Equals(_obj.GetComponent<BNG.Grabbable>())))
+                {
+                    Hand_hands[i].grabber.resetFlyingGrabbable();
+                    res = true;
+                }
             }
         }
 

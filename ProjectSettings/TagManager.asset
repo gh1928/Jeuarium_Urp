@@ -15,6 +15,7 @@ TagManager:
   - Marbling
   - Brush
   - Paint
+  - Letter
   layers:
   - Default
   - TransparentFX
