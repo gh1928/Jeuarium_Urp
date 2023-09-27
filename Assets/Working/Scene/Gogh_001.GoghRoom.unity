@@ -44802,6 +44802,8 @@ MonoBehaviour:
   Basic_floats:
   - 0
   - 1
+  - 0
+  - 3
   Basic_animator: {fileID: 0}
   Basic_phase: 0
   Basic_transformDesNum: 0
