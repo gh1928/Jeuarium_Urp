@@ -30,6 +30,8 @@ public class PuzzleMaker : MonoBehaviour
 
     private int currNodeNumber = 0;
 
+    public PuzzleElement[] elements;
+
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
@@ -46,7 +48,8 @@ public class PuzzleMaker : MonoBehaviour
         MakePuzzleArray();
         SetNodeAndLine();
         SetEnterAndExitPoint();
-        ReadPuzzleInfo();  
+        ReadPuzzleInfo();
+        ReadElemtnsInfo();
 
         lookAtConstraints.enabled = true;
     }
@@ -176,15 +179,31 @@ public class PuzzleMaker : MonoBehaviour
     {
         var elementsInfo = Data.elementsInfo;
 
-        foreach( var element in elementsInfo)
+        foreach(var info in elementsInfo)
         {
-            if (element.nodeNumber >= puzzleSize * puzzleSize)
+            if (info.nodeNumber >= puzzleSize * puzzleSize)
                 continue;
 
+            int posY = info.nodeNumber / puzzleSize;
+            int posX = info.nodeNumber % puzzleSize;
+
+            Vector3 elementPos = Vector3.zero;
+            Vector3 nodePos = puzzle[posY, posX].transform.position;
 
 
+            if (info.placeAtNode)
+                elementPos = nodePos;
 
+            if (info.placeAtTop)
+                elementPos = Vector3.Lerp(nodePos, puzzle[posY + 1, posX].transform.position, 0.5f);
 
+            if(info.placeAtRight)
+                elementPos = Vector3.Lerp(nodePos, puzzle[posY, posX + 1].transform.position, 0.5f);
+
+            var element = Instantiate(elements[(int)info.elements], elementPos, Quaternion.identity, puzzleHolder);
+
+            if (info.placeAtNode)
+                element.OnPlaceAtNode(puzzle[posY, posX]);
         }
     }
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);

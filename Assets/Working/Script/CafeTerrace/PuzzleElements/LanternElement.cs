@@ -10,16 +10,20 @@ public class LanternElement : PuzzleElement
     public Color workedColor;
     public Color failedColor;
     public Color baseColor;
-    protected override void OnWorked()
+    public override void OnWorked()
     {
         base.OnWorked();
         mainImage.color = workedColor;
+
+        lanternLight.enabled = true;
         lanternLight.color = workedColor;
     }
-    protected override void OffWorked()
+    public override void OffWorked()
     {
         base.OffWorked();
         mainImage.color = baseColor;
-        lanternLight.color = baseColor;
+
+        lanternLight.enabled = false;
+        //lanternLight.color = baseColor;
     }
 }

@@ -25,7 +25,6 @@ public struct ElementInfo
     public int nodeNumber;
     
     public bool placeAtNode;
-
     public bool placeAtTop;
     public bool placeAtRight;
 }

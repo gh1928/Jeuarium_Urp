@@ -14,19 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PuzzleSize: 4
   puzzleInfo: []
-  elementInfo:
-  - name: Lantern
+  elementsInfo:
+  - elements: 0
     nodeNumber: 0
     placeAtNode: 0
     placeAtTop: 0
     placeAtRight: 1
-  - name: Lantern
-    nodeNumber: 4
+  - elements: 0
+    nodeNumber: 1
     placeAtNode: 0
     placeAtTop: 1
     placeAtRight: 0
-  - name: Lantern
-    nodeNumber: 1
+  - elements: 0
+    nodeNumber: 5
+    placeAtNode: 0
+    placeAtTop: 0
+    placeAtRight: 1
+  - elements: 0
+    nodeNumber: 6
     placeAtNode: 1
     placeAtTop: 0
     placeAtRight: 0
