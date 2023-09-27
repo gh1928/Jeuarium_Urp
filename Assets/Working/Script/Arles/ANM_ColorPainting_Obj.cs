@@ -42,6 +42,8 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     public override void OnGrab(BNG.Grabber _grabber)
     {
         base.OnGrab(_grabber);
+
+        isCatch = true;
     }
 
     public override void OnBecomesClosestRemoteGrabbable(Grabber _theGrabber)
@@ -89,7 +91,6 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
 
             if(!isCatch)
             {
-
                 switch (this.tag)
                 {
                     case "Ball":    { Update_Ball();    }   break;
