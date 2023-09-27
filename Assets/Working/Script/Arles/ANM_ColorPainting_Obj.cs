@@ -10,13 +10,16 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     {
         NONE,
         //
-        TRANSFORM__INIT,
+        TRANSFORM__INIT = 1000,
         TRANSFORM,
         TRANSFORM__END,
         //
-        ANIMATION__START,
+        ANIMATION__START = 2000,
         AMIMATION__END_CHECK,
-        AMIMATION__END
+        AMIMATION__END,
+        //
+        ACTION__PAINT_WAIT_INIT,
+        ACTION__PAINT_WAIT,
     }
 
     [SerializeField] ANM_Manager Basic_Manager;
@@ -39,31 +42,20 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     public override void OnGrab(BNG.Grabber _grabber)
     {
         base.OnGrab(_grabber);
-
-        switch (this.tag)
-        {
-            case "Ball":    { OnGrab_Ball();    }   break;
-            case "Paint":   { ObGrab_Paint();   }   break;
-        }
     }
 
-    void OnGrab_Ball()
+    public override void OnBecomesClosestRemoteGrabbable(Grabber _theGrabber)
     {
-        GetComponent<Grabbable>().enabled = false;
-        isCatch = true;
+        base.OnBecomesClosestRemoteGrabbable(_theGrabber);
 
-        //
-        Basic_phase = PHASE.ANIMATION__START;
+        isCatch = true;
     }
 
-    void ObGrab_Paint()
+    public override void OnNoLongerClosestRemoteGrabbable(Grabber _theGrabber)
     {
-        GetComponent<Grabbable>().enabled = false;
-        isCatch = true;
+        base.OnNoLongerClosestRemoteGrabbable(_theGrabber);
 
-        //
-        Basic_transformDesNum = 0;
-        Basic_phase = PHASE.TRANSFORM__INIT;
+        isCatch = false;
     }
 
     ////////// Unity            //////////
@@ -86,12 +78,51 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
             //
             case PHASE.ANIMATION__START:        { ANM_Update__ANIMATION__START();       }   break;
             case PHASE.AMIMATION__END_CHECK:    { ANM_Update__AMIMATION__END_CHECK();   }   break;
+
+            case PHASE.ACTION__PAINT_WAIT_INIT: { ANM_Update__ACTION__PAINT_WAIT_INIT();    }   break;
+            case PHASE.ACTION__PAINT_WAIT:      { ANM_Update__ACTION__PAINT_WAIT();         }   break;
         }
 
         if(isCatch)
         {
             isCatch = !Basic_Manager.ANM_Hand_GrabRelease(this.gameObject);
+
+            if(!isCatch)
+            {
+
+                switch (this.tag)
+                {
+                    case "Ball":    { Update_Ball();    }   break;
+                    case "Paint":   { Update_Paint();   }   break;
+                    case "Letter":  { Update_Letter();  }   break;
+                }
+            }
         }
+    }
+
+    void Update_Ball()
+    {
+        GetComponent<Grabbable>().enabled = false;
+
+        //
+        Basic_phase = PHASE.ANIMATION__START;
+    }
+
+    void Update_Paint()
+    {
+        GetComponent<Grabbable>().enabled = false;
+
+        //
+        Basic_transformDesNum = 0;
+        Basic_phase = PHASE.TRANSFORM__INIT;
+    }
+
+    void Update_Letter()
+    {
+        Basic_Manager.ANM_Event_Trigger(this.gameObject);
+
+        //
+        this.GetComponent<LetterController>().ANM_Basic_StopRotateCoroutine();
     }
 
     //
@@ -166,6 +197,25 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     }
 
     //
+    void ANM_Update__ACTION__PAINT_WAIT_INIT()
+    {
+        Basic_floats[2] = 0.0f;
+        Basic_phase = PHASE.ACTION__PAINT_WAIT;
+    }
+
+    void ANM_Update__ACTION__PAINT_WAIT()
+    {
+        Basic_floats[2] += Time.deltaTime;
+
+        if (Basic_floats[2] >= Basic_floats[3])
+        {
+            Basic_transformDesNum = 1;
+            Basic_phase = PHASE.TRANSFORM__INIT;
+        }
+    }
+
+    // OnTriggerEnter
+    //
     private void OnTriggerEnter(Collider _other)
     {
         switch (_other.tag)
@@ -180,7 +230,6 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
         this.transform.Find("Color" ).gameObject.SetActive(true     );
 
         //
-        Basic_transformDesNum = 1;
-        Basic_phase = PHASE.TRANSFORM__INIT;
+        Basic_phase = PHASE.ACTION__PAINT_WAIT_INIT;
     }
 }

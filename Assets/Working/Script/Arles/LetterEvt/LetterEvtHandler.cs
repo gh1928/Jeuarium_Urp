@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LetterEvtHandler : MonoBehaviour
+public partial class LetterEvtHandler : MonoBehaviour
 {
     public DoorController door;
 
@@ -13,8 +13,8 @@ public class LetterEvtHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            StartCoroutine(LetterFlyEventCoroutine());
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //    StartCoroutine(LetterFlyEventCoroutine());
     }
 
     IEnumerator LetterFlyEventCoroutine()
@@ -37,4 +37,19 @@ public class LetterEvtHandler : MonoBehaviour
 
         yield break;
     }
+}
+
+partial class LetterEvtHandler
+{
+
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+    public void ANM_Basic_LetterFly()
+    {
+        StartCoroutine(LetterFlyEventCoroutine());
+    }
+
+    ////////// Unity            //////////
 }

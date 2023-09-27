@@ -662,7 +662,7 @@ namespace BNG {
             resetFlyingGrabbable();
         }
 
-        void resetFlyingGrabbable() {
+        public void resetFlyingGrabbable() {
             // No longer flying at us
             if (flyingGrabbable != null) {
                 flyingGrabbable.ResetGrabbing();
