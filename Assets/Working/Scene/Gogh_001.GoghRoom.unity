@@ -1735,7 +1735,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32518
+  m_Name: pb_Mesh216030
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1899,7 +1899,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31998
+  m_Name: pb_Mesh215510
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2141,7 +2141,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31656
+  m_Name: pb_Mesh215168
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -44208,18 +44208,20 @@ MonoBehaviour:
       - {fileID: 1848045506}
       Basic_values:
       - False
-    - Basic_type: 20000
-      Basic_objs:
-      - {fileID: 1848045506}
-      Basic_values: []
     - Basic_type: 40000
       Basic_objs:
       - {fileID: 1842510495}
-      Basic_values: []
+      Basic_values:
+      - Trigger/Next
     - Basic_type: 40001
       Basic_objs:
       - {fileID: 1842510495}
       Basic_values: []
+    - Basic_type: 20005
+      Basic_objs: []
+      Basic_values:
+      - 0
+      - 1
     - Basic_type: 1
       Basic_objs:
       - {fileID: 1848045506}
@@ -44261,6 +44263,12 @@ MonoBehaviour:
       - False
       - False
       - False
+    - Basic_type: 40000
+      Basic_objs:
+      - {fileID: 1407837610}
+      Basic_values:
+      - Trigger/isNext
+      - Int/motionNum/1
     Basic_num: 0
   - Basic_parts:
     - Basic_type: 20001
@@ -107522,6 +107530,8 @@ MonoBehaviour:
   - {fileID: 1982413010}
   Basic_strs:
   - DrawerOpen
+  - Trigger/isNext
+  - Int/motionNum/0
   Basic_floats: []
   Basic_animator: {fileID: 1407837612}
   Basic_phase: 0
