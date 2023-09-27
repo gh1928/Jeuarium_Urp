@@ -549,7 +549,6 @@ MonoBehaviour:
     type: 3}
   puzzleHolderPrafab: {fileID: 7691245136063957337, guid: 89a2ec7554909654c8e049c21fa1be45,
     type: 3}
-  intervalAdjust: 1
   Data: {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b, type: 2}
 --- !u!1183024399 &107224957997567322
 LookAtConstraint:
@@ -582,8 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 772fe2639e643eb45a3b6d8a9abccb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  UseVR: 1
+  speedMult: 2
   minDistanceToMove: 0.05
   minDistanceToExitNode: 0.1
 --- !u!1 &5099332582311602708
