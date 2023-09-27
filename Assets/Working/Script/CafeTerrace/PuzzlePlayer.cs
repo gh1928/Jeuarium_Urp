@@ -6,129 +6,166 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PuzzlePlayer : MonoBehaviour
-{
-    private RectTransform rect;    
-    private PuzzleMaker puzzleMaker;
+{   
     private PointerEventData eventData;
+    
+    private PuzzleMaker puzzleMaker;    
     private PuzzleNode[,] puzzle;
-    private bool isPlaying = false;
-    private Camera mainCam;
+    private bool isPlaying = false;    
 
-    public GameObject indicatorPrefab;
-    private GameObject indicator;
-
-    public float speed = 0.5f;
-
-    public bool UseVR;    
-    private PuzzleNode sourNode;
-    private Image currLine;
-    private PuzzleDir currLineDir;
+    public float speedMult = 0.5f;    
+    
+    private PuzzleNode currNode;
     private PuzzleNode destNode;
+    private Transform indicator;
 
-    private Stack<PuzzleNode> pathStack;
+    private int enterNodeNum;
+    private int exitNodeNum;
+ 
+    private Stack<PuzzleNode> pathStack = new Stack<PuzzleNode>();
 
-    Vector2 lastPointPos;
+    private int[] yDir = { 1, 0, -1, 0 };
+    private int[] xDir = { 0, 1, 0, -1 };
 
-    int[] yDir = { 1, 0, -1, 0 };
-    int[] xDir = { 0, 1, 0, -1 };
+    private float clampValue;
+    private float enterClampValue;
+
+    public float minDistanceToMove = 1f;
+    public float minDistanceToExitNode = 1f;
 
     private void Start()
-    {
-        rect = GetComponent<RectTransform>();
+    {   
         puzzleMaker = GetComponent<PuzzleMaker>();
-
-        if (UseVR)
-            eventData = VRUISystem.Instance.EventData;
-
-        mainCam = Camera.main;
+        eventData = VRUISystem.Instance.EventData;
     }
     public void StartPlay()
     {        
         puzzle = puzzleMaker.GetPuzzle();
+        pathStack.Clear();
+
+        SetClampValue();
+        ActivePoint(puzzleMaker.GetEnterPoint());
+        indicator = puzzleMaker.GetIndicator().transform;
+        currNode = puzzleMaker.GetEnterNode();
+        enterNodeNum = currNode.NodeNumber;
+        exitNodeNum = puzzleMaker.GetExitNode().NodeNumber;
+
+        currNode.OnVisitAction();
+
         isPlaying = true;
-
-        SetColorBeforePlay(puzzleMaker.Data.playerColor);
-
-        sourNode = puzzle[0, 0];
-        pathStack.Push(sourNode);
-
-        Vector3 screenPointPosition = UseVR ?
-            eventData.pointerCurrentRaycast.screenPosition : RectTransformUtility.WorldToScreenPoint(null, Input.mousePosition);
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, screenPointPosition, mainCam, out Vector2 localPointPosition);
-
-        lastPointPos = localPointPosition;
     }
-
-    public void SetColorBeforePlay(Color playerColor)
+    private void SetClampValue()
     {
-        var startPoint = puzzleMaker.GetStartPoint();
-        startPoint.GetComponent<RawImage>().color = playerColor;
+        float interval = puzzleMaker.Data.nodeInterval;
 
-        indicator = Instantiate(indicatorPrefab, startPoint.transform.position, Quaternion.Euler(startPoint.transform.localEulerAngles), puzzleMaker.GetPuzzleHolder());
-        indicator.GetComponent<Image>().color = playerColor;
+        clampValue = (interval - 0.15f) / interval;
+
+        enterClampValue = (interval - 0.225f) / interval;
     }
+    public void ActivePoint(RawImage point) => point.color = puzzleMaker.Data.playerColor;
+
     private void Update()
     {
         if (!isPlaying)
             return;
 
-        Vector3 screenPointPosition = UseVR ?
-            eventData.pointerCurrentRaycast.screenPosition : RectTransformUtility.WorldToScreenPoint(null, Input.mousePosition);
-        
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, screenPointPosition, mainCam, out Vector2 localPointPosition);
+        if (eventData.pointerCurrentRaycast.gameObject == null)
+            return;
 
-        Vector2 pointDelta = localPointPosition - lastPointPos;
-        lastPointPos = localPointPosition;
+        var currTarget = eventData.pointerCurrentRaycast.module;
+
+        if (currTarget == null || currTarget.GetType() != typeof(GraphicRaycaster))
+            return;
+
+        Vector3 currInputPos = eventData.pointerCurrentRaycast.worldPosition;            
+
+        Vector3 pointerDir = currInputPos - indicator.position;
+
+        if (Vector3.SqrMagnitude(pointerDir) < minDistanceToMove)
+            return;
+
+        var puzzleDir = GetLargeDirValue(pointerDir);
+        float currProgress = currNode.GetProgress();
+
+        if (currProgress <= 0f)
+        {
+            if (Vector3.SqrMagnitude(pointerDir) < minDistanceToExitNode)
+                return;
+
+            SetDestNode(puzzleDir);
+        }
 
         if (destNode == null)
-        {
-            var dir = GetMaxDeltaDir(pointDelta);
+            return;
 
-            if(sourNode.GetPathable(dir))
-            {
-                int dirIdx = (int)dir;
-                destNode = puzzle[sourNode.Pos.posY + yDir[dirIdx], sourNode.Pos.posX + xDir[dirIdx]];
-                currLineDir = dir;
-                currLine = sourNode.GetLineByDir(dir);
-            }
+        //currNode.UpdateLine(pointerDir, speed * Time.deltaTime);
+
+        currNode.UpdateProgress(speedMult * Time.deltaTime * pointerDir);
+
+        indicator.transform.position = Vector3.Lerp(currNode.transform.position, destNode.transform.position, currProgress);
+
+        if (destNode.IsVisited())
+            currNode.ClampProgress(clampValue);
+
+        if(destNode.NodeNumber == enterNodeNum)
+            currNode.ClampProgress(enterClampValue);
+
+        if (currProgress >= 1f)
+            VisitDestNode();
+    }
+
+    private void SetDestNode(PuzzleDir dir)
+    {
+        destNode = null;
+
+        if (dir == PuzzleDir.None)
+            return;        
+
+        if (!currNode.GetPathable(dir))
+            return;
+
+        if (pathStack.Count > 0 && dir == pathStack.Peek().GetOppositeDirection())
+        {
+            currNode.CancleVisit();
+
+            destNode = currNode;
+            currNode = pathStack.Pop();
+
+            return;
+        } 
+
+        int Idx = (int)dir;
+        destNode = puzzle[currNode.Pos.posY + yDir[Idx], currNode.Pos.posX + xDir[Idx]];
+
+        currNode.SetDestDir(dir);        
+    }
+
+    private void VisitDestNode()
+    {
+        destNode.OnVisitAction();
+
+        if (destNode.NodeNumber == exitNodeNum)
+        {
+            ActivePoint(puzzleMaker.GetExitPoint());
+
+            isPlaying = false;
             return;
         }
 
-        float lineSizeChanger = 0;
-        switch (currLineDir)
-        {
-            case PuzzleDir.Top:
-                lineSizeChanger = pointDelta.y;
-                break;
-            case PuzzleDir.Right:
-                lineSizeChanger = pointDelta.x;
-                break;
-            case PuzzleDir.Bottom:
-                lineSizeChanger = - pointDelta.y;
-                break;
-            case PuzzleDir.Left:
-                lineSizeChanger = - pointDelta.x;
-                break;
-        }
-
-        currLine.fillAmount += lineSizeChanger * speed;
-
-        if(currLine.fillAmount <= 0)
-        {
-            destNode = null;
-        }    
-
-        //Debug.Log(localPointPosition);        
+        pathStack.Push(currNode);
+        currNode = destNode;        
     }
-
-    private PuzzleDir GetMaxDeltaDir(Vector2 delta)
+    private PuzzleDir GetLargeDirValue(Vector2 look)
     {
-        if(Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+        if (look == Vector2.zero)
+            return PuzzleDir.None;
+
+        if(Mathf.Abs(look.x) > Mathf.Abs(look.y))
         {
-            return delta.x > 0 ? PuzzleDir.Right : PuzzleDir.Left;
+            return look.x > 0 ? PuzzleDir.Left : PuzzleDir.Right;
         }
 
-        return delta.y > 0 ? PuzzleDir.Top : PuzzleDir.Bottom;
+        return look.y > 0 ? PuzzleDir.Up : PuzzleDir.Down;
     }
+    public void StopPlay() => isPlaying = false;
 }
