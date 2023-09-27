@@ -17,7 +17,7 @@ public class PuzzleMaker : MonoBehaviour
     private float intervalAdjust;
     public PuzzleData Data;
     
-    private NodeNumLinePair[] disconnectTarget;
+    private NodeNumLinePair[] puzzleInfo;
     private PuzzleNode[,] puzzle;
     private int lastIdx;
 
@@ -136,9 +136,9 @@ public class PuzzleMaker : MonoBehaviour
     }
     public void ReadPuzzleInfo()
     {
-        disconnectTarget = Data.puzzleInfo;
+        puzzleInfo = Data.puzzleInfo;
 
-        foreach (var target in disconnectTarget)
+        foreach (var target in puzzleInfo)
         {
             if (target.nodeNumber >= puzzleSize * puzzleSize)
                 continue;
@@ -169,6 +169,22 @@ public class PuzzleMaker : MonoBehaviour
                 if(posX < lastIdx)
                     puzzle[posY, posX + 1].SetPathable(PuzzleDir.Left, false);
             }
+        }
+    }
+
+    public void ReadElemtnsInfo()
+    {
+        var elementsInfo = Data.elementsInfo;
+
+        foreach( var element in elementsInfo)
+        {
+            if (element.nodeNumber >= puzzleSize * puzzleSize)
+                continue;
+
+
+
+
+
         }
     }
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);

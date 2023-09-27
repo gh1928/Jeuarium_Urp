@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeNumber: 0
-  minProgressSpeed: 1
+  minProgressSpeed: 0.7
   topPath: {fileID: 7549312160431745591}
   rightPath: {fileID: 2078897614077428544}
   nodeImage: {fileID: 4791243611425565940}
@@ -729,7 +729,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 4dc2af512aa3370419ccd40d0abd485b, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

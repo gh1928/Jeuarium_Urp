@@ -12,7 +12,7 @@ public enum PuzzleDir
 public class PuzzleNode : MonoBehaviour
 {
     public int NodeNumber;
-    public float  minProgressSpeed = 0.1f;
+    public float minProgressSpeed = 0.1f;    
 
     public (int posY, int posX) Pos;
 
@@ -63,6 +63,9 @@ public class PuzzleNode : MonoBehaviour
         currDir = dir;
         currLine = lines[(int)currDir];
     }
+
+    public PuzzleDir GetDir() => currDir;
+
     public PuzzleDir GetOppositeDirection() => currDir switch
     {
         PuzzleDir.None => PuzzleDir.None,
@@ -107,6 +110,25 @@ public class PuzzleNode : MonoBehaviour
         }
 
         colliderBaseSize = Vector3.one * lineWidth;
+
+        SetLineCollider();
+    }
+    private void SetLineCollider()
+    {
+        float startPos = lineLength * 0.5f;
+        Vector3 center;
+
+        for (int i = 0; i < 4; i++)
+        {
+            center = Vector3.zero;
+
+            if (i % 2 == 0)
+                center.y = (i == 0) ? -startPos : startPos;
+            else
+                center.x = (i == 1) ? -startPos : startPos;
+
+            lineColliders[i].center = center;
+        }
     }
     public void OnVisitAction()
     {
@@ -122,12 +144,12 @@ public class PuzzleNode : MonoBehaviour
     public bool IsVisited() => visited;
 
     //고정 속도
-    public void UpdateProgress(Vector2 pointerDir, float value)
+    public void UpdateProgress(Vector2 pointerDiff, float value)
     {
         if (currDir == PuzzleDir.None)
             return;
 
-        if(pointerDir == Vector2.zero) 
+        if(pointerDiff == Vector2.zero) 
             return;
 
         bool valuePositive = true;
@@ -135,16 +157,16 @@ public class PuzzleNode : MonoBehaviour
         switch (currDir)
         {
             case PuzzleDir.Up:
-                valuePositive = pointerDir.y > 0;
+                valuePositive = pointerDiff.y > 0;
                 break;
             case PuzzleDir.Down:
-                valuePositive = pointerDir.y < 0;
+                valuePositive = pointerDiff.y < 0;
                 break;
             case PuzzleDir.Right:
-                valuePositive = pointerDir.x < 0;
+                valuePositive = pointerDiff.x < 0;
                 break;
             case PuzzleDir.Left:
-                valuePositive = pointerDir.x > 0;
+                valuePositive = pointerDiff.x > 0;
                 break;
         }
 
@@ -173,24 +195,20 @@ public class PuzzleNode : MonoBehaviour
         {
             case PuzzleDir.Up:                
             case PuzzleDir.Down:
-                lineSizeChanger =  moveValue.y;                
+                lineSizeChanger = moveValue.y;
                 break;
             case PuzzleDir.Right:                
             case PuzzleDir.Left:
-                lineSizeChanger =  moveValue.x;
+                lineSizeChanger = moveValue.x;
                 break;
         }
 
-        bool axisPositive = (currDir == PuzzleDir.Up || currDir == PuzzleDir.Right);
+        //float minSpeed = minProgressSpeed * Time.deltaTime;
+        //lineSizeChanger = Mathf.Clamp(lineSizeChanger, -minSpeed, minSpeed);
 
-        float minSpeed = minProgressSpeed * Time.deltaTime;
+        bool positiveAxis = (currDir == PuzzleDir.Up || currDir == PuzzleDir.Left);
 
-        if (lineSizeChanger < minSpeed)
-            lineSizeChanger = minSpeed;
-
-        Debug.Log(axisPositive);
-
-        currLine.fillAmount += lineSizeChanger;
+        currLine.fillAmount += positiveAxis ? lineSizeChanger : -lineSizeChanger;
 
         UpdateCollider();
     }

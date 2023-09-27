@@ -14,12 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PuzzleSize: 4
   puzzleInfo: []
+  elementInfo:
+  - name: Lantern
+    nodeNumber: 0
+    placeAtNode: 0
+    placeAtTop: 0
+    placeAtRight: 1
+  - name: Lantern
+    nodeNumber: 4
+    placeAtNode: 0
+    placeAtTop: 1
+    placeAtRight: 0
+  - name: Lantern
+    nodeNumber: 1
+    placeAtNode: 1
+    placeAtTop: 0
+    placeAtRight: 0
   enterPos:
     y: 0
     x: 1
   exitPos:
     y: 3
     x: 3
-  baseColor: {r: 1, g: 1, b: 1, a: 0.5686275}
+  baseColor: {r: 0, g: 1, b: 0.8703723, a: 1}
   playerColor: {r: 1, g: 0.6795065, b: 0, a: 1}
   nodeInterval: 1

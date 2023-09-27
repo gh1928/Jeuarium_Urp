@@ -18,6 +18,18 @@ public struct PosPair
     public int x;
 }
 
+[System.Serializable]
+public struct ElementInfo
+{
+    public Elements elements;
+    public int nodeNumber;
+    
+    public bool placeAtNode;
+
+    public bool placeAtTop;
+    public bool placeAtRight;
+}
+
 [CreateAssetMenu(fileName = "PuzzleData", menuName = "Scriptable/PuzzleData")]
 public class PuzzleData : ScriptableObject
 {
@@ -25,6 +37,7 @@ public class PuzzleData : ScriptableObject
     public int PuzzleSize;
 
     public NodeNumLinePair[] puzzleInfo;
+    public ElementInfo[] elementsInfo;
 
     public PosPair enterPos;
     public PosPair exitPos;    
