@@ -39,6 +39,9 @@ public class PuzzlePlayer : MonoBehaviour
     public float fadeTime = 1f;
     public float puzzleChangeInterval = 1f;
 
+    public AudioSource successAudio;
+    public AudioSource failureAudio;
+
     private void Start()
     {   
         canvasGroup = GetComponent<CanvasGroup>();
@@ -166,16 +169,22 @@ public class PuzzlePlayer : MonoBehaviour
     }
     private void VisitExitNode()
     {
+        isPlaying = false;
+
         ActivePoint(puzzleMaker.GetExitPoint());
 
         if (IsAllElemntsWorked())
         {
-            foreach (var element in elements)
-                element.PlaySuccessEffect();
+            //foreach (var element in elements)
+            //    element.PlaySuccessEffect();
+
+            successAudio.Play();
 
             SetNextStep();
             return;
         }
+
+        failureAudio.Play();
 
         foreach (var element in elements)
         {
@@ -188,8 +197,6 @@ public class PuzzlePlayer : MonoBehaviour
 
     private bool IsAllElemntsWorked()
     {
-        isPlaying = false;
-
         for(int i = 0; i < elements.Count; i++)
         {
             if(!elements[i].IsWorked())

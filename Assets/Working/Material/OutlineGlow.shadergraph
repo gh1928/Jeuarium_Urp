@@ -1031,7 +1031,7 @@
     "m_Guid": {
         "m_GuidSerialized": "96647bfb-5f2d-4ee5-b4e8-e5d25dd48be3"
     },
-    "m_Name": "a",
+    "m_Name": "OnOffswitch",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "OnOffswitch",
     "m_GeneratePropertyBlock": true,
