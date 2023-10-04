@@ -1654,7 +1654,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "c2e55823d38c44989a111d3bfa089196",
     "m_Id": 0,
-    "m_DisplayName": "switch",
+    "m_DisplayName": "Blinkswitch",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
