@@ -1,21 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LanternLightEvent : MonoBehaviour, Ievent
 {
-    public GameObject lightTrail;
+    public GameObject trailPrefab;
     public Transform target;
 
-    public void OnEvent()
+    public float waitBeforeTrans = 3f;
+    public float totalEvtTime = 15f;
+    public void OnEvent(List<PuzzleElement> elements)
     {
-        StartCoroutine(LightOnCoroutine());
+        foreach (PuzzleElement element in elements)
+        {
+            var startPos = element.transform.position - element.transform.forward * 0.3f;
+
+            var trail = Instantiate(trailPrefab, startPos, Quaternion.identity);
+            StartCoroutine(TrailTransCoroutine(trail));
+        }        
     }
 
-    private IEnumerator LightOnCoroutine()
+    private IEnumerator TrailTransCoroutine(GameObject trail)
     {
-        var trail = Instantiate(lightTrail);
+        yield return new WaitForSeconds(waitBeforeTrans);
 
-        yield break;
+        Transform trailTrasform = trail.transform;
+        Vector3 sourPos = trailTrasform.position;
+        Vector3 destPos = target.position;
+
+        float timer = 0f;
+        float inverseEvtTime = 1 / totalEvtTime;
+
+        while(timer < totalEvtTime)
+        {
+            trailTrasform.position = Vector3.Lerp(sourPos, destPos, timer * inverseEvtTime);
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        trailTrasform.position = destPos;
+        Destroy(trail, 5f);
     }
 }

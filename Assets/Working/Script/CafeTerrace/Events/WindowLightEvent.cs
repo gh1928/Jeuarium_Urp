@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WindowLightEvent : MonoBehaviour, Ievent
 {
-    public void OnEvent()
+    public void OnEvent(List<PuzzleElement> _)
     {
         StartCoroutine(LightOnCoroutine());
     }

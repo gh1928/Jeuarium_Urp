@@ -56,3 +56,4 @@ MonoBehaviour:
   baseColor: {r: 0, g: 1, b: 0.8703723, a: 1}
   playerColor: {r: 1, g: 0.6795065, b: 0, a: 1}
   nodeInterval: 1
+  eventIdx: 1

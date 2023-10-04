@@ -97,7 +97,7 @@ MonoBehaviour:
   blinkTime: 0.5
   blinkCount: 4
   workedColor: {r: 1, g: 0.95179456, b: 0, a: 1}
-  failedColor: {r: 1, g: 0, b: 0, a: 1}
+  failedColor: {r: 0.6226415, g: 0, b: 0, a: 0}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!223 &2446576475837553328
 Canvas:

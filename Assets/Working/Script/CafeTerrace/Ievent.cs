@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface Ievent
 {
-    public void OnEvent();
+    public void OnEvent(List<PuzzleElement> elements);
 }

@@ -169,18 +169,21 @@ public class PuzzlePlayer : MonoBehaviour
         ActivePoint(puzzleMaker.GetExitPoint());
 
         if (IsAllElemntsWorked())
-            SetNextStep();
-        else
         {
-            foreach(var element in elements)
-            {
-                if(!element.IsWorked())
-                    element.PlayFailEffect();
-            }   
+            foreach (var element in elements)
+                element.PlaySuccessEffect();
 
-            StartCoroutine(PuzzleFadeCoroutine(false, 3f));
+            SetNextStep();
+            return;
         }
-            
+
+        foreach (var element in elements)
+        {
+            if (!element.IsWorked())
+                element.PlayFailEffect();
+        }
+
+        StartCoroutine(PuzzleFadeCoroutine(false, 3f));
     }    
 
     private bool IsAllElemntsWorked()
@@ -198,22 +201,20 @@ public class PuzzlePlayer : MonoBehaviour
 
     private void SetNextStep()
     {
-        if(!puzzleMaker.IsRemainPuzzle())
-        {
-            ClearGame();
-            return;
-        }
-
-        float time = 1f;
-
         var evtHandler = GetComponent<CaffeEventHandler>();
 
         var evt = evtHandler.events [puzzleMaker.CurrData.eventIdx];
 
         if(evt != null)
-            evt.GetComponent<Ievent>().OnEvent();
+            evt.GetComponent<Ievent>().OnEvent(elements);
 
-        StartCoroutine(PuzzleFadeCoroutine(true, time));        
+        if (!puzzleMaker.IsRemainPuzzle())
+        {
+            ClearGame();
+            return;
+        }
+
+        StartCoroutine(PuzzleFadeCoroutine(true, 1f));        
     }
 
 

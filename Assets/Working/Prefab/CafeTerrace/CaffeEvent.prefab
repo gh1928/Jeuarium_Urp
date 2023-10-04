@@ -222,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 58436636356189769}
-  - component: {fileID: 1311435128860849690}
+  - component: {fileID: 7460665540221018863}
   m_Layer: 0
   m_Name: LanternTrailEvent
   m_TagString: Untagged
@@ -244,7 +244,7 @@ Transform:
   m_Father: {fileID: 5099332581664256907}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1311435128860849690
+--- !u!114 &7460665540221018863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,11 +253,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2572358796599702450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7650db8cdecaf674a99b65201bf52811, type: 3}
+  m_Script: {fileID: 11500000, guid: 9826dbdb2ab03cb46a8959d0697adb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windowMaterial: {fileID: 2100000, guid: 4e4e60e406dcab14ebb7457fe292f532, type: 2}
-  lightTime: 10
+  trailPrefab: {fileID: 1878646258122045332, guid: 61411100d5066af4f950615682c6d4d1,
+    type: 3}
+  target: {fileID: 0}
+  waitBeforeTrans: 3
+  totalEvtTime: 15
 --- !u!1 &5099332581664256902
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +351,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5099332581664256900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - {fileID: 5289472075696933636}
+  - {fileID: 2572358796599702450}
 --- !u!225 &8383333234348575925
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -480,7 +484,7 @@ RectTransform:
   m_GameObject: {fileID: 5099332582311602708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 5099332581664256907}
   m_RootOrder: 0
