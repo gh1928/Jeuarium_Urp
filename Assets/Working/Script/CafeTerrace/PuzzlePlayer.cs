@@ -1,7 +1,6 @@
 using BNG;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -47,7 +46,10 @@ public class PuzzlePlayer : MonoBehaviour
         eventData = VRUISystem.Instance.EventData;
     }
     public void StartPlay()
-    {        
+    {
+        if (isPlaying)
+            return;
+
         puzzle = puzzleMaker.GetPuzzle();
         elements = puzzleMaker.GetInstancedElements();
         pathStack.Clear();
@@ -202,16 +204,19 @@ public class PuzzlePlayer : MonoBehaviour
             return;
         }
 
-        float time = 3f;
+        float time = 1f;
 
-        StartCoroutine(PuzzleClearSequence(time));
+        var evtHandler = GetComponent<CaffeEventHandler>();
+
+        var evt = evtHandler.events [puzzleMaker.CurrData.eventIdx];
+
+        if(evt != null)
+            evt.GetComponent<Ievent>().OnEvent();
+
         StartCoroutine(PuzzleFadeCoroutine(true, time));        
     }
 
-    private IEnumerator PuzzleClearSequence(float totalTime)
-    {
-        yield break;
-    }    
+
     private void ClearGame()
     {
         

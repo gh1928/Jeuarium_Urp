@@ -45,4 +45,6 @@ public class PuzzleData : ScriptableObject
     public Color playerColor;
 
     public float nodeInterval = 1f;
+
+    public int eventIdx;
 }

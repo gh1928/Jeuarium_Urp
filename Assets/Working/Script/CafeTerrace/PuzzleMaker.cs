@@ -36,15 +36,25 @@ public class PuzzleMaker : MonoBehaviour
     public PuzzleElement[] elementPrefabs;
     private List<PuzzleElement> instancedElements = new List<PuzzleElement>();
 
+    private Vector3 scale;
+
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+        scale = rect.localScale;
+
         lookAtConstraints = GetComponent<LookAtConstraint>();
         CurrData = puzzleDatas[currStep];
     }
 
+    private void Start()
+    {
+        MakePuzzle();
+    }
+
     public void MakePuzzle()
     {
+        rect.localScale = Vector3.one;
         lookAtConstraints.enabled = false;
         rect.localEulerAngles = Vector3.zero;
 
@@ -56,6 +66,7 @@ public class PuzzleMaker : MonoBehaviour
         ReadPuzzleInfo();
         ReadElemtnsInfo();
 
+        rect.localScale = scale;
         lookAtConstraints.enabled = true;
     }
     public void StopPuzzle()

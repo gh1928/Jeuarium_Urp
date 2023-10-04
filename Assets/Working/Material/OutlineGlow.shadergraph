@@ -1031,9 +1031,9 @@
     "m_Guid": {
         "m_GuidSerialized": "96647bfb-5f2d-4ee5-b4e8-e5d25dd48be3"
     },
-    "m_Name": "OnOffswitch",
+    "m_Name": "a",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "Vector1_1",
+    "m_OverrideReferenceName": "OnOffswitch",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -1654,7 +1654,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "c2e55823d38c44989a111d3bfa089196",
     "m_Id": 0,
-    "m_DisplayName": "switch",
+    "m_DisplayName": "Blinkswitch",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
