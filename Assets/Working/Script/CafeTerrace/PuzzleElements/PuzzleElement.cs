@@ -40,16 +40,7 @@ public abstract class PuzzleElement : MonoBehaviour
     }
     public virtual void OnWorked() => isWorked = true;
     public virtual void OffWorked() => isWorked = false;    
-    public virtual void WorkedEffect() { }
-    public virtual void FailedEffect() { }
-    public virtual bool CheckWorked()
-    {
-        if(isWorked)
-            WorkedEffect();
-
-        if(!isWorked)
-            FailedEffect();
-
-        return isWorked;
-    }
+    public virtual void PlaySuccessEffect() { }
+    public virtual void PlayFailEffect() { }
+    public virtual bool IsWorked() => isWorked;
 }

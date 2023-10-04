@@ -94,8 +94,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainImage: {fileID: 3265156026061565252}
   lanternLight: {fileID: 668899046525544692}
+  blinkTime: 0.5
+  blinkCount: 4
   workedColor: {r: 1, g: 0.95179456, b: 0, a: 1}
-  failedColor: {r: 0, g: 0, b: 0, a: 1}
+  failedColor: {r: 1, g: 0, b: 0, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!223 &2446576475837553328
 Canvas:

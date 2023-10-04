@@ -15,8 +15,11 @@ public class PuzzleMaker : MonoBehaviour
     
     public Transform puzzleHolderPrafab;
     private float intervalAdjust;
-    public PuzzleData Data;
-    
+
+    public PuzzleData[] puzzleDatas;
+    public PuzzleData CurrData { get; set; }
+    private int currStep = 0;
+
     private NodeNumLinePair[] puzzleInfo;
     private PuzzleNode[,] puzzle;
     private int lastIdx;
@@ -30,12 +33,14 @@ public class PuzzleMaker : MonoBehaviour
 
     private int currNodeNumber = 0;
 
-    public PuzzleElement[] elements;
+    public PuzzleElement[] elementPrefabs;
+    private List<PuzzleElement> instancedElements = new List<PuzzleElement>();
 
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
         lookAtConstraints = GetComponent<LookAtConstraint>();
+        CurrData = puzzleDatas[currStep];
     }
 
     public void MakePuzzle()
@@ -66,14 +71,14 @@ public class PuzzleMaker : MonoBehaviour
         MakePuzzle();
     }
     private void MakePuzzleArray()
-    {
-        puzzleSize = Data.PuzzleSize;
+    {        
+        puzzleSize = CurrData.PuzzleSize;
         lastIdx = puzzleSize - 1;
         puzzle = new PuzzleNode[puzzleSize, puzzleSize];
     }
     private void SetNodeAndLine()
     {
-        intervalAdjust = Data.nodeInterval;
+        intervalAdjust = CurrData.nodeInterval;
 
         float temp = (puzzleSize - 1) * intervalAdjust * 0.5f;
         Vector3 startPos = new Vector3(-temp, -temp, 0);
@@ -113,8 +118,8 @@ public class PuzzleMaker : MonoBehaviour
         var node = Instantiate(nodePrefab, puzzleHolder);
         node.transform.localPosition = nodePos;
         node.SetPathAndProgressLine(intervalAdjust);
-        node.SetPlayerColor(Data.playerColor);
-        node.SetBaseColor(Data.baseColor);
+        node.SetPlayerColor(CurrData.playerColor);
+        node.SetBaseColor(CurrData.baseColor);
         node.SetColor();
 
         node.NodeNumber = currNodeNumber++;
@@ -123,23 +128,23 @@ public class PuzzleMaker : MonoBehaviour
     }    
     private void SetEnterAndExitPoint()
     {
-        var enterPos = Data.enterPos;
+        var enterPos = CurrData.enterPos;
         enterPoint = Instantiate(entAndExitPrefab, puzzleHolder);
         enterPoint.transform.position = puzzle[enterPos.y, enterPos.x].transform.position;
-        enterPoint.color = Data.playerColor;
+        enterPoint.color = CurrData.playerColor;
 
         indicator = Instantiate(indicatorPrefab, puzzleHolder);
         indicator.transform.position = enterPoint.transform.position;
-        indicator.GetComponent<Image>().color = Data.playerColor;
+        indicator.GetComponent<Image>().color = CurrData.playerColor;
 
-        var exitPos = Data.exitPos;
+        var exitPos = CurrData.exitPos;
         exitPoint = Instantiate(entAndExitPrefab, puzzleHolder);
         exitPoint.transform.position = puzzle[exitPos.y, exitPos.x].transform.position;
-        exitPoint.color = Data.baseColor;
+        exitPoint.color = CurrData.baseColor;
     }
     public void ReadPuzzleInfo()
     {
-        puzzleInfo = Data.puzzleInfo;
+        puzzleInfo = CurrData.puzzleInfo;
 
         foreach (var target in puzzleInfo)
         {
@@ -177,9 +182,10 @@ public class PuzzleMaker : MonoBehaviour
 
     public void ReadElemtnsInfo()
     {
-        var elementsInfo = Data.elementsInfo;
+        var elementsInfo = CurrData.elementsInfo;
+        instancedElements.Clear();
 
-        foreach(var info in elementsInfo)
+        foreach (var info in elementsInfo)
         {
             if (info.nodeNumber >= puzzleSize * puzzleSize)
                 continue;
@@ -190,7 +196,6 @@ public class PuzzleMaker : MonoBehaviour
             Vector3 elementPos = Vector3.zero;
             Vector3 nodePos = puzzle[posY, posX].transform.position;
 
-
             if (info.placeAtNode)
                 elementPos = nodePos;
 
@@ -200,18 +205,27 @@ public class PuzzleMaker : MonoBehaviour
             if(info.placeAtRight)
                 elementPos = Vector3.Lerp(nodePos, puzzle[posY, posX + 1].transform.position, 0.5f);
 
-            var element = Instantiate(elements[(int)info.elements], elementPos, Quaternion.identity, puzzleHolder);
+            var element = Instantiate(elementPrefabs[(int)info.elements], elementPos, Quaternion.identity, puzzleHolder);
 
             if (info.placeAtNode)
                 element.OnPlaceAtNode(puzzle[posY, posX]);
+
+            instancedElements.Add(element);
         }
     }
+    public void SetNextStep()
+    {
+        CurrData = puzzleDatas[++currStep];
+        ResetPuzzle();
+    }
+    public bool IsRemainPuzzle() => currStep < puzzleDatas.Length - 1;
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
     public PuzzleNode[,] GetPuzzle() => puzzle;
+    public List<PuzzleElement> GetInstancedElements() => instancedElements;
     public RawImage GetEnterPoint() => enterPoint;
     public RawImage GetExitPoint() => exitPoint;
     public Transform GetPuzzleHolder() => puzzleHolder;
-    public PuzzleNode GetEnterNode() => puzzle[Data.enterPos.y,Data.enterPos.x];
-    public PuzzleNode GetExitNode() => puzzle[Data.exitPos.y, Data.exitPos.y];
+    public PuzzleNode GetEnterNode() => puzzle[CurrData.enterPos.y,CurrData.enterPos.x];
+    public PuzzleNode GetExitNode() => puzzle[CurrData.exitPos.y, CurrData.exitPos.y];
     public GameObject GetIndicator()=> indicator;
 }

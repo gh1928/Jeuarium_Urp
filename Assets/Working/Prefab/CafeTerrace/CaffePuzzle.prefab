@@ -439,6 +439,8 @@ GameObject:
   - component: {fileID: 7434342309670066250}
   - component: {fileID: 107224957997567322}
   - component: {fileID: -4066479762168914649}
+  - component: {fileID: 8383333234348575925}
+  - component: {fileID: -4362306003813480967}
   m_Layer: 5
   m_Name: CaffePuzzle
   m_TagString: Untagged
@@ -549,7 +551,11 @@ MonoBehaviour:
     type: 3}
   puzzleHolderPrafab: {fileID: 7691245136063957337, guid: 89a2ec7554909654c8e049c21fa1be45,
     type: 3}
-  Data: {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b, type: 2}
+  puzzleDatas:
+  - {fileID: 11400000, guid: d13cde1c29fecf149a23a9ded682e8a6, type: 2}
+  - {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b, type: 2}
+  elementPrefabs:
+  - {fileID: 6077612434883308300, guid: 5d8a19ee1db014c4ebef7989274b6065, type: 3}
 --- !u!1183024399 &107224957997567322
 LookAtConstraint:
   m_ObjectHideFlags: 0
@@ -584,6 +590,32 @@ MonoBehaviour:
   speedMult: 2
   minDistanceToMove: 0.05
   minDistanceToExitNode: 0.1
+  fadeTime: 1
+  puzzleChangeInterval: 1
+--- !u!225 &8383333234348575925
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099332581664256902}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &-4362306003813480967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099332581664256902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b1917d2fa083e46a97f5bfb1978b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5099332582311602708
 GameObject:
   m_ObjectHideFlags: 0
