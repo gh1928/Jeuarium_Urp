@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Trail_effect 2
+  m_Shader: {fileID: -6465566751694194690, guid: 2e55243d67f5a6943a87650fa4476b2e,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_61c2802af5074803a67224a27b5c059d:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_c566deaa5ef441f1a42c29ffa82ab826:
+        m_Texture: {fileID: 2800000, guid: edd3614266bb5794ba4ebbee88729234, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_f3c4a46515554b4e98ece125432d4c17_Texture_1:
+        m_Texture: {fileID: 2800000, guid: edd3614266bb5794ba4ebbee88729234, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_2b7fdfd74d074e2c8aba92f426f49543: 35
+    - Vector1_4ec0e91baf48461c8093539ab245e450: 35
+    m_Colors:
+    - Color_2afed1a7b5224e87b0fd14c4be12a7e0: {r: 1, g: 0, b: 0.2601109, a: 0}
+    - Color_6769ccdd31e84a24b9a5251056ec8836: {r: 1.1301128, g: 0.23075603, b: 0,
+        a: 0}
+    - Color_9e92d0ace7d94c3fa8486078aabcd7fc: {r: 0, g: 0.09292173, b: 1, a: 0}
+    - Color_a2690b551935433199215e777aefd910: {r: 0.091338225, g: 0, b: 1.5954535,
+        a: 0}
+    - Vector2_1ed959611bce4aeebfcefe6489d15a37: {r: 1, g: 0, b: 0, a: 0}
+    - Vector2_849a595dabb84d868128eae1801e6fc9: {r: 1, g: 0, b: 0, a: 0}
+    - Vector2_e7667c12e535484f85514ec5cc9bd225: {r: 1, g: 0, b: 0, a: 0}
+    - Vector2_ed9ac248d2834a5ebf0833cc1739d28d: {r: -0.5, g: 0, b: 0, a: 0}
+    - Vector2_f594eb450dc84a1b9e3315de9f32b28a: {r: -0.5, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
