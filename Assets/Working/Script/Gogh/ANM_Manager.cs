@@ -88,12 +88,13 @@ partial class ANM_Manager
                 ACTION__GRAB_OFF,
                 ACTION__DOOR_OPEN,
                 ACTION__LETTER_FLY,
+                ACTION__WAITTING,
 
                 // UI
                 UI__TEXT = 30000,
 
                 // ANIMATION
-                ANIMATION__NEXT = 40000,
+                ANIMATION__START = 40000,
                 ANIMATION__END,
             }
 
@@ -209,6 +210,26 @@ partial class ANM_Manager
                 Basic_objs[0].GetComponent<LetterEvtHandler>().ANM_Basic_LetterFly();
             }
 
+            public bool ANM_Basic_Waitting()
+            {
+                bool res = false;
+
+                //
+                float time = float.Parse(Basic_values[0]) + Time.deltaTime;
+
+                if(time >= float.Parse(Basic_values[1]))
+                {
+                    res = true;
+                }
+                else
+                {
+                    Basic_values[0] = time.ToString();
+                }
+
+                //
+                return res;
+            }
+
             // UI
             public bool ANM_Basic_BtnNextText()
             {
@@ -234,9 +255,17 @@ partial class ANM_Manager
             }
 
             // ANIMATION
-            public void ANM_Basic_AnimationNext()
+            public void ANM_Basic_AnimationStart()
             {
-                Basic_objs[0].GetComponent<Animator>().SetTrigger("Next");
+                for (int i = 0; i < Basic_values.Count; i++)
+                {
+                    string[] strs = Basic_values[i].Split('/');
+                    switch (strs[0])
+                    {
+                        case "Trigger": { Basic_objs[0].GetComponent<Animator>().SetTrigger(strs[1]                     );  }   break;
+                        case "Int":     { Basic_objs[0].GetComponent<Animator>().SetInteger(strs[1], int.Parse(strs[2]) );  }   break;
+                    }
+                }
             }
 
             public bool ANM_Basic_AnimationEnd()
@@ -321,12 +350,13 @@ partial class ANM_Manager
                     case ANM_Part.TYPE.ACTION__GRAB_OFF:        { Basic_parts[Basic_num].ANM_Basic_GrabbableOff();  isNext = true;  }   break;
                     case ANM_Part.TYPE.ACTION__DOOR_OPEN:       { Basic_parts[Basic_num].ANM_Basic_DoorOpen();      isNext = true;  }   break;
                     case ANM_Part.TYPE.ACTION__LETTER_FLY:      { Basic_parts[Basic_num].ANM_Basic_LetterFly();     isNext = true;  }   break;
+                    case ANM_Part.TYPE.ACTION__WAITTING:        { isNext = Basic_parts[Basic_num].ANM_Basic_Waitting();             }   break;
 
                     // UI
 
                     // ANIMATION
-                    case ANM_Part.TYPE.ANIMATION__NEXT: { Basic_parts[Basic_num].ANM_Basic_AnimationNext(); isNext = true;  }   break;
-                    case ANM_Part.TYPE.ANIMATION__END:  { isNext = Basic_parts[Basic_num].ANM_Basic_AnimationEnd();         }   break;
+                    case ANM_Part.TYPE.ANIMATION__START:    { Basic_parts[Basic_num].ANM_Basic_AnimationStart();    isNext = true;  }   break;
+                    case ANM_Part.TYPE.ANIMATION__END:      { isNext = Basic_parts[Basic_num].ANM_Basic_AnimationEnd();             }   break;
                 }
 
                 //

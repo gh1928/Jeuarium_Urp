@@ -142,6 +142,8 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
 
         Basic_floats[0] = 0.0f;
 
+        this.transform.parent = Basic_objs[Basic_transformDesNum].transform;
+
         //
         Basic_phase = PHASE.TRANSFORM;
     }
@@ -171,7 +173,16 @@ public class ANM_ColorPainting_Obj : GrabbableEvents
     //
     void ANM_Update__ANIMATION__START()
     {
-        Basic_animator.SetTrigger("isOpen");
+        for(int i = 1; i < Basic_strs.Count; i++)
+        {
+            Debug.Log(Basic_strs[i]);
+            string[] strs = Basic_strs[i].Split('/');
+            switch(strs[0])
+            {
+                case "Trigger": { Basic_animator.SetTrigger(    strs[1]                         );  }   break;
+                case "Int":     { Basic_animator.SetInteger(    strs[1],    int.Parse(strs[2])  );  }   break;
+            }
+        }
 
         //
         Basic_phase = PHASE.AMIMATION__END_CHECK;
