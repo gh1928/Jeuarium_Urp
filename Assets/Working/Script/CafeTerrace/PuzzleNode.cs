@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
-
 public enum PuzzleDir
 {
     None = -1, Up = 0, Right = 1, Down = 2, Left = 3
 }
-
 public class PuzzleNode : MonoBehaviour
 {
     public int NodeNumber;
@@ -38,6 +35,8 @@ public class PuzzleNode : MonoBehaviour
     private Color baseColor;
 
     private PuzzleDir currDir = PuzzleDir.None;
+
+    public PuzzleElement Element { get; set; }    
 
     private void Awake()
     {
@@ -134,11 +133,17 @@ public class PuzzleNode : MonoBehaviour
     {
         visited = true;
         nodeImage.color = playerColor;
+
+        if (Element != null)
+            Element.OnWorked();
     }
     public void CancleVisit()
     {
         visited = false;
         nodeImage.color = baseColor;
+
+        if (Element != null)
+            Element.OffWorked();
     }
 
     public bool IsVisited() => visited;

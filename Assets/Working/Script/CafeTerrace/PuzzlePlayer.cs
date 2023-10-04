@@ -1,16 +1,20 @@
 using BNG;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PuzzlePlayer : MonoBehaviour
-{   
+{
+    private CanvasGroup canvasGroup;
+
     private PointerEventData eventData;
     
     private PuzzleMaker puzzleMaker;    
     private PuzzleNode[,] puzzle;
+    private List<PuzzleElement> elements;
     private bool isPlaying = false;    
 
     public float speedMult = 0.5f;    
@@ -33,14 +37,19 @@ public class PuzzlePlayer : MonoBehaviour
     public float minDistanceToMove = 1f;
     public float minDistanceToExitNode = 1f;
 
+    public float fadeTime = 1f;
+    public float puzzleChangeInterval = 1f;
+
     private void Start()
     {   
+        canvasGroup = GetComponent<CanvasGroup>();
         puzzleMaker = GetComponent<PuzzleMaker>();
         eventData = VRUISystem.Instance.EventData;
     }
     public void StartPlay()
     {        
         puzzle = puzzleMaker.GetPuzzle();
+        elements = puzzleMaker.GetInstancedElements();
         pathStack.Clear();
 
         SetClampValue();
@@ -56,13 +65,13 @@ public class PuzzlePlayer : MonoBehaviour
     }
     private void SetClampValue()
     {
-        float interval = puzzleMaker.Data.nodeInterval;
+        float interval = puzzleMaker.CurrData.nodeInterval;
 
         clampValue = (interval - 0.15f) / interval;
 
         enterClampValue = (interval - 0.225f) / interval;
     }
-    public void ActivePoint(RawImage point) => point.color = puzzleMaker.Data.playerColor;
+    public void ActivePoint(RawImage point) => point.color = puzzleMaker.CurrData.playerColor;
 
     private void Update()
     {
@@ -146,15 +155,107 @@ public class PuzzlePlayer : MonoBehaviour
 
         if (destNode.NodeNumber == exitNodeNum)
         {
-            ActivePoint(puzzleMaker.GetExitPoint());
-
-            isPlaying = false;
+            VisitExitNode();
             return;
         }
 
         pathStack.Push(currNode);
         currNode = destNode;        
     }
+    private void VisitExitNode()
+    {
+        ActivePoint(puzzleMaker.GetExitPoint());
+
+        if (IsAllElemntsWorked())
+            SetNextStep();
+        else
+        {
+            foreach(var element in elements)
+            {
+                if(!element.IsWorked())
+                    element.PlayFailEffect();
+            }   
+
+            StartCoroutine(PuzzleFadeCoroutine(false, 3f));
+        }
+            
+    }    
+
+    private bool IsAllElemntsWorked()
+    {
+        isPlaying = false;
+
+        for(int i = 0; i < elements.Count; i++)
+        {
+            if(!elements[i].IsWorked())
+                return false;
+        }
+
+        return true;
+    }
+
+    private void SetNextStep()
+    {
+        if(!puzzleMaker.IsRemainPuzzle())
+        {
+            ClearGame();
+            return;
+        }
+
+        float time = 3f;
+
+        StartCoroutine(PuzzleClearSequence(time));
+        StartCoroutine(PuzzleFadeCoroutine(true, time));        
+    }
+
+    private IEnumerator PuzzleClearSequence(float totalTime)
+    {
+        yield break;
+    }    
+    private void ClearGame()
+    {
+        
+    }
+
+    private IEnumerator PuzzleFadeCoroutine(bool goNextStep, float startDelay = 0f)
+    {   
+        yield return new WaitForSeconds(startDelay);
+
+        float timer = 0f;
+        float inverseFadeTime = 1 / fadeTime;
+
+        while(timer < fadeTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(1, 0, timer * inverseFadeTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        canvasGroup.alpha = 0;
+
+        if(goNextStep)
+            puzzleMaker.SetNextStep();
+        else
+            ResetGame();
+
+        yield return new WaitForSeconds(puzzleChangeInterval);
+        timer = 0f;
+
+        while (timer < fadeTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(0, 1, timer * inverseFadeTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        canvasGroup.alpha = 1;
+    }
+
+    private void ResetGame()
+    {
+        puzzleMaker.ResetPuzzle();
+    }
+
     private PuzzleDir GetLargeDirValue(Vector2 look)
     {
         if (look == Vector2.zero)

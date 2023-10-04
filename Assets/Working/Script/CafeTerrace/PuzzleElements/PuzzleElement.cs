@@ -11,15 +11,14 @@ public enum Elements
 public abstract class PuzzleElement : MonoBehaviour
 {
     public Image mainImage;
-
-    [Header("위치는 간선이나 노드에 존재")]
-    public bool atNode = false;
+    
+    private bool placeAtNode = false;
 
     private bool isWorked = false;
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (atNode)
+        if (placeAtNode)
             return;
 
         if(other.CompareTag("CaffePuzzle"))
@@ -27,25 +26,21 @@ public abstract class PuzzleElement : MonoBehaviour
     }
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (atNode)
+        if (placeAtNode)
             return;
 
         if (other.CompareTag("CaffePuzzle"))
             OffWorked();
     }
 
-    protected virtual void OnWorked() => isWorked = true;
-    protected virtual void OffWorked() => isWorked = false;    
-    public virtual void WorkedEffect() { }
-    public virtual void FailedEffect() { }
-    public virtual bool CheckWorked()
+    public void OnPlaceAtNode(PuzzleNode node)
     {
-        if(isWorked)
-            WorkedEffect();
-
-        if(!isWorked)
-            FailedEffect();
-
-        return isWorked;
+        placeAtNode = true;
+        node.Element = this;
     }
+    public virtual void OnWorked() => isWorked = true;
+    public virtual void OffWorked() => isWorked = false;    
+    public virtual void PlaySuccessEffect() { }
+    public virtual void PlayFailEffect() { }
+    public virtual bool IsWorked() => isWorked;
 }
