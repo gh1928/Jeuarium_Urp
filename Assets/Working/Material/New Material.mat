@@ -21,14 +21,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Material
-  m_Shader: {fileID: 4800000, guid: b7839dad95683814aa64166edc107ae2, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 86e0abc8139106b41a6542c1358e4bc1,
+    type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -132,6 +132,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_46328f4c69d44ceda1b2e9a01a2d8e0a: {r: 6.062865, g: 5.745438, b: 0.6031123,
+        a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
