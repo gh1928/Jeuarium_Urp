@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class PuzzlePlayer : MonoBehaviour
 {
+    public static PuzzlePlayer Instance;
+
     private CanvasGroup canvasGroup;
 
     private PointerEventData eventData;
@@ -41,7 +43,12 @@ public class PuzzlePlayer : MonoBehaviour
 
     public AudioSource successAudio;
     public AudioSource failureAudio;
+    public AudioSource elementSound;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {   
         canvasGroup = GetComponent<CanvasGroup>();
@@ -97,15 +104,16 @@ public class PuzzlePlayer : MonoBehaviour
 
         if (Vector3.SqrMagnitude(pointerDir) < minDistanceToMove)
             return;
-
-        var puzzleDir = GetLargeDirValue(pointerDir);
+        
         float currProgress = currNode.GetProgress();
+
+        var puzzleDir = GetLargeDirValue(pointerDir);        
 
         if (currProgress <= 0f)
         {
             if (Vector3.SqrMagnitude(pointerDir) < minDistanceToExitNode)
                 return;
-
+            
             SetDestNode(puzzleDir);
         }
 
@@ -125,7 +133,9 @@ public class PuzzlePlayer : MonoBehaviour
             currNode.ClampProgress(enterClampValue);
 
         if (currProgress >= 1f)
+        {   
             VisitDestNode();
+        }
     }
 
     private void SetDestNode(PuzzleDir dir)
@@ -156,6 +166,9 @@ public class PuzzlePlayer : MonoBehaviour
 
     private void VisitDestNode()
     {
+        if (destNode.IsVisited())
+            return;
+
         destNode.OnVisitAction();
 
         if (destNode.NodeNumber == exitNodeNum)
@@ -213,7 +226,7 @@ public class PuzzlePlayer : MonoBehaviour
         var evt = evtHandler.events [puzzleMaker.CurrData.eventIdx];
 
         if(evt != null)
-            evt.GetComponent<Ievent>().OnEvent(elements);
+            evt.OnEvent(elements);
 
         if (!puzzleMaker.IsRemainPuzzle())
         {
@@ -282,4 +295,5 @@ public class PuzzlePlayer : MonoBehaviour
         return look.y > 0 ? PuzzleDir.Up : PuzzleDir.Down;
     }
     public void StopPlay() => isPlaying = false;
+    public void PlayElementSound() => elementSound.Play();
 }

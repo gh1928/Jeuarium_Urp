@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WindowLightEvent : MonoBehaviour, Ievent
+public class WindowLightEvent : CaffeEventDeafault
 {
-    public void OnEvent(List<PuzzleElement> _)
+    public override void OnEvent(List<PuzzleElement> _)
     {
         StartCoroutine(LightOnCoroutine());
     }

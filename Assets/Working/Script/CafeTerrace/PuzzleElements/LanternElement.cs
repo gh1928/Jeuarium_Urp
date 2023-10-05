@@ -13,8 +13,15 @@ public class LanternElement : PuzzleElement
     public Color workedColor;
     public Color failedColor;
     public Color baseColor;
+
+    private bool readyPlaySound = true;
+    private float soundCoolDown = 1f;
+    private float startSoundCoolDown = 1f;
     public override void OnWorked()
     {
+        if(readyPlaySound)
+            PuzzlePlayer.Instance.PlayElementSound();
+
         base.OnWorked();
         mainImage.color = workedColor;
 
@@ -23,6 +30,8 @@ public class LanternElement : PuzzleElement
     }
     public override void OffWorked()
     {
+        startSoundCoolDown = Time.time;
+
         base.OffWorked();
         mainImage.color = baseColor;
 
@@ -31,6 +40,10 @@ public class LanternElement : PuzzleElement
     }
     //public override void PlaySuccessEffect() => StartCoroutine(SuccessEffectCoroutine());
     public override void PlayFailEffect() => StartCoroutine(FailEffectCoroutine());
+    private void Update()
+    {
+        readyPlaySound = (Time.time - startSoundCoolDown) > soundCoolDown;
+    }
 
     //private IEnumerator SuccessEffectCoroutine()
     //{

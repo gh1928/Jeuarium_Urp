@@ -13,5 +13,5 @@ namespace CaffeEvent
 }
 public class CaffeEventHandler : MonoBehaviour
 {   
-    public GameObject[] events;
+    public CaffeEventDeafault[] events;
 }

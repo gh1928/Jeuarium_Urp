@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LanternLightEvent : MonoBehaviour, Ievent
+public class LanternLightEvent : CaffeEventDeafault
 {
     public GameObject trailPrefab;
     public Transform target;
 
     public float waitBeforeTrans = 3f;
     public float totalEvtTime = 15f;
-    public void OnEvent(List<PuzzleElement> elements)
+    public override void OnEvent(List<PuzzleElement> elements)
     {
         foreach (PuzzleElement element in elements)
         {
