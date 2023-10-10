@@ -9,7 +9,7 @@ public class LanternLightEvent : CaffeEventDeafault
     public Transform target;
 
     public float waitBeforeTrans = 3f;
-    public float totalEvtTime = 15f;
+    public float waitAfterTrans = 1f;
     public override void OnEvent(List<PuzzleElement> elements)
     {
         foreach (PuzzleElement element in elements)
@@ -30,11 +30,13 @@ public class LanternLightEvent : CaffeEventDeafault
         Vector3 destPos = target.position;
 
         float timer = 0f;
-        float inverseEvtTime = 1 / totalEvtTime;
+        float trailTime = totalEvtTime - waitBeforeTrans - waitAfterTrans;
 
-        while(timer < totalEvtTime)
+        float inverseTrailTime = 1 / trailTime;
+
+        while(timer < trailTime)
         {
-            trailTrasform.position = Vector3.Lerp(sourPos, destPos, timer * inverseEvtTime);
+            trailTrasform.position = Vector3.Lerp(sourPos, destPos, timer * inverseTrailTime);
             timer += Time.deltaTime;
 
             yield return null;

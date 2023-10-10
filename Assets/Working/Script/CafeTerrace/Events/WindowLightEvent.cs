@@ -11,8 +11,7 @@ public class WindowLightEvent : CaffeEventDeafault
 
     public Material windowMaterial;
     private string materialSwtich = "OnOffswitch";
-
-    public float lightTime = 3f;
+    public float blinkTime = 3f;
 
     private void Start()
     {
@@ -23,9 +22,9 @@ public class WindowLightEvent : CaffeEventDeafault
     {
         float timer = 0f;
 
-        while (timer < lightTime)
-        {
-            windowMaterial.SetFloat(materialSwtich, timer/lightTime);
+        while (timer < blinkTime)
+        {            
+            windowMaterial.SetFloat(materialSwtich, timer/ blinkTime);
             timer += Time.deltaTime;
 
             yield return null;

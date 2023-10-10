@@ -12,6 +12,9 @@ namespace CaffeEvent
     }
 }
 public class CaffeEventHandler : MonoBehaviour
-{   
+{
+    public bool StepOne { get; set; } = false;
+    public bool StepTwo { get; set; } = false;
+
     public CaffeEventDeafault[] events;
 }

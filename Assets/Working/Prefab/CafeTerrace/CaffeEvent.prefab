@@ -383,11 +383,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9826dbdb2ab03cb46a8959d0697adb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalEvtTime: 7
   trailPrefab: {fileID: 1878646258122045332, guid: 61411100d5066af4f950615682c6d4d1,
     type: 3}
   target: {fileID: 0}
   waitBeforeTrans: 3
-  totalEvtTime: 15
+  waitAfterTrans: 1
 --- !u!1 &5099332581664256902
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +482,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5099332581664256900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,6 +523,7 @@ MonoBehaviour:
   puzzleDatas:
   - {fileID: 11400000, guid: 6aef953b2f6acc445bf95a812fab1e4f, type: 2}
   - {fileID: 11400000, guid: ba18d4e7fed57c74bb5b989af9b8f1f7, type: 2}
+  - {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b, type: 2}
   elementPrefabs:
   - {fileID: 6077612434883308300, guid: 5d8a19ee1db014c4ebef7989274b6065, type: 3}
 --- !u!1183024399 &107224957997567322
@@ -558,11 +560,12 @@ MonoBehaviour:
   speedMult: 2
   minDistanceToMove: 0.1
   minDistanceToExitNode: 0.15
-  fadeTime: 1
+  fadeTime: 2
   puzzleChangeInterval: 1
   successAudio: {fileID: 1202305541206138046}
   failureAudio: {fileID: 8049912893657906211}
   elementSound: {fileID: 754851418925889201}
+  failEffectDelay: 1
 --- !u!114 &7259937191732827094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -708,8 +711,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7650db8cdecaf674a99b65201bf52811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalEvtTime: 3
   windowMaterial: {fileID: 2100000, guid: 4e4e60e406dcab14ebb7457fe292f532, type: 2}
-  lightTime: 10
+  blinkTime: 1000
 --- !u!1 &7777770044979561503
 GameObject:
   m_ObjectHideFlags: 0

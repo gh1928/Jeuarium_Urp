@@ -45,6 +45,10 @@ public class PuzzlePlayer : MonoBehaviour
     public AudioSource failureAudio;
     public AudioSource elementSound;
 
+    private CaffeEventHandler eventHandler;
+
+    public float failEffectDelay = 2f;
+
     private void Awake()
     {
         Instance = this;
@@ -53,6 +57,7 @@ public class PuzzlePlayer : MonoBehaviour
     {   
         canvasGroup = GetComponent<CanvasGroup>();
         puzzleMaker = GetComponent<PuzzleMaker>();
+        eventHandler = GetComponent<CaffeEventHandler>();
         eventData = VRUISystem.Instance.EventData;
     }
     public void StartPlay()
@@ -166,9 +171,6 @@ public class PuzzlePlayer : MonoBehaviour
 
     private void VisitDestNode()
     {
-        if (destNode.IsVisited())
-            return;
-
         destNode.OnVisitAction();
 
         if (destNode.NodeNumber == exitNodeNum)
@@ -182,30 +184,17 @@ public class PuzzlePlayer : MonoBehaviour
     }
     private void VisitExitNode()
     {
-        isPlaying = false;
+        isPlaying = false;        
 
         ActivePoint(puzzleMaker.GetExitPoint());
 
         if (IsAllElemntsWorked())
         {
-            //foreach (var element in elements)
-            //    element.PlaySuccessEffect();
-
-            successAudio.Play();
-
-            SetNextStep();
+            StartCoroutine(PuzzleSuccessCoroutine());
             return;
         }
 
-        failureAudio.Play();
-
-        foreach (var element in elements)
-        {
-            if (!element.IsWorked())
-                element.PlayFailEffect();
-        }
-
-        StartCoroutine(PuzzleFadeCoroutine(false, 3f));
+        StartCoroutine(PuzzleFailureCoroutine());
     }    
 
     private bool IsAllElemntsWorked()
@@ -218,64 +207,72 @@ public class PuzzlePlayer : MonoBehaviour
 
         return true;
     }
-
-    private void SetNextStep()
+    private void ClearGame()
     {
-        var evtHandler = GetComponent<CaffeEventHandler>();
+        Debug.Log("게임 클리어");
+    }
+    private IEnumerator PuzzleFadeCoroutine(bool inToOut)
+    {
+        float timer = 0f;
+        float inverseFadeTime = 1 / fadeTime;
 
-        var evt = evtHandler.events [puzzleMaker.CurrData.eventIdx];
+        float sour = inToOut ? 1 : 0;
+        float dest = inToOut ? 0 : 1;
 
-        if(evt != null)
+        while (timer < fadeTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(sour, dest, timer * inverseFadeTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        canvasGroup.alpha = dest;
+
+        yield break;
+    }
+
+    private IEnumerator PuzzleFailureCoroutine()
+    {
+        failureAudio.Play();
+        foreach (var element in elements)
+        {
+            if (!element.IsWorked())
+                element.PlayFailEffect();
+        }
+
+        StartCoroutine(PuzzleFadeCoroutine(true));
+
+        yield return new WaitForSeconds(fadeTime + failEffectDelay);
+
+        puzzleMaker.ResetPuzzle();
+
+        StartCoroutine(PuzzleFadeCoroutine(false));
+    }
+    private IEnumerator PuzzleSuccessCoroutine()
+    {
+        successAudio.Play();
+        StartCoroutine(PuzzleFadeCoroutine(true));
+
+        var evt = puzzleMaker.GetCurrEvt();
+
+        if (evt != null)
             evt.OnEvent(elements);
+
+        yield return new WaitForSeconds(evt.GetEvtTime());
 
         if (!puzzleMaker.IsRemainPuzzle())
         {
             ClearGame();
-            return;
+            yield break;
         }
 
-        StartCoroutine(PuzzleFadeCoroutine(true, 1f));        
-    }
+        puzzleMaker.SetNextStep();
+        puzzleMaker.ResetPuzzle();
 
+        StartCoroutine(PuzzleFadeCoroutine(false));
 
-    private void ClearGame()
-    {
-        
-    }
-
-    private IEnumerator PuzzleFadeCoroutine(bool goNextStep, float startDelay = 0f)
-    {   
-        yield return new WaitForSeconds(startDelay);
-
-        float timer = 0f;
-        float inverseFadeTime = 1 / fadeTime;
-
-        while(timer < fadeTime)
-        {
-            canvasGroup.alpha = Mathf.Lerp(1, 0, timer * inverseFadeTime);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        canvasGroup.alpha = 0;
-
-        if(goNextStep)
-            puzzleMaker.SetNextStep();
-        else
-            ResetGame();
-
-        yield return new WaitForSeconds(puzzleChangeInterval);
-        timer = 0f;
-
-        while (timer < fadeTime)
-        {
-            canvasGroup.alpha = Mathf.Lerp(0, 1, timer * inverseFadeTime);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        canvasGroup.alpha = 1;
-    }
+        yield break;
+    }    
 
     private void ResetGame()
     {

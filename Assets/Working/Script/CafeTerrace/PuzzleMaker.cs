@@ -224,11 +224,8 @@ public class PuzzleMaker : MonoBehaviour
             instancedElements.Add(element);
         }
     }
-    public void SetNextStep()
-    {
-        CurrData = puzzleDatas[++currStep];
-        ResetPuzzle();
-    }
+    public void SetNextStep() => CurrData = puzzleDatas[++currStep];
+
     public bool IsRemainPuzzle() => currStep < puzzleDatas.Length - 1;
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
     public PuzzleNode[,] GetPuzzle() => puzzle;
@@ -239,4 +236,5 @@ public class PuzzleMaker : MonoBehaviour
     public PuzzleNode GetEnterNode() => puzzle[CurrData.enterPos.y,CurrData.enterPos.x];
     public PuzzleNode GetExitNode() => puzzle[CurrData.exitPos.y, CurrData.exitPos.y];
     public GameObject GetIndicator()=> indicator;
+    public CaffeEventDeafault GetCurrEvt() => GetComponent<CaffeEventHandler>().events[CurrData.eventIdx];
 }
