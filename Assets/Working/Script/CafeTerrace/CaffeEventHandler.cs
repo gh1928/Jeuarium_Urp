@@ -9,12 +9,11 @@ namespace CaffeEvent
     {
         None = -1,
         Window = 0,
+        Lantern,
+        Aquarius,
     }
 }
 public class CaffeEventHandler : MonoBehaviour
 {
-    public bool StepOne { get; set; } = false;
-    public bool StepTwo { get; set; } = false;
-
     public CaffeEventDeafault[] events;
 }

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public enum Elements
 {
     None = -1,
-    Lantern = 0
+    Lantern = 0,
+    Aqua = 1,
 }
 public abstract class PuzzleElement : MonoBehaviour
 {

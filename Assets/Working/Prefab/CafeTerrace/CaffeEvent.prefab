@@ -242,7 +242,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5099332581664256907}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1202305541206138046
 AudioSource:
@@ -389,6 +389,57 @@ MonoBehaviour:
   target: {fileID: 0}
   waitBeforeTrans: 3
   waitAfterTrans: 1
+--- !u!1 &4084729277345105512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4447547593563727756}
+  - component: {fileID: 5357323980922435846}
+  m_Layer: 0
+  m_Name: AquariusEvent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4447547593563727756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4084729277345105512}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5099332581664256907}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5357323980922435846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4084729277345105512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf34902efed72048af9fed485a0f7a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalEvtTime: 15
+  aquariusPrefab: {fileID: 2977158428500085388, guid: 8f781ed8ee070fb4cb9f8ffcf12998bb,
+    type: 3}
+  aquariusPos: {x: -3.4, y: 9.8, z: -5.2}
+  trailPrefab: {fileID: 1878646258122045332, guid: 61411100d5066af4f950615682c6d4d1,
+    type: 3}
+  waitBeforeTrans: 3
+  waitAfterTrans: 1
 --- !u!1 &5099332581664256902
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +479,7 @@ RectTransform:
   - {fileID: 1321678002}
   - {fileID: 4136766975967446910}
   - {fileID: 58436636356189769}
+  - {fileID: 4447547593563727756}
   - {fileID: 6013954007094437100}
   - {fileID: 7823861306356387535}
   - {fileID: 7082875240997677570}
@@ -526,6 +578,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b, type: 2}
   elementPrefabs:
   - {fileID: 6077612434883308300, guid: 5d8a19ee1db014c4ebef7989274b6065, type: 3}
+  - {fileID: -2173663344328902987, guid: 5031f4af8cb2824468987cf13e3f773a, type: 3}
 --- !u!1183024399 &107224957997567322
 LookAtConstraint:
   m_ObjectHideFlags: 0
@@ -560,7 +613,7 @@ MonoBehaviour:
   speedMult: 2
   minDistanceToMove: 0.1
   minDistanceToExitNode: 0.15
-  fadeTime: 2
+  fadeTime: 2.5
   puzzleChangeInterval: 1
   successAudio: {fileID: 1202305541206138046}
   failureAudio: {fileID: 8049912893657906211}
@@ -581,6 +634,7 @@ MonoBehaviour:
   events:
   - {fileID: 5714862740088718796}
   - {fileID: 7460665540221018863}
+  - {fileID: 5357323980922435846}
 --- !u!225 &8383333234348575925
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -620,7 +674,7 @@ RectTransform:
   m_GameObject: {fileID: 5099332582311602708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 5099332581664256907}
   m_RootOrder: 0
@@ -713,7 +767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalEvtTime: 3
   windowMaterial: {fileID: 2100000, guid: 4e4e60e406dcab14ebb7457fe292f532, type: 2}
-  blinkTime: 1000
+  blinkTime: 15
 --- !u!1 &7777770044979561503
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,7 +797,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5099332581664256907}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &754851418925889201
 AudioSource:
@@ -870,7 +924,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5099332581664256907}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &8049912893657906211
 AudioSource:
