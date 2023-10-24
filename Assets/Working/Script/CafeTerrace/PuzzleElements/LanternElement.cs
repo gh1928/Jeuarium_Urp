@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LanternElement : PuzzleElement
 {
-    public Image lanternLight;
+    //public Image lanternLight;
 
     public float blinkTime = 0.5f;
     public int blinkCount = 2;
@@ -25,8 +25,8 @@ public class LanternElement : PuzzleElement
         base.OnWorked();
         mainImage.color = workedColor;
 
-        lanternLight.enabled = true;
-        lanternLight.color = workedColor;
+        //lanternLight.enabled = true;
+        //lanternLight.color = workedColor;
     }
     public override void OffWorked()
     {
@@ -35,7 +35,7 @@ public class LanternElement : PuzzleElement
         base.OffWorked();
         mainImage.color = baseColor;
 
-        lanternLight.enabled = false;
+        //lanternLight.enabled = false;
         //lanternLight.color = baseColor;
     }
     //public override void PlaySuccessEffect() => StartCoroutine(SuccessEffectCoroutine());

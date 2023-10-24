@@ -15,67 +15,67 @@ MonoBehaviour:
   PuzzleSize: 5
   puzzleInfo: []
   elementsInfo:
-  - elements: 1
+  - elements: 0
     nodeNumber: 1
     placeAtNode: 1
     placeAtTop: 0
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 4
     placeAtNode: 1
     placeAtTop: 0
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 3
     placeAtNode: 0
     placeAtTop: 1
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 5
     placeAtNode: 1
     placeAtTop: 0
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 6
     placeAtNode: 0
     placeAtTop: 0
     placeAtRight: 1
-  - elements: 1
+  - elements: 0
     nodeNumber: 7
     placeAtNode: 0
     placeAtTop: 0
     placeAtRight: 1
-  - elements: 1
+  - elements: 0
     nodeNumber: 5
     placeAtNode: 0
     placeAtTop: 1
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 10
     placeAtNode: 0
     placeAtTop: 0
     placeAtRight: 1
-  - elements: 1
+  - elements: 0
     nodeNumber: 11
     placeAtNode: 0
     placeAtTop: 1
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 12
     placeAtNode: 1
     placeAtTop: 0
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 13
     placeAtNode: 0
     placeAtTop: 1
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 17
     placeAtNode: 1
     placeAtTop: 0
     placeAtRight: 0
-  - elements: 1
+  - elements: 0
     nodeNumber: 23
     placeAtNode: 1
     placeAtTop: 0

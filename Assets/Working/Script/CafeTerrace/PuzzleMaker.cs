@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PuzzleMaker : MonoBehaviour
@@ -68,10 +69,16 @@ public class PuzzleMaker : MonoBehaviour
 
         rect.localScale = scale;
         lookAtConstraints.enabled = true;
+
+        var button = enterPoint.GetComponent<Button>();
+        GetComponent<PuzzlePlayer>().AddToButtonStartPlay(button);
     }
     public void StopPuzzle()
     {
         GetComponent<PuzzlePlayer>().StopPlay();
+        var button = enterPoint.GetComponent<Button>();
+        button.onClick.RemoveAllListeners();
+
         Destroy(puzzleHolder.gameObject);
     }
     public void ResetPuzzle()

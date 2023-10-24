@@ -291,6 +291,8 @@ public class PuzzlePlayer : MonoBehaviour
 
         return look.y > 0 ? PuzzleDir.Up : PuzzleDir.Down;
     }
+
+    public void AddToButtonStartPlay(UnityEngine.UI.Button button) => button.onClick.AddListener(StartPlay);
     public void StopPlay() => isPlaying = false;
     public void PlayElementSound() => elementSound.Play();
 }
