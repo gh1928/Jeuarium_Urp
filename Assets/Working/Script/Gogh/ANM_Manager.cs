@@ -431,9 +431,11 @@ partial class ANM_Manager
 partial class ANM_Manager
 {
     [Header("HAND_CONTROLLER ==================================================")]
+    [SerializeField] Transform Player_body;
     [SerializeField] List<BNG.HandController> Hand_hands;
 
     ////////// Getter & Setter  //////////
+    public Transform ANM_Player_body    { get { return Player_body; }   }
 
     ////////// Method           //////////
     public bool ANM_Hand_GrabRelease(GameObject _obj)
