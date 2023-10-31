@@ -22,7 +22,7 @@ public partial class PuzzleGame : MonoBehaviour
         {
             do
             {
-                rand = Random.Range(0, 12);
+                rand = Random.Range(0, pieces.Count);
             } while (randNum.Contains(rand));
             pieces_Shuffle.Add(pieces[rand]);
             pieces[rand].localPosition = new Vector3(0.203f * (i % 3) - 0.203f, 0.3f - 0.2f * (i / 3), pieces[rand].localPosition.z);
@@ -34,6 +34,8 @@ public partial class PuzzleGame : MonoBehaviour
             isReady = true;
             gameObject.SetActive(false);
         }
+
+        ANM_Basic_Start();
     }
 
     public void SetTrigger(TriggerSet t)
@@ -81,13 +83,24 @@ public partial class PuzzleGame : MonoBehaviour
             }
         }
     }
+
+    //
+    private void Update()
+    {
+        ANM_Basic_Update();
+    }
 }
 
 partial class PuzzleGame
 {
     [Header("BASIC ==================================================")]
     [SerializeField] ANM_Manager Basic_Manager;
+    [SerializeField] float Basic_distanceMin;
+    [SerializeField] float Basic_distanceMax;
 
+    [Header("RUNNING")]
+    [SerializeField] float Basic_distance;
+    [SerializeField] float Basic_distanceRange;
 
     ////////// Getter & Setter  //////////
 
@@ -98,4 +111,37 @@ partial class PuzzleGame
     }
 
     ////////// Unity            //////////
+    void ANM_Basic_Start()
+    {
+        Basic_distanceRange = Basic_distanceMax - Basic_distanceMin;
+    }
+
+    void ANM_Basic_Update()
+    {
+        Vector3 pos = this.transform.position;
+        pos -= Basic_Manager.ANM_Player_body.position;
+        float distance = Mathf.Sqrt(Mathf.Pow(pos.x, 2) + Mathf.Pow(pos.y, 2) + Mathf.Pow(pos.z, 2));
+        if (Basic_distance != distance)
+        {
+            Debug.Log(distance);
+            Basic_distance = distance;
+
+            float alpha = 0.0f;
+            if(Basic_distance < Basic_distanceMin)
+            {
+                alpha = 1.0f;
+            }
+            else if(Basic_distance < Basic_distanceMax)
+            {
+                alpha = 1.0f - ((Basic_distance - Basic_distanceMin) / Basic_distanceRange);
+            }
+
+            for(int i = 0; i < pieces.Count; i++)
+            {
+                Color color = pieces[i].Find("Text").GetComponent<MeshRenderer>().materials[0].GetColor("_FaceColor");
+                color.a = alpha;
+                pieces[i].Find("Text").GetComponent<MeshRenderer>().materials[0].SetColor("_FaceColor", color);
+            }
+        }
+    }
 }
