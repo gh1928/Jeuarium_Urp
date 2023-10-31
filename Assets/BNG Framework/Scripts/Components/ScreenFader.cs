@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace BNG {
-    public class ScreenFader : MonoBehaviour {
+    public partial class ScreenFader : MonoBehaviour {
 
         [Tooltip("Should the screen fade in when a new level is loaded")]
         public bool FadeOnSceneLoaded = true;
@@ -30,9 +30,12 @@ namespace BNG {
         IEnumerator fadeRoutine;
         string faderName = "ScreenFader";
 
+        void Awake()
+        {
+            //initialize();
 
-        void Awake() {
-            initialize();
+            // 황영재 편집
+            Basic_Awake();
         }
 
         protected virtual void initialize() {
@@ -57,6 +60,7 @@ namespace BNG {
 
                 canvasGroup = fadeObject.AddComponent<CanvasGroup>();
                 canvasGroup.interactable = false;
+                Debug.Log(canvasGroup.name);
 
                 fadeImage = fadeObject.AddComponent<Image>();
                 fadeImage.color = FadeColor;
@@ -190,6 +194,30 @@ namespace BNG {
             // Disable Canvas if we're done
             if (alphaValue == 0 && canvasGroup.gameObject.activeSelf) {
                 canvasGroup.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    partial class ScreenFader
+    {
+        [Header("HYJ_ADD ==================================================")]
+        [SerializeField] bool Basic_isOn;
+
+        ////////// Getter & Setter  //////////
+
+        ////////// Method           //////////
+
+        ////////// Unity            //////////
+
+        private void Basic_Awake()
+        {
+            if (Basic_isOn)
+            {
+                initialize();
+            }
+            else
+            {
+                this.enabled = false;
             }
         }
     }

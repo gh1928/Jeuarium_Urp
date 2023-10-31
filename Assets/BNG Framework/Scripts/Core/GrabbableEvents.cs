@@ -26,6 +26,7 @@ namespace BNG {
         /// </summary>
         /// <param name="grabber"></param>
         public virtual void OnGrab(Grabber grabber) {
+
             thisGrabber = grabber;
         }
         

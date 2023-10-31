@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -39,7 +38,15 @@ public class TriggerSet
     {
         triggers.Invoke(this);
 
-        yield return new WaitUntil(() => { bool r = true; foreach (bool b in isTriggered) { r &= b; } return r; });
+        yield return new WaitUntil(() =>
+        {
+            foreach (var trigger in isTriggered)
+            {
+                if (!trigger) return false;
+            }                
+            return true;
+        });
+
         events.Invoke();
     }
 }

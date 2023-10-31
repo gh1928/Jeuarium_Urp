@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BNG
 {
-    public class ObjectMovementRestrict : GrabbableEvents
+    public partial class ObjectMovementRestrict : GrabbableEvents
     {
         public bool move_Position = false;
         public Vector3 dest_Pos;
@@ -46,6 +46,8 @@ namespace BNG
             scale = transform.localScale;
 
             dist = (dest_Pos - pos).magnitude;
+
+            ANM_Check_Start();
         }
 
         void Update()
@@ -75,11 +77,63 @@ namespace BNG
 
             }
             else transform.position = pos;
+
+            //
+            ANM_Check_Update();
         }
 
         public void TestLog()
         {
             Debug.Log("OK");
+        }
+    }
+
+    // 황영재 추가.
+    // clamp와 연동된 값을 체크하여, max_Clamp와 위치값이 같을 때, 다음 단계로 진행하도록 한다.
+    partial class ObjectMovementRestrict
+    {
+        [Header("CHECK ==================================================")]
+        [SerializeField] List<HandController> ANM_Check_controllers;
+        [SerializeField] Grabbable ANM_Check_Next;
+
+        [Header("RUNNING")]
+        [SerializeField] bool ANM_Check_isCheck;
+
+        ////////// Getter & Setter  //////////
+
+        ////////// Method           //////////
+
+        ////////// Unity            //////////
+        void ANM_Check_Start()
+        {
+            ANM_Check_isCheck = true;
+        }
+
+        void ANM_Check_Update()
+        {
+            if (ANM_Check_isCheck)
+            {
+                bool isCatch = false;
+                for (int i = 0; i < ANM_Check_controllers.Count; i++)
+                {
+                    if ((ANM_Check_controllers[i].PreviousHeldObject != null) && (ANM_Check_controllers[i].PreviousHeldObject.Equals(this.gameObject)))
+                    {
+                        isCatch = true;
+                        break;
+                    }
+                }
+
+                if (!isCatch)
+                {
+                    if (isClamp && transform.localPosition.Equals(max_Clamp))
+                    {
+                        this.GetComponent<Grabbable>().enabled = false;
+                        ANM_Check_Next.enabled = true;
+
+                        ANM_Check_isCheck = false;
+                    }
+                }
+            }
         }
     }
 };

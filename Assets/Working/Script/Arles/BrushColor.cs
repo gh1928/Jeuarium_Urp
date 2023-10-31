@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 컵에 들어있는 물의 색으로 브러쉬 색을 변경합니다.
 /// </summary>
-public class BrushColor : MonoBehaviour
+public partial class BrushColor : MonoBehaviour
 {
     public GameObject cup;
     CupFilling cf;
@@ -26,10 +26,10 @@ public class BrushColor : MonoBehaviour
         {
             GetComponent<MeshRenderer>().material.color = _other.transform.GetComponent<MeshRenderer>().material.GetColor(other_Color_name);
         }
-        else if (_other.CompareTag("Canvas") && cf.isOK)
-        {
-            trigger.SwitchOn();
-        }
+        //else if (_other.CompareTag("Canvas") && cf.isOK)
+        //{
+        //    trigger.SwitchOn();
+        //}
     }
 
     public void SetTrigger(TriggerSet t)
