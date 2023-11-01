@@ -180,6 +180,7 @@ public partial class ANM_ColorPainting_Obj : GrabbableEvents
     }
 
     //
+    //
     void ANM_Update__TRANSFORM__INIT()
     {
         if (Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj != null)
@@ -188,13 +189,36 @@ public partial class ANM_ColorPainting_Obj : GrabbableEvents
             {
                 Basic_vec3s = new List<Vector3>();
             }
-            while (Basic_vec3s.Count < 2)
+            while (Basic_vec3s.Count < 4)
             {
                 Basic_vec3s.Add(new Vector3());
             }
-            Basic_vec3s[0] = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            Basic_vec3s[1] = new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
 
+            // position
+            Basic_vec3s[0]
+                = new Vector3(
+                    this.transform.position.x,
+                    this.transform.position.y,
+                    this.transform.position.z);
+            Basic_vec3s[1]
+                = new Vector3(
+                    Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.position.x - Basic_vec3s[0].x,
+                    Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.position.y - Basic_vec3s[0].y,
+                    Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.position.z - Basic_vec3s[0].z);
+
+            // rotation
+            Basic_vec3s[2]
+                = new Vector3(
+                    this.transform.rotation.eulerAngles.x,
+                    this.transform.rotation.eulerAngles.y,
+                    this.transform.rotation.eulerAngles.z);
+            Basic_vec3s[3]
+                = new Vector3(
+                    ANM_Update__TRANSFORM__INIT_CalcRot(Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.rotation.eulerAngles.x - Basic_vec3s[2].x),
+                    ANM_Update__TRANSFORM__INIT_CalcRot(Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.rotation.eulerAngles.y - Basic_vec3s[2].y),
+                    ANM_Update__TRANSFORM__INIT_CalcRot(Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.rotation.eulerAngles.z - Basic_vec3s[2].z));
+
+            //
             this.transform.parent = Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform;
         }
 
@@ -204,6 +228,26 @@ public partial class ANM_ColorPainting_Obj : GrabbableEvents
         Basic_phase = PHASE.TRANSFORM;
     }
 
+    float ANM_Update__TRANSFORM__INIT_CalcRot(float _value)
+    {
+        float res = _value;
+
+        //
+        if(_value > 180.0f)
+        {
+            res -= 360.0f;
+        }
+        else if(_value < -180.0f)
+        {
+            res += 360.0f;
+        }
+
+        Debug.Log(res);
+        //
+        return res;
+    }
+
+    //
     void ANM_Update__TRANSFORM()
     {
         Basic_transformDatasTimer += Time.deltaTime;
@@ -216,17 +260,29 @@ public partial class ANM_ColorPainting_Obj : GrabbableEvents
 
         if (Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj != null)
         {
+            float lerp = Basic_transformDatasTimer / Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_time;
             this.transform.position
-                = Vector3.Lerp(
-                    Basic_vec3s[0],
-                    Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.position,
-                    Basic_transformDatasTimer / Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_time);
+                = new Vector3(
+                    Basic_vec3s[0].x + (Basic_vec3s[1].x * lerp),
+                    Basic_vec3s[0].y + (Basic_vec3s[1].y * lerp),
+                    Basic_vec3s[0].z + (Basic_vec3s[1].z * lerp));
             this.transform.rotation
                 = Quaternion.Euler(
-                    Vector3.Lerp(
-                        Basic_vec3s[1],
-                        Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.rotation.eulerAngles,
-                        Basic_transformDatasTimer / Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_time));
+                    Basic_vec3s[2].x + (Basic_vec3s[3].x * lerp),
+                    Basic_vec3s[2].y + (Basic_vec3s[3].y * lerp),
+                    Basic_vec3s[2].z + (Basic_vec3s[3].z * lerp));
+
+            //this.transform.position
+            //    = Vector3.Lerp(
+            //        Basic_vec3s[0],
+            //        Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.position,
+            //        Basic_transformDatasTimer / Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_time);
+            //this.transform.rotation
+            //    = Quaternion.Euler(
+            //        Vector3.Lerp(
+            //            Basic_vec3s[1],
+            //            Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_obj.transform.rotation.eulerAngles,
+            //            Basic_transformDatasTimer / Basic_transformDatas[Basic_transformDatasNum].ANM_Basic_data.ANM_Basic_time));
         }
     }
 
