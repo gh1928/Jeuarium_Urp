@@ -58,6 +58,13 @@ partial class ANM_GoghYellowhouse_Manager
     [SerializeField] MeshRenderer   Knife_mixMat;
     [SerializeField] MeshRenderer   Knife_knifePaintMR;
 
+    [Header("RUNNING")]
+    [SerializeField] float Knife_red;
+    [SerializeField] float Knife_green;
+    [SerializeField] float Knife_blue;
+
+    [SerializeField] float Knife_max;
+
     ////////// Getter & Setter  //////////
 
     ////////// Method           //////////
@@ -68,13 +75,21 @@ partial class ANM_GoghYellowhouse_Manager
 
     public void ANM_Knife_Mix()
     {
-        Color color0 = Knife_mixMat.material.GetColor(      "_BaseColor");
         Color color1 = Knife_knifePaintMR.material.GetColor("_BaseColor");
 
-        color0.r = (color0.r + color1.r) * 0.5f;
-        color0.g = (color0.g + color1.g) * 0.5f;
-        color0.b = (color0.b + color1.b) * 0.5f;
-        color0.a = 1.0f;
+        //
+        Knife_red += color1.r;
+        if (Knife_red > Knife_max)  { Knife_max = Knife_red;    }
+
+        Knife_green += color1.g;
+        if(Knife_green > Knife_max) { Knife_max = Knife_green;  }
+
+        Knife_blue  += color1.b;
+        if (Knife_blue > Knife_max) { Knife_max = Knife_blue;   }
+
+        //
+        Color color0 = new Color(Knife_red / Knife_max, Knife_green / Knife_max, Knife_blue / Knife_max, 1.0f);
+
         Knife_mixMat.material.SetColor("_BaseColor", color0);
     }
 
