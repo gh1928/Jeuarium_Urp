@@ -51,3 +51,32 @@ partial class ANM_GoghYellowhouse_Manager
         Brush_tools.rotation = Brush_painter.rotation;
     }
 }
+
+partial class ANM_GoghYellowhouse_Manager
+{
+    [Header("KNIFW ==================================================")]
+    [SerializeField] MeshRenderer   Knife_mixMat;
+    [SerializeField] MeshRenderer   Knife_knifePaintMR;
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+    public void ANM_Knife_SelectMat(Material _selectMat)
+    {
+        Knife_knifePaintMR.material = _selectMat;
+    }
+
+    public void ANM_Knife_Mix()
+    {
+        Color color0 = Knife_mixMat.material.GetColor(      "_BaseColor");
+        Color color1 = Knife_knifePaintMR.material.GetColor("_BaseColor");
+
+        color0.r = (color0.r + color1.r) * 0.5f;
+        color0.g = (color0.g + color1.g) * 0.5f;
+        color0.b = (color0.b + color1.b) * 0.5f;
+        color0.a = 1.0f;
+        Knife_mixMat.material.SetColor("_BaseColor", color0);
+    }
+
+    ////////// Unity            //////////
+}
