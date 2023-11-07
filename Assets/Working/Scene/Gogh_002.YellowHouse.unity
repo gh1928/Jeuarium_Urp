@@ -2843,7 +2843,7 @@ MonoBehaviour:
   - triggers:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 815703212}
+        - m_Target: {fileID: 1098652481}
           m_TargetAssemblyTypeName: PaintBarrelTrigger, Assembly-CSharp
           m_MethodName: SetTrigger
           m_Mode: 0
@@ -2855,7 +2855,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 846060721}
+        - m_Target: {fileID: 799617166}
           m_TargetAssemblyTypeName: PaintBarrelTrigger, Assembly-CSharp
           m_MethodName: SetTrigger
           m_Mode: 0
@@ -2867,7 +2867,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1185065807}
+        - m_Target: {fileID: 588521580}
           m_TargetAssemblyTypeName: PaintBarrelTrigger, Assembly-CSharp
           m_MethodName: SetTrigger
           m_Mode: 0
@@ -5607,6 +5607,126 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Basic_Manager: {fileID: 1660487568}
+--- !u!1 &588521577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 588521578}
+  - component: {fileID: 588521579}
+  - component: {fileID: 588521580}
+  m_Layer: 0
+  m_Name: Paint_Wall
+  m_TagString: Paint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &588521578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588521577}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1020998, y: 0.0092999935, z: 0.0041996986}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1248497513}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &588521579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588521577}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BeingHeld: 0
+  GrabButton: 2
+  Grabtype: 2
+  GrabPhysics: 4
+  GrabMechanic: 1
+  GrabSpeed: 15
+  RemoteGrabbable: 0
+  RemoteGrabMechanic: 0
+  RemoteGrabDistance: 2
+  ThrowForceMultiplier: 2
+  ThrowForceMultiplierAngular: 1.5
+  BreakDistance: 0
+  HideHandGraphics: 0
+  ParentToHands: 0
+  ParentHandModel: 1
+  SnapHandModel: 1
+  CanBeDropped: 1
+  CanBeSnappedToSnapZone: 1
+  ForceDisableKinematicOnDrop: 0
+  InstantMovement: 0
+  MakeChildCollidersGrabbable: 0
+  handPoseType: 1
+  SelectedHandPose: {fileID: 0}
+  CustomHandPose: 0
+  SecondaryGrabBehavior: 0
+  TwoHandedPosition: 0
+  TwoHandedPostionLerpAmount: 0.5
+  TwoHandedRotation: 1
+  TwoHandedRotationLerpAmount: 0.5
+  TwoHandedDropBehavior: 0
+  TwoHandedLookVector: 0
+  SecondHandLookSpeed: 40
+  SecondaryGrabbable: {fileID: 0}
+  OtherGrabbableMustBeGrabbed: {fileID: 0}
+  CollisionSpring: 3000
+  CollisionSlerp: 500
+  CollisionLinearMotionX: 2
+  CollisionLinearMotionY: 2
+  CollisionLinearMotionZ: 2
+  CollisionAngularMotionX: 2
+  CollisionAngularMotionY: 2
+  CollisionAngularMotionZ: 2
+  ApplyCorrectiveForce: 1
+  MoveVelocityForce: 3000
+  MoveAngularVelocityForce: 90
+  LastGrabTime: 0
+  LastDropTime: 0
+  AddControllerVelocityOnDrop: 1
+  collisions: []
+  ActiveGrabPoint: {fileID: 0}
+  SecondaryLookOffset: {x: 0, y: 0, z: 0}
+  SecondaryLookAtTransform: {fileID: 0}
+  LocalOffsetTransform: {fileID: 0}
+  GrabPoints: []
+  UseCustomInspector: 1
+  lastFlickTime: 0
+  FlickForce: 1
+--- !u!114 &588521580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588521577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197f0d88b8b1aa3429fcbfee43baf3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paint: {fileID: 1022561306}
+  obj: {fileID: 2017133306}
+  list_Mat:
+  - {fileID: 2100000, guid: 2931d4f2135a15244bb89fdbf0e43042, type: 2}
+  - {fileID: -5254752162498044798, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: 752492319262309027, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  isSky: 0
 --- !u!43 &741288501
 Mesh:
   m_ObjectHideFlags: 0
@@ -8049,6 +8169,125 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &799617163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 799617164}
+  - component: {fileID: 799617165}
+  - component: {fileID: 799617166}
+  m_Layer: 0
+  m_Name: Paint_Sky
+  m_TagString: Paint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &799617164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799617163}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.08059956, y: 0.0092999935, z: -0.07929978}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1248497513}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &799617165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799617163}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BeingHeld: 0
+  GrabButton: 2
+  Grabtype: 2
+  GrabPhysics: 4
+  GrabMechanic: 1
+  GrabSpeed: 15
+  RemoteGrabbable: 0
+  RemoteGrabMechanic: 0
+  RemoteGrabDistance: 2
+  ThrowForceMultiplier: 2
+  ThrowForceMultiplierAngular: 1.5
+  BreakDistance: 0
+  HideHandGraphics: 0
+  ParentToHands: 0
+  ParentHandModel: 1
+  SnapHandModel: 1
+  CanBeDropped: 1
+  CanBeSnappedToSnapZone: 1
+  ForceDisableKinematicOnDrop: 0
+  InstantMovement: 0
+  MakeChildCollidersGrabbable: 0
+  handPoseType: 1
+  SelectedHandPose: {fileID: 0}
+  CustomHandPose: 0
+  SecondaryGrabBehavior: 0
+  TwoHandedPosition: 0
+  TwoHandedPostionLerpAmount: 0.5
+  TwoHandedRotation: 1
+  TwoHandedRotationLerpAmount: 0.5
+  TwoHandedDropBehavior: 0
+  TwoHandedLookVector: 0
+  SecondHandLookSpeed: 40
+  SecondaryGrabbable: {fileID: 0}
+  OtherGrabbableMustBeGrabbed: {fileID: 0}
+  CollisionSpring: 3000
+  CollisionSlerp: 500
+  CollisionLinearMotionX: 2
+  CollisionLinearMotionY: 2
+  CollisionLinearMotionZ: 2
+  CollisionAngularMotionX: 2
+  CollisionAngularMotionY: 2
+  CollisionAngularMotionZ: 2
+  ApplyCorrectiveForce: 1
+  MoveVelocityForce: 3000
+  MoveAngularVelocityForce: 90
+  LastGrabTime: 0
+  LastDropTime: 0
+  AddControllerVelocityOnDrop: 1
+  collisions: []
+  ActiveGrabPoint: {fileID: 0}
+  SecondaryLookOffset: {x: 0, y: 0, z: 0}
+  SecondaryLookAtTransform: {fileID: 0}
+  LocalOffsetTransform: {fileID: 0}
+  GrabPoints: []
+  UseCustomInspector: 1
+  lastFlickTime: 0
+  FlickForce: 1
+--- !u!114 &799617166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799617163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197f0d88b8b1aa3429fcbfee43baf3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paint: {fileID: 1682199982}
+  obj: {fileID: 0}
+  list_Mat:
+  - {fileID: 2100000, guid: f112bcd6a9a8b5e4abc0bb7535a8236f, type: 2}
+  - {fileID: 2100000, guid: 6b52b2b11d6006e40b2d257320892bbd, type: 2}
+  isSky: 1
 --- !u!1 &811412760
 GameObject:
   m_ObjectHideFlags: 0
@@ -20262,13 +20501,144 @@ RectTransform:
   m_AnchoredPosition: {x: -150, y: -150}
   m_SizeDelta: {x: 150, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1098652478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1098652479}
+  - component: {fileID: 1098652480}
+  - component: {fileID: 1098652481}
+  m_Layer: 0
+  m_Name: Paint_Window
+  m_TagString: Paint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1098652479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098652478}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.014700156, y: 0.0092999935, z: -0.10639972}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1248497513}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1098652480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098652478}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BeingHeld: 0
+  GrabButton: 2
+  Grabtype: 2
+  GrabPhysics: 4
+  GrabMechanic: 1
+  GrabSpeed: 15
+  RemoteGrabbable: 0
+  RemoteGrabMechanic: 0
+  RemoteGrabDistance: 2
+  ThrowForceMultiplier: 2
+  ThrowForceMultiplierAngular: 1.5
+  BreakDistance: 0
+  HideHandGraphics: 0
+  ParentToHands: 0
+  ParentHandModel: 1
+  SnapHandModel: 1
+  CanBeDropped: 1
+  CanBeSnappedToSnapZone: 1
+  ForceDisableKinematicOnDrop: 0
+  InstantMovement: 0
+  MakeChildCollidersGrabbable: 0
+  handPoseType: 1
+  SelectedHandPose: {fileID: 0}
+  CustomHandPose: 0
+  SecondaryGrabBehavior: 0
+  TwoHandedPosition: 0
+  TwoHandedPostionLerpAmount: 0.5
+  TwoHandedRotation: 1
+  TwoHandedRotationLerpAmount: 0.5
+  TwoHandedDropBehavior: 0
+  TwoHandedLookVector: 0
+  SecondHandLookSpeed: 40
+  SecondaryGrabbable: {fileID: 0}
+  OtherGrabbableMustBeGrabbed: {fileID: 0}
+  CollisionSpring: 3000
+  CollisionSlerp: 500
+  CollisionLinearMotionX: 2
+  CollisionLinearMotionY: 2
+  CollisionLinearMotionZ: 2
+  CollisionAngularMotionX: 2
+  CollisionAngularMotionY: 2
+  CollisionAngularMotionZ: 2
+  ApplyCorrectiveForce: 1
+  MoveVelocityForce: 3000
+  MoveAngularVelocityForce: 90
+  LastGrabTime: 0
+  LastDropTime: 0
+  AddControllerVelocityOnDrop: 1
+  collisions: []
+  ActiveGrabPoint: {fileID: 0}
+  SecondaryLookOffset: {x: 0, y: 0, z: 0}
+  SecondaryLookAtTransform: {fileID: 0}
+  LocalOffsetTransform: {fileID: 0}
+  GrabPoints: []
+  UseCustomInspector: 1
+  lastFlickTime: 0
+  FlickForce: 1
+--- !u!114 &1098652481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098652478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197f0d88b8b1aa3429fcbfee43baf3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paint: {fileID: 2003391509}
+  obj: {fileID: 476963777}
+  list_Mat:
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
+  isSky: 0
 --- !u!43 &1139326269
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh79022
+  m_Name: pb_Mesh31970
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -25552,6 +25922,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1888358415}
+  - {fileID: 1098652479}
+  - {fileID: 799617164}
+  - {fileID: 588521578}
   m_Father: {fileID: 316322482}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -29016,9 +29389,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Brush_tools: {fileID: 316322482}
   Brush_painter: {fileID: 358526417}
+  Brush_selectDatas:
+  - Basic_paintBarrelTrigger: {fileID: 1098652481}
+    Basic_color: {r: 0, g: 0, b: 0, a: 1}
+  - Basic_paintBarrelTrigger: {fileID: 799617166}
+    Basic_color: {r: 0, g: 1, b: 1, a: 1}
+  - Basic_paintBarrelTrigger: {fileID: 588521580}
+    Basic_color: {r: 1, g: 1, b: 0, a: 1}
   Brush_selectPaint: {fileID: 0}
   Knife_mixMat: {fileID: 1939324898}
   Knife_knifePaintMR: {fileID: 1350693412}
+  Knife_red: 0
+  Knife_green: 0
+  Knife_blue: 0
+  Knife_max: 0
 --- !u!143 &1675229221 stripped
 CharacterController:
   m_CorrespondingSourceObject: {fileID: 2093207351243708607, guid: 4ac7df741a9c0a2418ec19477729ee3d,
@@ -29112,7 +29496,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh78716
+  m_Name: pb_Mesh31642
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
