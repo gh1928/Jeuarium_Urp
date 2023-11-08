@@ -126,3 +126,46 @@ partial class ANM_GoghYellowhouse_Manager
 
     ////////// Unity            //////////
 }
+
+partial class ANM_GoghYellowhouse_Manager
+{
+    public enum Hand_Type
+    {
+        LEFT    = 0,
+        RIGHT
+    }
+
+    [Header("HAND_CONTROLLER ==================================================")]
+    [SerializeField] Transform Player_body;
+    [SerializeField] List<BNG.HandController> Hand_hands;
+
+    ////////// Getter & Setter  //////////
+    public Transform ANM_Player_body { get { return Player_body; } }
+
+    ////////// Method           //////////
+    public bool ANM_Hand_GrabRelease(Hand_Type _type, GameObject _obj)
+    {
+        bool res = false;
+
+        //
+        if (Hand_hands[(int)_type].GripAmount > 0)
+        {
+            if ((Hand_hands[(int)_type].PreviousHeldObject != null) && (Hand_hands[(int)_type].PreviousHeldObject.Equals(_obj)))
+            {
+                Hand_hands[(int)_type].grabber.TryRelease();
+                res = true;
+            }
+
+            if ((Hand_hands[(int)_type].grabber.RemoteGrabbingGrabbable != null) && (Hand_hands[(int)_type].grabber.RemoteGrabbingGrabbable.Equals(_obj.GetComponent<BNG.Grabbable>())))
+            {
+                Hand_hands[(int)_type].grabber.resetFlyingGrabbable();
+                res = true;
+            }
+        }
+
+        //
+        return res;
+    }
+
+    ////////// Unity            //////////
+}
