@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //
+using TMPro;
 using BNG;
 
 public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
@@ -23,8 +24,7 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
         MOVE,
         MOVE_END
     }
-    [SerializeField] ANM_GoghYellowhouse_Manager Basic_manager;
-    [SerializeField] List<Grabbable> Basic_Grabbables;
+    [SerializeField] ANM_Manager Basic_manager;
 
     [Header("RUNNING")]
     [SerializeField] bool Basic_isCatch;
@@ -57,11 +57,7 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
 
     public void ANM_Basic_BtnOK()
     {
-        this.gameObject.SetActive(false);
-        for(int i = 0; i < Basic_Grabbables.Count; i++)
-        {
-            Basic_Grabbables[i].enabled = true;
-        }
+        Basic_manager.ANM_Event_Trigger(this.gameObject);
     }
 
     ////////// Unity            //////////
@@ -74,43 +70,19 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
     // Update is called once per frame
     void Update()
     {
-        if (Basic_isCatch)
-        {
-            bool isClick = false;
-
-            if (InputBridge.Instance.RightGripDown)
-            {
-                isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_GoghYellowhouse_Manager.Hand_Type.RIGHT, this.gameObject);
-            }
-
-            if (!isClick)
-            {
-                if (InputBridge.Instance.LeftGripDown)
-                {
-                    isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_GoghYellowhouse_Manager.Hand_Type.LEFT, this.gameObject);
-                }
-            }
-
-            //
-            if (isClick)
-            {
-                Basic_phase = PHASE.OPEN_START;
-            }
-        }
-
         switch(Basic_phase)
         {
             case PHASE.INIT:
                 {
                     if (ANM_Open_Init())
                     {
-                        Basic_phase = PHASE.MOVE_START;
+                        Basic_phase = PHASE.NONE;
                     }
                 }
                 break;
 
             //
-            case PHASE.NONE:    {   }   break;
+            case PHASE.NONE:    { ANM_Baisc_Update__NONE(); }   break;
             
             //
             case PHASE.OPEN_START:  {       ANM_Open_Update__OPEN_START();      Basic_phase = PHASE.OPEN;           }   break;
@@ -123,6 +95,34 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
             case PHASE.MOVE_END:    {       ANM_Move_Update__MOVE_END();        Basic_phase = PHASE.NONE;           }   break;
         }
     }
+
+    void ANM_Baisc_Update__NONE()
+    {
+        if (Basic_isCatch)
+        {
+            bool isClick = false;
+
+            if (InputBridge.Instance.RightGripDown)
+            {
+                isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.RIGHT, this.gameObject);
+            }
+
+            if (!isClick)
+            {
+                if (InputBridge.Instance.LeftGripDown)
+                {
+                    isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.LEFT, this.gameObject);
+                }
+            }
+
+            //
+            if (isClick)
+            {
+                Basic_isCatch = false;
+                Basic_manager.ANM_Event_Trigger(this.gameObject);
+            }
+        }
+    }
 }
 
 partial class ANM_GoghYellowhouse_Letter
@@ -130,10 +130,15 @@ partial class ANM_GoghYellowhouse_Letter
     [Header("OPEN ==================================================")]
     [SerializeField] Animator   Open_animator;
     [SerializeField] Canvas     Open_canvas;
+    [SerializeField] TMP_Text   Open_text;
 
     ////////// Getter & Setter  //////////
 
     ////////// Method           //////////
+    public void ANM_Open_Setting()
+    {
+        Basic_phase = PHASE.OPEN_START;
+    }
 
     ////////// Unity            //////////
     //
@@ -158,6 +163,7 @@ partial class ANM_GoghYellowhouse_Letter
     {
         Open_animator.SetTrigger("Next");
         this.GetComponent<BNG.Grabbable>().enabled = false;
+        Open_text.text = Move_datas[Move_num].ANM_Basic_str;
     }
 
     bool ANM_Open_Update__OPEN()
@@ -168,9 +174,6 @@ partial class ANM_GoghYellowhouse_Letter
         if( (Open_animator.GetCurrentAnimatorStateInfo(0).IsName("Open")) &&
             (Open_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f))
         {
-            Open_animator.gameObject.SetActive(false);
-            Open_canvas.gameObject.SetActive(true);
-
             res = true;
         }
 
@@ -180,7 +183,10 @@ partial class ANM_GoghYellowhouse_Letter
 
     void ANM_Open_Update__OPEN_END()
     {
+        Open_animator.SetTrigger("Next");
 
+        //
+        Basic_manager.ANM_Event_Trigger(this.gameObject);
     }
 }
 
@@ -189,13 +195,16 @@ partial class ANM_GoghYellowhouse_Letter
     [System.Serializable]
     public class Move_Data
     {
-        [SerializeField] Transform Basic_startPoint;
-        [SerializeField] float Basic_time;
+        [SerializeField] Transform  Basic_startPoint;
+        [SerializeField] float      Basic_time;
+        [SerializeField] string     Basic_str;
 
         ////////// Getter & Setter  //////////
         public Transform ANM_Basic_startPoint { get { return Basic_startPoint; } }
 
         public float ANM_Basic_time { get { return Basic_time; } }
+
+        public string ANM_Basic_str { get { return Basic_str; } }
 
         ////////// Method           //////////
 
@@ -213,6 +222,16 @@ partial class ANM_GoghYellowhouse_Letter
     ////////// Getter & Setter  //////////
 
     ////////// Method           //////////
+    public void ANM_Move_Setting(int _num)
+    {
+        Open_animator.gameObject.SetActive(false);
+        Open_canvas.gameObject.SetActive(false);
+        this.gameObject.SetActive(true);
+
+        Basic_phase = PHASE.MOVE_START;
+
+        Move_num = _num;
+    }
 
     ////////// Unity            //////////
     void ANM_Move_Start()
@@ -226,7 +245,10 @@ partial class ANM_GoghYellowhouse_Letter
         this.GetComponent<Grabbable>().enabled = false;
         this.GetComponent<UnityEngine.Animations.LookAtConstraint>().constraintActive = false;
 
-        Move_num++;
+        this.transform.rotation = Quaternion.Euler(Vector3.zero);
+        Open_animator.transform.position = Move_datas[Move_num].ANM_Basic_startPoint.position;
+        Open_animator.gameObject.SetActive(true);
+
         Move_timer = 0.0f;
         Move_rotateSpeed = 360.0f / Move_datas[Move_num].ANM_Basic_time;
     }
@@ -256,6 +278,8 @@ partial class ANM_GoghYellowhouse_Letter
 
     void ANM_Move_Update__MOVE_END()
     {
+        Basic_manager.ANM_Event_Trigger(this.gameObject);
+
         this.GetComponent<Grabbable>().enabled = true;
         this.GetComponent<UnityEngine.Animations.LookAtConstraint>().constraintActive = true;
     }

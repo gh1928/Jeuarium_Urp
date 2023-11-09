@@ -629,6 +629,7 @@ MonoBehaviour:
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
+  Brush_manager: {fileID: 0}
 --- !u!82 &81426792
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1215,7 +1216,7 @@ LookAtConstraint:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164371036}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Weight: 1
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_RotationOffset: {x: 0, y: 180, z: 0}
@@ -1256,17 +1257,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4450d8b9212b64c8f4173fa6a29877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Basic_manager: {fileID: 1660487568}
-  Basic_Grabbables:
-  - {fileID: 1926634598}
-  - {fileID: 350148321}
+  Basic_manager: {fileID: 1660487569}
   Basic_isCatch: 0
   Basic_phase: 0
   Open_animator: {fileID: 419241582}
   Open_canvas: {fileID: 906383723}
+  Open_text: {fileID: 485892978}
   Move_datas:
   - Basic_startPoint: {fileID: 1170351683}
     Basic_time: 5
+    Basic_str: "\uC628 \uC138\uC0C1\uC744 \uCE60\uD558\uACE0 \uC2F6\uC5B4."
+  - Basic_startPoint: {fileID: 1170351683}
+    Basic_time: 5
+    Basic_str: "\uCE74\uD398\uD14C\uB77C\uC2A4\uC5D0 \uAC00\uACE0 \uC2F6\uC5B4."
   Move_num: -1
   Move_timer: 0
   Move_rotateSpeed: 0
@@ -3128,7 +3131,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335067273}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dcb492e76f6daf4cafc551aa425aef6, type: 3}
   m_Name: 
@@ -3141,7 +3144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335067273}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8f9b9659b07a914292ccd39b358b755, type: 3}
   m_Name: 
@@ -3371,6 +3374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ANI_close_to_open.Ver.1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a52a624ec6279a14f9b0d76f62a7f84a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a52a624ec6279a14f9b0d76f62a7f84a, type: 3}
@@ -3674,7 +3682,7 @@ PrefabInstance:
     - target: {fileID: 2093207351243708607, guid: 4ac7df741a9c0a2418ec19477729ee3d,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2093207351243708607, guid: 4ac7df741a9c0a2418ec19477729ee3d,
         type: 3}
@@ -6132,7 +6140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC628 \uC138\uC0C1\uC744 \uCE60\uD558\uACE0 \uC2F6\uC5B4"
+  m_text: "\uC628 \uC138\uC0C1\uC744 \uCE60\uD558\uACE0 \uC2F6\uC5B4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d848b65e4d2b3b54e9830e61d8d23849, type: 2}
   m_sharedMaterial: {fileID: 5417953332734533993, guid: d848b65e4d2b3b54e9830e61d8d23849,
@@ -6388,6 +6396,7 @@ MonoBehaviour:
   - {fileID: -5254752162498044798, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   - {fileID: 752492319262309027, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
+  Brush_manager: {fileID: 1660487569}
 --- !u!43 &741288501
 Mesh:
   m_ObjectHideFlags: 0
@@ -8949,6 +8958,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f112bcd6a9a8b5e4abc0bb7535a8236f, type: 2}
   - {fileID: 2100000, guid: 6b52b2b11d6006e40b2d257320892bbd, type: 2}
   isSky: 1
+  Brush_manager: {fileID: 1660487569}
 --- !u!1 &811412760
 GameObject:
   m_ObjectHideFlags: 0
@@ -9175,6 +9185,7 @@ MonoBehaviour:
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
+  Brush_manager: {fileID: 0}
 --- !u!1 &816475475
 GameObject:
   m_ObjectHideFlags: 0
@@ -15573,6 +15584,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f112bcd6a9a8b5e4abc0bb7535a8236f, type: 2}
   - {fileID: 2100000, guid: 6b52b2b11d6006e40b2d257320892bbd, type: 2}
   isSky: 1
+  Brush_manager: {fileID: 0}
 --- !u!1 &906383719
 GameObject:
   m_ObjectHideFlags: 0
@@ -21395,13 +21407,14 @@ MonoBehaviour:
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
+  Brush_manager: {fileID: 1660487569}
 --- !u!43 &1139326269
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh205920
+  m_Name: pb_Mesh436444
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -21654,6 +21667,7 @@ MonoBehaviour:
   - {fileID: -5254752162498044798, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   - {fileID: 752492319262309027, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
+  Brush_manager: {fileID: 0}
 --- !u!114 &1185065808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26901,6 +26915,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Intro
       objectReference: {fileID: 0}
+    - target: {fileID: 3861944832747385280, guid: f3f441f81054d9a40bb46186c9a7da5a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5533118932797519083, guid: f3f441f81054d9a40bb46186c9a7da5a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -30280,6 +30299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1660487567}
   - component: {fileID: 1660487568}
+  - component: {fileID: 1660487569}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -30329,6 +30349,148 @@ MonoBehaviour:
   Knife_green: 0
   Knife_blue: 0
   Knife_max: 0
+--- !u!114 &1660487569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660487566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3b2a3dc9d2e134b8a094689de8b7ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI_canvases: []
+  UI_CanvasIsInit: 0
+  Event_list:
+  - Basic_parts:
+    - Basic_type: 3
+      Basic_objs:
+      - {fileID: 419241580}
+      Basic_values:
+      - True
+    - Basic_type: 20006
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - 0
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 20007
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values: []
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 3
+      Basic_objs:
+      - {fileID: 906383719}
+      - {fileID: 419241580}
+      Basic_values:
+      - True
+      - False
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 3
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 3
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 50000
+      Basic_objs:
+      - {fileID: 1926634594}
+      - {fileID: 350148319}
+      Basic_values:
+      - True
+      - True
+    Basic_num: 0
+  - Basic_parts:
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 1098652478}
+      - {fileID: 799617163}
+      - {fileID: 588521577}
+      Basic_values:
+      - False
+      - False
+      - False
+    Basic_num: 0
+  - Basic_parts:
+    - Basic_type: 3
+      Basic_objs:
+      - {fileID: 1941173414}
+      - {fileID: 316322481}
+      Basic_values:
+      - False
+      - False
+    - Basic_type: 20006
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - 1
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 20007
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values: []
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 3
+      Basic_objs:
+      - {fileID: 906383719}
+      - {fileID: 419241580}
+      Basic_values:
+      - True
+      - False
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 164371036}
+      Basic_values:
+      - False
+    - Basic_type: 3
+      Basic_objs:
+      - {fileID: 2076777532}
+      Basic_values:
+      - True
+    - Basic_type: 10000
+      Basic_objs:
+      - {fileID: 2076777532}
+      Basic_values:
+      - False
+    Basic_num: 0
+  Event_num: 0
   Player_body: {fileID: 0}
   Hand_hands:
   - {fileID: 358526419}
@@ -30426,7 +30588,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh205554
+  m_Name: pb_Mesh436034
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -30933,6 +31095,7 @@ MonoBehaviour:
   - {fileID: -5254752162498044798, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   - {fileID: 752492319262309027, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
+  Brush_manager: {fileID: 0}
 --- !u!114 &1885226965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32088,7 +32251,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076777532}
-  m_LocalRotation: {x: 0.0038506708, y: -0.96252453, z: 0.0136856185, w: 0.27082193}
+  m_LocalRotation: {x: 0.011260763, y: -0.95153195, z: 0.035092674, w: 0.3053337}
   m_LocalPosition: {x: -11.329, y: 0.92, z: 13.579}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -32498,6 +32661,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f112bcd6a9a8b5e4abc0bb7535a8236f, type: 2}
   - {fileID: 2100000, guid: 6b52b2b11d6006e40b2d257320892bbd, type: 2}
   isSky: 1
+  Brush_manager: {fileID: 0}
 --- !u!114 &2105931996
 MonoBehaviour:
   m_ObjectHideFlags: 0

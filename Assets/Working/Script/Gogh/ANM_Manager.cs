@@ -75,9 +75,10 @@ partial class ANM_Manager
             public enum TYPE
             {
                 // OBJECT
-                OBJECT__ABLE = 0,
-                OBJECT__DISABLE,
+                OBJECT__0 = 0,
+                OBJECT__1,
                 OBJECT__POSITION,
+                OBJECT__SET_ACTIVE,
 
                 // TRIGGER
                 TRIGGER = 10000,
@@ -89,6 +90,8 @@ partial class ANM_Manager
                 ACTION__DOOR_OPEN,
                 ACTION__LETTER_FLY,
                 ACTION__WAITTING,
+                ACTION__LETTER_MOVE,
+                ACTION__LETTER_OPEN,
 
                 // UI
                 UI__TEXT = 30000,
@@ -96,6 +99,9 @@ partial class ANM_Manager
                 // ANIMATION
                 ANIMATION__START = 40000,
                 ANIMATION__END,
+
+                //
+                SCRIPT__GRABBABLE_ENABLE = 50000
             }
 
             [SerializeField] TYPE Basic_type;
@@ -129,6 +135,14 @@ partial class ANM_Manager
             public void ANM_Basic_Position()
             {
                 Basic_objs[0].transform.position = Basic_objs[1].transform.position;
+            }
+
+            public void ANM_Basic_SetActive()
+            {
+                for (int i = 0; i < Basic_objs.Count; i++)
+                {
+                    Basic_objs[i].SetActive(bool.Parse(Basic_values[i]));
+                }
             }
 
             // TRIGGER
@@ -230,6 +244,16 @@ partial class ANM_Manager
                 return res;
             }
 
+            public void ANM_Basic_LetterMove()
+            {
+                Basic_objs[0].GetComponent<ANM_GoghYellowhouse_Letter>().ANM_Move_Setting(int.Parse(Basic_values[0]));
+            }
+
+            public void ANM_Basic_LetterOpen()
+            {
+                Basic_objs[0].GetComponent<ANM_GoghYellowhouse_Letter>().ANM_Open_Setting();
+            }
+
             // UI
             public bool ANM_Basic_BtnNextText()
             {
@@ -280,6 +304,15 @@ partial class ANM_Manager
 
                 //
                 return res;
+            }
+
+            // SCRIPT
+            public void ANM_Basic_GrabbableEnable()
+            {
+                for(int i = 0; i < Basic_objs.Count; i++)
+                {
+                    Basic_objs[i].GetComponent<BNG.Grabbable>().enabled = bool.Parse(Basic_values[i]);
+                }
             }
 
             ////////// Unity            //////////
@@ -337,9 +370,10 @@ partial class ANM_Manager
                 switch (Basic_parts[Basic_num].ANM_Basic_type)
                 {
                     // OBJECT
-                    case ANM_Part.TYPE.OBJECT__ABLE:        { Basic_parts[Basic_num].ANM_Basic_SetActive(true);     isNext = true;  }   break;
-                    case ANM_Part.TYPE.OBJECT__DISABLE:     { Basic_parts[Basic_num].ANM_Basic_SetActive(false);    isNext = true;  }   break;
+                    case ANM_Part.TYPE.OBJECT__0:           { Basic_parts[Basic_num].ANM_Basic_SetActive(true);     isNext = true;  }   break;
+                    case ANM_Part.TYPE.OBJECT__1:           { Basic_parts[Basic_num].ANM_Basic_SetActive(false);    isNext = true;  }   break;
                     case ANM_Part.TYPE.OBJECT__POSITION:    { Basic_parts[Basic_num].ANM_Basic_Position();          isNext = true;  }   break;
+                    case ANM_Part.TYPE.OBJECT__SET_ACTIVE:  { Basic_parts[Basic_num].ANM_Basic_SetActive();         isNext = true;  }   break;
 
                     // TRIGGER
                     case ANM_Part.TYPE.TRIGGER: { isNext = Basic_parts[Basic_num].ANM_Basic_TriggerCheck(); }   break;
@@ -351,12 +385,17 @@ partial class ANM_Manager
                     case ANM_Part.TYPE.ACTION__DOOR_OPEN:       { Basic_parts[Basic_num].ANM_Basic_DoorOpen();      isNext = true;  }   break;
                     case ANM_Part.TYPE.ACTION__LETTER_FLY:      { Basic_parts[Basic_num].ANM_Basic_LetterFly();     isNext = true;  }   break;
                     case ANM_Part.TYPE.ACTION__WAITTING:        { isNext = Basic_parts[Basic_num].ANM_Basic_Waitting();             }   break;
+                    case ANM_Part.TYPE.ACTION__LETTER_MOVE:     { Basic_parts[Basic_num].ANM_Basic_LetterMove();    isNext = true;  }   break;
+                    case ANM_Part.TYPE.ACTION__LETTER_OPEN:     { Basic_parts[Basic_num].ANM_Basic_LetterOpen();    isNext = true;  }   break;
 
                     // UI
 
                     // ANIMATION
                     case ANM_Part.TYPE.ANIMATION__START:    { Basic_parts[Basic_num].ANM_Basic_AnimationStart();    isNext = true;  }   break;
                     case ANM_Part.TYPE.ANIMATION__END:      { isNext = Basic_parts[Basic_num].ANM_Basic_AnimationEnd();             }   break;
+
+                    // SCRIPT
+                    case ANM_Part.TYPE.SCRIPT__GRABBABLE_ENABLE:    { Basic_parts[Basic_num].ANM_Basic_GrabbableEnable();   isNext = true;  }   break;
                 }
 
                 //
@@ -430,6 +469,12 @@ partial class ANM_Manager
 
 partial class ANM_Manager
 {
+    public enum Hand_TYPE
+    {
+        LEFT = 0,
+        RIGHT
+    }
+
     [Header("HAND_CONTROLLER ==================================================")]
     [SerializeField] Transform Player_body;
     [SerializeField] List<BNG.HandController> Hand_hands;
@@ -458,6 +503,30 @@ partial class ANM_Manager
                     Hand_hands[i].grabber.resetFlyingGrabbable();
                     res = true;
                 }
+            }
+        }
+
+        //
+        return res;
+    }
+
+    public bool ANM_Hand_GrabRelease(Hand_TYPE _type, GameObject _obj)
+    {
+        bool res = false;
+
+        //
+        if (Hand_hands[(int)_type].GripAmount > 0)
+        {
+            if ((Hand_hands[(int)_type].PreviousHeldObject != null) && (Hand_hands[(int)_type].PreviousHeldObject.Equals(_obj)))
+            {
+                Hand_hands[(int)_type].grabber.TryRelease();
+                res = true;
+            }
+
+            if ((Hand_hands[(int)_type].grabber.RemoteGrabbingGrabbable != null) && (Hand_hands[(int)_type].grabber.RemoteGrabbingGrabbable.Equals(_obj.GetComponent<BNG.Grabbable>())))
+            {
+                Hand_hands[(int)_type].grabber.resetFlyingGrabbable();
+                res = true;
             }
         }
 
