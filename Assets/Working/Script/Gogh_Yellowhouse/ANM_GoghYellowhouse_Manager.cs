@@ -25,17 +25,48 @@ public partial class ANM_GoghYellowhouse_Manager : MonoBehaviour
 
 partial class ANM_GoghYellowhouse_Manager
 {
+    [System.Serializable]
+    public class ANM_BrushSelectData
+    {
+        [SerializeField] PaintBarrelTrigger Basic_paintBarrelTrigger;
+        [SerializeField] Color Basic_color;
+
+        ////////// Getter & Setter  //////////
+        public PaintBarrelTrigger   ANM_Basic_paintBarrelTrigger    { get { return Basic_paintBarrelTrigger;    }   }
+
+        public Color    ANM_Basic_color { get { return Basic_color; }   }
+
+        ////////// Method           //////////
+
+        ////////// Unity            //////////
+    }
+
     [Header("BRUSH ==================================================")]
     [SerializeField] Transform Brush_tools;
     [SerializeField] Transform Brush_painter;
+    [SerializeField] List<ANM_BrushSelectData> Brush_selectDatas;
 
     [Header("RUNNING")]
     [SerializeField] PaintBarrelTrigger Brush_selectPaint;
 
     ////////// Getter & Setter  //////////
-    public PaintBarrelTrigger ANM_Brush_selectPaint { set { Brush_selectPaint = value;  }   }
 
     ////////// Method           //////////
+    public void ANM_Brush_Select(Color _color)
+    {
+        Brush_selectPaint = null;
+
+        for(int i = 0; i < Brush_selectDatas.Count; i++)
+        {
+            Color color0 = Brush_selectDatas[i].ANM_Basic_color;
+            if(_color.r.Equals(color0.r) && _color.g.Equals(color0.g) && _color.b.Equals(color0.b))
+            {
+                Brush_selectPaint = Brush_selectDatas[i].ANM_Basic_paintBarrelTrigger;
+                break;
+            }
+        }
+    }
+
     public void ANM_Brush_Painting()
     {
         if(Brush_selectPaint != null)
@@ -91,6 +122,49 @@ partial class ANM_GoghYellowhouse_Manager
         Color color0 = new Color(Knife_red / Knife_max, Knife_green / Knife_max, Knife_blue / Knife_max, 1.0f);
 
         Knife_mixMat.material.SetColor("_BaseColor", color0);
+    }
+
+    ////////// Unity            //////////
+}
+
+partial class ANM_GoghYellowhouse_Manager
+{
+    public enum Hand_Type
+    {
+        LEFT    = 0,
+        RIGHT
+    }
+
+    [Header("HAND_CONTROLLER ==================================================")]
+    [SerializeField] Transform Player_body;
+    [SerializeField] List<BNG.HandController> Hand_hands;
+
+    ////////// Getter & Setter  //////////
+    public Transform ANM_Player_body { get { return Player_body; } }
+
+    ////////// Method           //////////
+    public bool ANM_Hand_GrabRelease(Hand_Type _type, GameObject _obj)
+    {
+        bool res = false;
+
+        //
+        if (Hand_hands[(int)_type].GripAmount > 0)
+        {
+            if ((Hand_hands[(int)_type].PreviousHeldObject != null) && (Hand_hands[(int)_type].PreviousHeldObject.Equals(_obj)))
+            {
+                Hand_hands[(int)_type].grabber.TryRelease();
+                res = true;
+            }
+
+            if ((Hand_hands[(int)_type].grabber.RemoteGrabbingGrabbable != null) && (Hand_hands[(int)_type].grabber.RemoteGrabbingGrabbable.Equals(_obj.GetComponent<BNG.Grabbable>())))
+            {
+                Hand_hands[(int)_type].grabber.resetFlyingGrabbable();
+                res = true;
+            }
+        }
+
+        //
+        return res;
     }
 
     ////////// Unity            //////////
