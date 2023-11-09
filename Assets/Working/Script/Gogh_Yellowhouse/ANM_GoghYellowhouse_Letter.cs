@@ -68,6 +68,7 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
     // Start is called before the first frame update
     void Start()
     {
+        ANM_Move_Start();
     }
 
     // Update is called once per frame
@@ -103,7 +104,7 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
                 {
                     if (ANM_Open_Init())
                     {
-                        Basic_phase = PHASE.NONE;
+                        Basic_phase = PHASE.MOVE_START;
                     }
                 }
                 break;
@@ -115,6 +116,11 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
             case PHASE.OPEN_START:  {       ANM_Open_Update__OPEN_START();      Basic_phase = PHASE.OPEN;           }   break;
             case PHASE.OPEN:        { if (  ANM_Open_Update__OPEN()         ) { Basic_phase = PHASE.OPEN_END;   }   }   break;
             case PHASE.OPEN_END:    {       ANM_Open_Update__OPEN_END();        Basic_phase = PHASE.NONE;           }   break;
+
+            //
+            case PHASE.MOVE_START:  {       ANM_Move_Update__MOVE_START();      Basic_phase = PHASE.MOVE;           }   break;
+            case PHASE.MOVE:        { if(   ANM_Move_Update__MOVE()         ) { Basic_phase = PHASE.MOVE_END;   }   }   break;
+            case PHASE.MOVE_END:    {       ANM_Move_Update__MOVE_END();        Basic_phase = PHASE.NONE;           }   break;
         }
     }
 }
@@ -151,7 +157,6 @@ partial class ANM_GoghYellowhouse_Letter
     void ANM_Open_Update__OPEN_START()
     {
         Open_animator.SetTrigger("Next");
-        this.GetComponent<UnityEngine.Animations.LookAtConstraint>().constraintActive = true;
         this.GetComponent<BNG.Grabbable>().enabled = false;
     }
 
@@ -176,5 +181,82 @@ partial class ANM_GoghYellowhouse_Letter
     void ANM_Open_Update__OPEN_END()
     {
 
+    }
+}
+
+partial class ANM_GoghYellowhouse_Letter
+{
+    [System.Serializable]
+    public class Move_Data
+    {
+        [SerializeField] Transform Basic_startPoint;
+        [SerializeField] float Basic_time;
+
+        ////////// Getter & Setter  //////////
+        public Transform ANM_Basic_startPoint { get { return Basic_startPoint; } }
+
+        public float ANM_Basic_time { get { return Basic_time; } }
+
+        ////////// Method           //////////
+
+        ////////// Unity            //////////
+    }
+
+    [Header("MOVE ==================================================")]
+    [SerializeField] List<Move_Data> Move_datas;
+
+    [Header("RUNNING")]
+    [SerializeField] int Move_num;
+    [SerializeField] float Move_timer;
+    [SerializeField] float Move_rotateSpeed;
+
+    ////////// Getter & Setter  //////////
+
+    ////////// Method           //////////
+
+    ////////// Unity            //////////
+    void ANM_Move_Start()
+    {
+        Move_num = -1;
+    }
+
+    //
+    void ANM_Move_Update__MOVE_START()
+    {
+        this.GetComponent<Grabbable>().enabled = false;
+        this.GetComponent<UnityEngine.Animations.LookAtConstraint>().constraintActive = false;
+
+        Move_num++;
+        Move_timer = 0.0f;
+        Move_rotateSpeed = 360.0f / Move_datas[Move_num].ANM_Basic_time;
+    }
+
+    bool ANM_Move_Update__MOVE()
+    {
+        bool res = false;
+
+        //
+        Move_timer += Time.deltaTime;
+        if(Move_timer >= Move_datas[Move_num].ANM_Basic_time)
+        {
+            Move_timer = Move_datas[Move_num].ANM_Basic_time;
+            res = true;
+        }
+
+        this.transform.rotation = Quaternion.Euler(0, Move_rotateSpeed * Move_timer, 0);
+        Open_animator.transform.position
+            = Vector3.Lerp(
+                Move_datas[Move_num].ANM_Basic_startPoint.position,
+                this.transform.position,
+                Move_timer / Move_datas[Move_num].ANM_Basic_time);
+
+        //
+        return res;
+    }
+
+    void ANM_Move_Update__MOVE_END()
+    {
+        this.GetComponent<Grabbable>().enabled = true;
+        this.GetComponent<UnityEngine.Animations.LookAtConstraint>().constraintActive = true;
     }
 }
