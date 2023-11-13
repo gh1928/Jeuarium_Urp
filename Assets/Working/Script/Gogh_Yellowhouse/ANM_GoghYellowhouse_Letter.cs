@@ -82,7 +82,7 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
                 break;
 
             //
-            case PHASE.NONE:    { ANM_Baisc_Update__NONE(); }   break;
+            case PHASE.NONE:    { ANM_Basic_Update__NONE(); }   break;
             
             //
             case PHASE.OPEN_START:  {       ANM_Open_Update__OPEN_START();      Basic_phase = PHASE.OPEN;           }   break;
@@ -96,20 +96,20 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
         }
     }
 
-    void ANM_Baisc_Update__NONE()
+    void ANM_Basic_Update__NONE()
     {
         if (Basic_isCatch)
         {
             bool isClick = false;
 
-            if (InputBridge.Instance.RightGripDown)
+            if (InputBridge.Instance.RightGrip > 0.95f)
             {
                 isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.RIGHT, this.gameObject);
             }
 
             if (!isClick)
             {
-                if (InputBridge.Instance.LeftGripDown)
+                if (InputBridge.Instance.LeftGrip > 0.95f)
                 {
                     isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.LEFT, this.gameObject);
                 }
