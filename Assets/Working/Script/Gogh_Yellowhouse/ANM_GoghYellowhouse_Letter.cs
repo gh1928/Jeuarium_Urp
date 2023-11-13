@@ -27,7 +27,8 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
     [SerializeField] ANM_Manager Basic_manager;
 
     [Header("RUNNING")]
-    [SerializeField] bool Basic_isCatch;
+    //[SerializeField] bool Basic_isCatch;
+    [SerializeField] List<bool> Basic_isCatchs;
     [SerializeField] PHASE Basic_phase;
 
     ////////// Getter & Setter  //////////
@@ -45,14 +46,30 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
     {
         base.OnBecomesClosestRemoteGrabbable(_theGrabber);
 
-        Basic_isCatch = true;
+        //Basic_isCatch = true;
+        for(int i = 0; i < Basic_isCatchs.Count; i++)
+        {
+            if(Basic_manager.ANM_Player_GetHandGrabber((ANM_Manager.Hand_TYPE)i).Equals(_theGrabber))
+            {
+                Basic_isCatchs[i] = true;
+                break;
+            }
+        }
     }
 
     public override void OnNoLongerClosestRemoteGrabbable(Grabber _theGrabber)
     {
         base.OnNoLongerClosestRemoteGrabbable(_theGrabber);
 
-        Basic_isCatch = false;
+        //Basic_isCatch = false;
+        for (int i = 0; i < Basic_isCatchs.Count; i++)
+        {
+            if (Basic_manager.ANM_Player_GetHandGrabber((ANM_Manager.Hand_TYPE)i).Equals(_theGrabber))
+            {
+                Basic_isCatchs[i] = false;
+                break;
+            }
+        }
     }
 
     public void ANM_Basic_BtnOK()
@@ -98,27 +115,57 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
 
     void ANM_Basic_Update__NONE()
     {
-        if (Basic_isCatch)
+        //if (Basic_isCatch)
+        //{
+        //    bool isClick = false;
+        //
+        //    if (InputBridge.Instance.RightGrip > 0.95f)
+        //    {
+        //        isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.RIGHT, this.gameObject);
+        //    }
+        //
+        //    if (!isClick)
+        //    {
+        //        if (InputBridge.Instance.LeftGrip > 0.95f)
+        //        {
+        //            isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.LEFT, this.gameObject);
+        //        }
+        //    }
+        //
+        //    //
+        //    if (isClick)
+        //    {
+        //        Basic_isCatch = false;
+        //        Basic_manager.ANM_Event_Trigger(this.gameObject);
+        //    }
+        //}
+
+        ANM_Basic_Update__NONE__Hand( ANM_Manager.Hand_TYPE.LEFT    );
+        ANM_Basic_Update__NONE__Hand( ANM_Manager.Hand_TYPE.RIGHT   );
+    }
+
+    void ANM_Basic_Update__NONE__Hand(ANM_Manager.Hand_TYPE _type)
+    {
+        if (Basic_isCatchs[(int)_type])
         {
             bool isClick = false;
 
-            if (InputBridge.Instance.RightGrip > 0.95f)
+            //
+            bool isBtn = false;
+            switch(_type)
             {
-                isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.RIGHT, this.gameObject);
+                case ANM_Manager.Hand_TYPE.LEFT:    { isBtn = (InputBridge.Instance.LeftGrip > 0.95f);  }   break;
+                case ANM_Manager.Hand_TYPE.RIGHT:   { isBtn = (InputBridge.Instance.RightGrip > 0.95f); }   break;
             }
-
-            if (!isClick)
+            if (isBtn)
             {
-                if (InputBridge.Instance.LeftGrip > 0.95f)
-                {
-                    isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.LEFT, this.gameObject);
-                }
+                isClick = Basic_manager.ANM_Hand_GrabRelease(_type, this.gameObject);
             }
 
             //
             if (isClick)
             {
-                Basic_isCatch = false;
+                Basic_isCatchs[(int)_type] = false;
                 Basic_manager.ANM_Event_Trigger(this.gameObject);
             }
         }
