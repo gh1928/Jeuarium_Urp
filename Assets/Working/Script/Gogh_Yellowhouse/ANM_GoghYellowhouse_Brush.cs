@@ -5,6 +5,7 @@ using UnityEngine;
 public class ANM_GoghYellowhouse_Brush : MonoBehaviour
 {
     [SerializeField] ANM_GoghYellowhouse_Manager Basic_Manager;
+    [SerializeField] GameObject Basic_obj;
 
     ////////// Getter & Setter  //////////
 
@@ -33,7 +34,7 @@ public class ANM_GoghYellowhouse_Brush : MonoBehaviour
                     {
                         Color c = _other.gameObject.GetComponent<MeshRenderer>().material.GetColor("_BaseColor");
                         Basic_Manager.ANM_Brush_Select(c);
-                        this.gameObject.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", c);
+                        Basic_obj.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", c);
                     }
                 }
                 break;
