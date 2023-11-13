@@ -69,6 +69,8 @@ public partial class PaintBarrelTrigger : BNG.GrabbableEvents
 // 황영재 추가
 partial class PaintBarrelTrigger
 {
+    [Header("BRUSH ==================================================")]
+    [SerializeField] ANM_Manager Brush_manager;
 
     ////////// Getter & Setter  //////////
 
@@ -78,7 +80,8 @@ partial class PaintBarrelTrigger
     {
         if (!isDone)
         {
-            trigger.SwitchOn();
+            Brush_manager.ANM_Event_Trigger(this.gameObject);
+            //trigger.SwitchOn();
             if (GetComponent<AudioSource>() != null)
             {
                 GetComponent<AudioSource>().Play();
