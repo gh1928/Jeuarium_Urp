@@ -482,6 +482,12 @@ partial class ANM_Manager
     ////////// Getter & Setter  //////////
     public Transform ANM_Player_body    { get { return Player_body; }   }
 
+    //
+    public BNG.Grabber ANM_Player_GetHandGrabber(Hand_TYPE _type)
+    {
+        return Hand_hands[(int)_type].grabber;
+    }
+
     ////////// Method           //////////
     public bool ANM_Hand_GrabRelease(GameObject _obj)
     {
