@@ -115,31 +115,6 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
 
     void ANM_Basic_Update__NONE()
     {
-        //if (Basic_isCatch)
-        //{
-        //    bool isClick = false;
-        //
-        //    if (InputBridge.Instance.RightGrip > 0.95f)
-        //    {
-        //        isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.RIGHT, this.gameObject);
-        //    }
-        //
-        //    if (!isClick)
-        //    {
-        //        if (InputBridge.Instance.LeftGrip > 0.95f)
-        //        {
-        //            isClick = Basic_manager.ANM_Hand_GrabRelease(ANM_Manager.Hand_TYPE.LEFT, this.gameObject);
-        //        }
-        //    }
-        //
-        //    //
-        //    if (isClick)
-        //    {
-        //        Basic_isCatch = false;
-        //        Basic_manager.ANM_Event_Trigger(this.gameObject);
-        //    }
-        //}
-
         ANM_Basic_Update__NONE__Hand( ANM_Manager.Hand_TYPE.LEFT    );
         ANM_Basic_Update__NONE__Hand( ANM_Manager.Hand_TYPE.RIGHT   );
     }
