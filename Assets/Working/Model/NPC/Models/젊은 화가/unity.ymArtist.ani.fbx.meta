@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -5416952395525263045
-    second: Armature.001|Armature.001|Armature|idle
+    second: 'Armature.001|Armature.001|Armature|idle '
   - first:
       74: 6898021919484286564
     second: Armature.001|Armature.001|Armature|Root_walk
@@ -30,9 +30,6 @@ ModelImporter:
   - first:
       74: -6993090946979842912
     second: Armature.001|walk
-  - first:
-      74: -6538550483810360494
-    second: Armature.001|Armature.001|Armature|sitting_talking (1)
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -62,11 +59,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature.001|Armature.001|Armature|sitting_talking (1)
-      takeName: Armature.001|Armature.001|Armature|sitting_talking
+      name: 'Armature.001|Armature.001|Armature|idle '
+      takeName: 'Armature.001|Armature.001|Armature|idle '
       internalID: 0
       firstFrame: 0
-      lastFrame: 1349
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -131,8 +128,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -325,7 +322,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.2
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -376,7 +373,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.002
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

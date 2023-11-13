@@ -1093,7 +1093,7 @@
     },
     "m_Name": "OnOffswitch",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "Vector1_1",
+    "m_OverrideReferenceName": "OnOffswitch",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,

@@ -29,7 +29,9 @@ public class ANM_GoghYellowhouse_Brush : MonoBehaviour
         {
             case "Paint":
                 {
-                    Basic_Manager.ANM_Brush_selectPaint = _other.GetComponent<PaintBarrelTrigger>();
+                    Color c = _other.gameObject.GetComponent<MeshRenderer>().material.GetColor("_BaseColor");
+                    Basic_Manager.ANM_Brush_Select(c);
+                    this.gameObject.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", c);
                 }
                 break;
             case "Canvas":

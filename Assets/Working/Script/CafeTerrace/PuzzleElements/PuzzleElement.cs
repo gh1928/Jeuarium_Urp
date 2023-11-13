@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public enum Elements
 {
     None = -1,
-    Lantern = 0
+    Lantern = 0,
+    Aqua = 1,
 }
 public abstract class PuzzleElement : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public abstract class PuzzleElement : MonoBehaviour
         if (placeAtNode)
             return;
 
-        if(other.CompareTag("CaffePuzzle"))
+        if (other.CompareTag("CaffePuzzle"))
             OnWorked();
     }
     protected virtual void OnTriggerExit(Collider other)
@@ -38,7 +39,10 @@ public abstract class PuzzleElement : MonoBehaviour
         placeAtNode = true;
         node.Element = this;
     }
-    public virtual void OnWorked() => isWorked = true;
+    public virtual void OnWorked()
+    {
+        isWorked = true;        
+    }    
     public virtual void OffWorked() => isWorked = false;    
     public virtual void PlaySuccessEffect() { }
     public virtual void PlayFailEffect() { }

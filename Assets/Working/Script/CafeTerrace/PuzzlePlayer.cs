@@ -1,13 +1,14 @@
 using BNG;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PuzzlePlayer : MonoBehaviour
 {
+    public static PuzzlePlayer Instance;
+
     private CanvasGroup canvasGroup;
 
     private PointerEventData eventData;
@@ -40,14 +41,30 @@ public class PuzzlePlayer : MonoBehaviour
     public float fadeTime = 1f;
     public float puzzleChangeInterval = 1f;
 
+    public AudioSource successAudio;
+    public AudioSource failureAudio;
+    public AudioSource elementSound;
+
+    private CaffeEventHandler eventHandler;
+
+    public float failEffectDelay = 2f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {   
         canvasGroup = GetComponent<CanvasGroup>();
         puzzleMaker = GetComponent<PuzzleMaker>();
+        eventHandler = GetComponent<CaffeEventHandler>();
         eventData = VRUISystem.Instance.EventData;
     }
     public void StartPlay()
-    {        
+    {
+        if (isPlaying)
+            return;
+
         puzzle = puzzleMaker.GetPuzzle();
         elements = puzzleMaker.GetInstancedElements();
         pathStack.Clear();
@@ -92,15 +109,16 @@ public class PuzzlePlayer : MonoBehaviour
 
         if (Vector3.SqrMagnitude(pointerDir) < minDistanceToMove)
             return;
-
-        var puzzleDir = GetLargeDirValue(pointerDir);
+        
         float currProgress = currNode.GetProgress();
+
+        var puzzleDir = GetLargeDirValue(pointerDir);        
 
         if (currProgress <= 0f)
         {
             if (Vector3.SqrMagnitude(pointerDir) < minDistanceToExitNode)
                 return;
-
+            
             SetDestNode(puzzleDir);
         }
 
@@ -120,7 +138,9 @@ public class PuzzlePlayer : MonoBehaviour
             currNode.ClampProgress(enterClampValue);
 
         if (currProgress >= 1f)
+        {   
             VisitDestNode();
+        }
     }
 
     private void SetDestNode(PuzzleDir dir)
@@ -164,27 +184,21 @@ public class PuzzlePlayer : MonoBehaviour
     }
     private void VisitExitNode()
     {
+        isPlaying = false;        
+
         ActivePoint(puzzleMaker.GetExitPoint());
 
         if (IsAllElemntsWorked())
-            SetNextStep();
-        else
         {
-            foreach(var element in elements)
-            {
-                if(!element.IsWorked())
-                    element.PlayFailEffect();
-            }   
-
-            StartCoroutine(PuzzleFadeCoroutine(false, 3f));
+            StartCoroutine(PuzzleSuccessCoroutine());
+            return;
         }
-            
+
+        StartCoroutine(PuzzleFailureCoroutine());
     }    
 
     private bool IsAllElemntsWorked()
     {
-        isPlaying = false;
-
         for(int i = 0; i < elements.Count; i++)
         {
             if(!elements[i].IsWorked())
@@ -193,63 +207,72 @@ public class PuzzlePlayer : MonoBehaviour
 
         return true;
     }
-
-    private void SetNextStep()
-    {
-        if(!puzzleMaker.IsRemainPuzzle())
-        {
-            ClearGame();
-            return;
-        }
-
-        float time = 3f;
-
-        StartCoroutine(PuzzleClearSequence(time));
-        StartCoroutine(PuzzleFadeCoroutine(true, time));        
-    }
-
-    private IEnumerator PuzzleClearSequence(float totalTime)
-    {
-        yield break;
-    }    
     private void ClearGame()
     {
-        
+        Debug.Log("게임 클리어");
     }
-
-    private IEnumerator PuzzleFadeCoroutine(bool goNextStep, float startDelay = 0f)
-    {   
-        yield return new WaitForSeconds(startDelay);
-
+    private IEnumerator PuzzleFadeCoroutine(bool inToOut)
+    {
         float timer = 0f;
         float inverseFadeTime = 1 / fadeTime;
 
-        while(timer < fadeTime)
-        {
-            canvasGroup.alpha = Mathf.Lerp(1, 0, timer * inverseFadeTime);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        canvasGroup.alpha = 0;
-
-        if(goNextStep)
-            puzzleMaker.SetNextStep();
-        else
-            ResetGame();
-
-        yield return new WaitForSeconds(puzzleChangeInterval);
-        timer = 0f;
+        float sour = inToOut ? 1 : 0;
+        float dest = inToOut ? 0 : 1;
 
         while (timer < fadeTime)
         {
-            canvasGroup.alpha = Mathf.Lerp(0, 1, timer * inverseFadeTime);
+            canvasGroup.alpha = Mathf.Lerp(sour, dest, timer * inverseFadeTime);
             timer += Time.deltaTime;
             yield return null;
         }
 
-        canvasGroup.alpha = 1;
+        canvasGroup.alpha = dest;
+
+        yield break;
     }
+
+    private IEnumerator PuzzleFailureCoroutine()
+    {
+        failureAudio.Play();
+        foreach (var element in elements)
+        {
+            if (!element.IsWorked())
+                element.PlayFailEffect();
+        }
+
+        StartCoroutine(PuzzleFadeCoroutine(true));
+
+        yield return new WaitForSeconds(fadeTime + failEffectDelay);
+
+        puzzleMaker.ResetPuzzle();
+
+        StartCoroutine(PuzzleFadeCoroutine(false));
+    }
+    private IEnumerator PuzzleSuccessCoroutine()
+    {
+        successAudio.Play();
+        StartCoroutine(PuzzleFadeCoroutine(true));
+
+        var evt = puzzleMaker.GetCurrEvt();
+
+        if (evt != null)
+            evt.OnEvent(elements);
+
+        yield return new WaitForSeconds(evt.GetEvtTime());
+
+        if (!puzzleMaker.IsRemainPuzzle())
+        {
+            ClearGame();
+            yield break;
+        }
+
+        puzzleMaker.SetNextStep();
+        puzzleMaker.ResetPuzzle();
+
+        StartCoroutine(PuzzleFadeCoroutine(false));
+
+        yield break;
+    }    
 
     private void ResetGame()
     {
@@ -268,5 +291,8 @@ public class PuzzlePlayer : MonoBehaviour
 
         return look.y > 0 ? PuzzleDir.Up : PuzzleDir.Down;
     }
+
+    public void AddToButtonStartPlay(UnityEngine.UI.Button button) => button.onClick.AddListener(StartPlay);
     public void StopPlay() => isPlaying = false;
+    public void PlayElementSound() => elementSound.Play();
 }

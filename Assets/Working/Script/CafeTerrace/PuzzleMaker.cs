@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PuzzleMaker : MonoBehaviour
@@ -36,15 +37,25 @@ public class PuzzleMaker : MonoBehaviour
     public PuzzleElement[] elementPrefabs;
     private List<PuzzleElement> instancedElements = new List<PuzzleElement>();
 
+    private Vector3 scale;
+
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+        scale = rect.localScale;
+
         lookAtConstraints = GetComponent<LookAtConstraint>();
         CurrData = puzzleDatas[currStep];
     }
 
+    private void Start()
+    {
+        MakePuzzle();
+    }
+
     public void MakePuzzle()
     {
+        rect.localScale = Vector3.one;
         lookAtConstraints.enabled = false;
         rect.localEulerAngles = Vector3.zero;
 
@@ -56,11 +67,18 @@ public class PuzzleMaker : MonoBehaviour
         ReadPuzzleInfo();
         ReadElemtnsInfo();
 
+        rect.localScale = scale;
         lookAtConstraints.enabled = true;
+
+        var button = enterPoint.GetComponent<Button>();
+        GetComponent<PuzzlePlayer>().AddToButtonStartPlay(button);
     }
     public void StopPuzzle()
     {
         GetComponent<PuzzlePlayer>().StopPlay();
+        var button = enterPoint.GetComponent<Button>();
+        button.onClick.RemoveAllListeners();
+
         Destroy(puzzleHolder.gameObject);
     }
     public void ResetPuzzle()
@@ -213,11 +231,8 @@ public class PuzzleMaker : MonoBehaviour
             instancedElements.Add(element);
         }
     }
-    public void SetNextStep()
-    {
-        CurrData = puzzleDatas[++currStep];
-        ResetPuzzle();
-    }
+    public void SetNextStep() => CurrData = puzzleDatas[++currStep];
+
     public bool IsRemainPuzzle() => currStep < puzzleDatas.Length - 1;
     public void DestroyPuzzle() => Destroy(puzzleHolder.gameObject);
     public PuzzleNode[,] GetPuzzle() => puzzle;
@@ -228,4 +243,5 @@ public class PuzzleMaker : MonoBehaviour
     public PuzzleNode GetEnterNode() => puzzle[CurrData.enterPos.y,CurrData.enterPos.x];
     public PuzzleNode GetExitNode() => puzzle[CurrData.exitPos.y, CurrData.exitPos.y];
     public GameObject GetIndicator()=> indicator;
+    public CaffeEventDeafault GetCurrEvt() => GetComponent<CaffeEventHandler>().events[CurrData.eventIdx];
 }

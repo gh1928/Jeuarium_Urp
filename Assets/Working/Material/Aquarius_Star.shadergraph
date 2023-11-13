@@ -2682,7 +2682,7 @@
     },
     "m_Name": "Opaticity",
     "m_DefaultReferenceName": "Vector1_b8e59d1cf3c74764b99d907e78f73b6e",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "Opaticity",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,

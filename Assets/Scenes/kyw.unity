@@ -867,6 +867,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -2.16
       objectReference: {fileID: 0}
+    - target: {fileID: 58436636356189769, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 107224957997567322, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform

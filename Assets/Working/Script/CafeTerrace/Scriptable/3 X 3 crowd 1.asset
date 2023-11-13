@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90684d67f2298fb438314f8b13843bbb, type: 3}
+  m_Name: 3 X 3 crowd 1
+  m_EditorClassIdentifier: 
+  PuzzleSize: 3
+  puzzleInfo:
+  - nodeNumber: 2
+    offNode: 1
+    offTopPath: 1
+    offRightPath: 0
+  - nodeNumber: 6
+    offNode: 1
+    offTopPath: 0
+    offRightPath: 1
+  - nodeNumber: 1
+    offNode: 0
+    offTopPath: 0
+    offRightPath: 1
+  - nodeNumber: 3
+    offNode: 0
+    offTopPath: 1
+    offRightPath: 0
+  elementsInfo:
+  - elements: 0
+    nodeNumber: 4
+    placeAtNode: 1
+    placeAtTop: 0
+    placeAtRight: 0
+  enterPos:
+    y: 0
+    x: 0
+  exitPos:
+    y: 2
+    x: 2
+  baseColor: {r: 0.3160377, g: 1, b: 0.9430401, a: 1}
+  playerColor: {r: 1, g: 1, b: 0, a: 1}
+  nodeInterval: 1
+  eventIdx: 2
