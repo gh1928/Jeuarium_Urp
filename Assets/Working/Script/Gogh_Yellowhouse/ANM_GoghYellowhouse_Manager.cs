@@ -80,8 +80,8 @@ partial class ANM_GoghYellowhouse_Manager
     ////////// Unity            //////////
     void ANM_Brush_Update()
     {
-        Brush_tools.position = Brush_painter.position;
-        Brush_tools.rotation = Brush_painter.rotation;
+        //Brush_tools.position = Brush_painter.position;
+        //Brush_tools.rotation = Brush_painter.rotation;
     }
 }
 

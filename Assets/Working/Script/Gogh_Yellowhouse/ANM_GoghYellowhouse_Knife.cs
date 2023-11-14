@@ -29,20 +29,23 @@ public class ANM_GoghYellowhouse_Knife : MonoBehaviour
         {
             case "Paint":
                 {
-                    MeshRenderer mr = _other.GetComponent<MeshRenderer>();
-                    Debug.Log(mr.material.name);
-                    switch (mr.material.name)
+                    if (!_other.GetComponent<ANM_GoghYellowhouse_Paint>().enabled)
                     {
-                        case "Paint_Mix (Instance)":
-                            {
-                                Basic_Manager.ANM_Knife_Mix();
-                            }
-                            break;
-                        default:
-                            {
-                                Basic_Manager.ANM_Knife_SelectMat(mr.material);
-                            }
-                            break;
+                        MeshRenderer mr = _other.GetComponent<MeshRenderer>();
+                        Debug.Log(mr.material.name);
+                        switch (mr.material.name)
+                        {
+                            case "Paint_Mix (Instance)":
+                                {
+                                    Basic_Manager.ANM_Knife_Mix();
+                                }
+                                break;
+                            default:
+                                {
+                                    Basic_Manager.ANM_Knife_SelectMat(mr.material);
+                                }
+                                break;
+                        }
                     }
                 }
                 break;
