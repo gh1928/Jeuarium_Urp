@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class ANM_GoghYellowhouse_Paint : MonoBehaviour
 {
+    [SerializeField] ANM_Manager Basic_Manager;
+
     [SerializeField] Transform Basic_origin;
     [SerializeField] float Basic_valueTime;
+
     [Header("RUNNING")]
     [SerializeField] Vector3 Basic_position;
     [SerializeField] Vector3 Basic_localScale;
     [SerializeField] float Basic_value;
-
 
     ////////// Getter & Setter  //////////
 
@@ -24,6 +26,7 @@ public class ANM_GoghYellowhouse_Paint : MonoBehaviour
             Basic_value = Basic_valueTime;
 
             //
+            Basic_Manager.ANM_Event_Trigger(this.gameObject);
             this.enabled = false;
         }
 
