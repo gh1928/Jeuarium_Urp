@@ -13,7 +13,7 @@ public partial class ANM_GoghYellowhouse_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ANM_Brush_Start();
     }
 
     // Update is called once per frame
@@ -30,13 +30,26 @@ partial class ANM_GoghYellowhouse_Manager
     {
         [SerializeField] PaintBarrelTrigger Basic_paintBarrelTrigger;
         [SerializeField] Color Basic_color;
+        [SerializeField] string Basic_colorStr;
 
         ////////// Getter & Setter  //////////
         public PaintBarrelTrigger   ANM_Basic_paintBarrelTrigger    { get { return Basic_paintBarrelTrigger;    }   }
 
         public Color    ANM_Basic_color { get { return Basic_color; }   }
 
+        public string   ANM_Basic_colorStr  { get { return Basic_colorStr;  }   }
+
         ////////// Method           //////////
+        public void ANM_Basic_Init()
+        {
+            float min = 1;
+
+            if ((Basic_color.r != 0.0f  ) && (min > Basic_color.r   ))  { min = Basic_color.r;  }
+            if ((Basic_color.g != 0.0f  ) && (min > Basic_color.g   ))  { min = Basic_color.g;  }
+            if ((Basic_color.b != 0.0f  ) && (min > Basic_color.b   ))  { min = Basic_color.b;  }
+
+            Basic_colorStr = "R:" + (int)(Basic_color.r / min) + ", G:" + (int)(Basic_color.g / min) + ", B:" + (int)(Basic_color.b / min);
+        }
 
         ////////// Unity            //////////
     }
@@ -75,9 +88,20 @@ partial class ANM_GoghYellowhouse_Manager
         }
 
         //ANM_Knife_Reset();
+        ANM_Knife_text();
     }
 
     ////////// Unity            //////////
+    void ANM_Brush_Start()
+    {
+        for(int i = 0; i < Brush_selectDatas.Count; i++)
+        {
+            Brush_selectDatas[i].ANM_Basic_Init();
+        }
+
+        ANM_Knife_text();
+    }
+
     void ANM_Brush_Update()
     {
         //Brush_tools.position = Brush_painter.position;
@@ -91,12 +115,16 @@ partial class ANM_GoghYellowhouse_Manager
     [SerializeField] MeshRenderer   Knife_mixMat;
     [SerializeField] MeshRenderer   Knife_knifePaintMR;
 
+    [SerializeField] TMPro.TextMeshProUGUI Knife_tmp;
+
     [Header("RUNNING")]
     [SerializeField] float Knife_red;
     [SerializeField] float Knife_green;
     [SerializeField] float Knife_blue;
 
     [SerializeField] float Knife_max;
+
+    [SerializeField] List<string> Knife_tmpStrs;
 
     ////////// Getter & Setter  //////////
 
@@ -124,6 +152,9 @@ partial class ANM_GoghYellowhouse_Manager
         Color color0 = new Color(Knife_red / Knife_max, Knife_green / Knife_max, Knife_blue / Knife_max, 1.0f);
 
         Knife_mixMat.material.SetColor("_BaseColor", color0);
+
+        //
+        ANM_Knife_text();
     }
 
     public void ANM_Knife_Reset()
@@ -131,6 +162,32 @@ partial class ANM_GoghYellowhouse_Manager
         Knife_red = Knife_green = Knife_blue = 0.0f;
 
         Knife_mixMat.material.SetColor("_BaseColor", Color.white);
+    }
+
+    void ANM_Knife_text()
+    {
+        Color color = Knife_mixMat.material.GetColor("_BaseColor");
+
+        //
+        Knife_tmp.text = "";
+        for (int i = 0; i < Brush_selectDatas.Count; i++)
+        {
+            if(Brush_selectDatas[i].ANM_Basic_paintBarrelTrigger.ANM_Basic_isDone)
+            {
+                Knife_tmp.text += "¡Ü ";
+            }
+            else if (Brush_selectDatas[i].ANM_Basic_color.Equals(color))
+            {
+                Knife_tmp.text += "¡Ý ";
+            }
+            else
+            {
+                Knife_tmp.text += "¡Û ";
+            }
+            Knife_tmp.text += Brush_selectDatas[i].ANM_Basic_colorStr + "\n";
+        }
+        Knife_tmp.text += "\n";
+        Knife_tmp.text += "R:" + (int)Knife_red + ", G:" + (int)Knife_green + ", B:" + (int)Knife_blue;
     }
 
     ////////// Unity            //////////

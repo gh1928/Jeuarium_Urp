@@ -69,6 +69,16 @@ public partial class PaintBarrelTrigger : BNG.GrabbableEvents
 // 황영재 추가
 partial class PaintBarrelTrigger
 {
+    ////////// Getter & Setter  //////////
+    public bool ANM_Basic_isDone    { get { return isDone;  }   }
+
+    ////////// Method           //////////
+
+    ////////// Unity            //////////
+}
+
+partial class PaintBarrelTrigger
+{
     [Header("BRUSH ==================================================")]
     [SerializeField] ANM_Manager Brush_manager;
 
