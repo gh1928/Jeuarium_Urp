@@ -74,7 +74,7 @@ partial class ANM_GoghYellowhouse_Manager
             Brush_selectPaint.ANM_Brush_Painting();
         }
 
-        ANM_Knife_Reset();
+        //ANM_Knife_Reset();
     }
 
     ////////// Unity            //////////
@@ -126,7 +126,7 @@ partial class ANM_GoghYellowhouse_Manager
         Knife_mixMat.material.SetColor("_BaseColor", color0);
     }
 
-    void ANM_Knife_Reset()
+    public void ANM_Knife_Reset()
     {
         Knife_red = Knife_green = Knife_blue = 0.0f;
 
