@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: e780b9b656c153a43b9c24d289d83685
+guid: 568696887b3d7dd48917dd4081b83c4d
 ModelImporter:
   serializedVersion: 20300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lit
+    second: {fileID: 2100000, guid: 269bb3bde06bca94183baf4c19e08a1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lit.001
+    second: {fileID: 2100000, guid: 52cb4f51f9bab1a4ea1a1a948a12aa77, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
