@@ -5,7 +5,7 @@ using System.IO;
 
 namespace BNG
 {
-    public class DrawingTool : GrabbableEvents
+    public partial class DrawingTool : GrabbableEvents
     {
         public enum DrawType
         {
@@ -165,6 +165,10 @@ namespace BNG
                 
                 if (drawType == DrawType.Brush)
                     endPoint.localEulerAngles = new Vector3(-60.0f, 0, 0);
+            }
+            else if(other.CompareTag("Paint"))
+            {
+                ANM_Basic_OnTriggerEnter__Paint(other);
             }
         }
 
@@ -391,6 +395,35 @@ namespace BNG
 
                 transform.hasChanged = false;
                 yield return null;
+            }
+        }
+    }
+
+    partial class DrawingTool
+    {
+
+        ////////// Getter & Setter  //////////
+
+        ////////// Method           //////////
+
+        ////////// Unity            //////////
+        void ANM_Basic_OnTriggerEnter__Paint(Collider _other)
+        {
+            if (!_other.GetComponent<ANM_GoghYellowhouse_Paint>().enabled)
+            {
+                Color color = _other.GetComponent<MeshRenderer>().material.GetColor("_BaseColor");
+                //
+                Texture2D tempTex = mat.GetTexture("_DrawTex") as Texture2D;
+                Color32[] tempColor = tempTex.GetPixels32();
+                for (int i = 0; i < tempColor.Length; i++)
+                {
+                    tempColor[i].r = (byte)(color.r * 255.0f);
+                    tempColor[i].g = (byte)(color.g * 255.0f);
+                    tempColor[i].b = (byte)(color.b * 255.0f);
+                }
+                tempTex.SetPixels32(tempColor);
+                tempTex.Apply();
+                mat.SetTexture("_DrawTex", tempTex);
             }
         }
     }
