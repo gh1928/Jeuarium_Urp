@@ -32,6 +32,8 @@ partial class ANM_GoghYellowhouse_Manager
         [SerializeField] Color Basic_color;
         [SerializeField] string Basic_colorStr;
 
+        public delegate string Basic_Text(int _r, int _g, int _b);
+
         ////////// Getter & Setter  //////////
         public PaintBarrelTrigger   ANM_Basic_paintBarrelTrigger    { get { return Basic_paintBarrelTrigger;    }   }
 
@@ -40,7 +42,7 @@ partial class ANM_GoghYellowhouse_Manager
         public string   ANM_Basic_colorStr  { get { return Basic_colorStr;  }   }
 
         ////////// Method           //////////
-        public void ANM_Basic_Init()
+        public void ANM_Basic_Init(Basic_Text _method_text)
         {
             float min = 1;
 
@@ -48,7 +50,7 @@ partial class ANM_GoghYellowhouse_Manager
             if ((Basic_color.g != 0.0f  ) && (min > Basic_color.g   ))  { min = Basic_color.g;  }
             if ((Basic_color.b != 0.0f  ) && (min > Basic_color.b   ))  { min = Basic_color.b;  }
 
-            Basic_colorStr = "»¡°­:" + (int)(Basic_color.r / min) + ", ÃÊ·Ï:" + (int)(Basic_color.g / min) + ", ÆÄ¶û:" + (int)(Basic_color.b / min);
+            Basic_colorStr = _method_text((int)(Basic_color.r / min), (int)(Basic_color.g / min), (int)(Basic_color.b / min));
         }
 
         ////////// Unity            //////////
@@ -88,7 +90,7 @@ partial class ANM_GoghYellowhouse_Manager
         }
 
         //ANM_Knife_Reset();
-        ANM_Knife_text();
+        ANM_Knife_Text();
     }
 
     ////////// Unity            //////////
@@ -96,10 +98,10 @@ partial class ANM_GoghYellowhouse_Manager
     {
         for(int i = 0; i < Brush_selectDatas.Count; i++)
         {
-            Brush_selectDatas[i].ANM_Basic_Init();
+            Brush_selectDatas[i].ANM_Basic_Init(ANM_Knife_Text__Value);
         }
 
-        ANM_Knife_text();
+        ANM_Knife_Text();
     }
 
     void ANM_Brush_Update()
@@ -154,7 +156,7 @@ partial class ANM_GoghYellowhouse_Manager
         Knife_mixMat.material.SetColor("_BaseColor", color0);
 
         //
-        ANM_Knife_text();
+        ANM_Knife_Text();
     }
 
     public void ANM_Knife_Reset()
@@ -162,10 +164,10 @@ partial class ANM_GoghYellowhouse_Manager
         Knife_red = Knife_green = Knife_blue = 0.0f;
 
         Knife_mixMat.material.SetColor("_BaseColor", Color.white);
-        ANM_Knife_text();
+        ANM_Knife_Text();
     }
 
-    void ANM_Knife_text()
+    void ANM_Knife_Text()
     {
         Color color = Knife_mixMat.material.GetColor("_BaseColor");
 
@@ -188,7 +190,12 @@ partial class ANM_GoghYellowhouse_Manager
             Knife_tmp.text += Brush_selectDatas[i].ANM_Basic_colorStr + "\n";
         }
         Knife_tmp.text += "\n";
-        Knife_tmp.text += "»¡°­:" + (int)Knife_red + ", ÃÊ·Ï:" + (int)Knife_green + ", ÆÄ¶û:" + (int)Knife_blue;
+        Knife_tmp.text += ANM_Knife_Text__Value((int)Knife_red, (int)Knife_green, (int)Knife_blue);
+    }
+
+    string ANM_Knife_Text__Value(int _r, int _g, int _b)
+    {
+        return "<color=#FF0000>¡á</color>:" + _r + ", <color=#00FF00>¡á</color>:" + _g + ", <color=#0000FF>¡á</color>:" + _b;
     }
 
     ////////// Unity            //////////
