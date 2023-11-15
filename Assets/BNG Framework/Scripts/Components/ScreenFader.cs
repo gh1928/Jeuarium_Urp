@@ -151,6 +151,8 @@ namespace BNG {
 
             updateImageAlpha(alpha);
 
+            var waitForEndOfFrame = new WaitForEndOfFrame();
+
             while (alpha != alphaTo) {
 
                 if (alphaFrom < alphaTo) {
@@ -168,10 +170,10 @@ namespace BNG {
 
                 updateImageAlpha(alpha);
 
-                yield return new WaitForEndOfFrame();
+                yield return waitForEndOfFrame;
             }
 
-            yield return new WaitForEndOfFrame();
+            yield return waitForEndOfFrame;
 
             // Ensure alpha is always applied
             updateImageAlpha(alphaTo);
@@ -221,5 +223,21 @@ namespace BNG {
             }
         }
     }
+
+    //partial class ScreenFader
+    //{
+    //    private void Update()
+    //    {
+    //        if(Input.GetKeyDown(KeyCode.Alpha1))
+    //        {
+    //            DoFadeIn();
+    //        }
+
+    //        if(Input.GetKeyDown(KeyCode.Alpha2))
+    //        {
+    //            DoFadeOut();
+    //        }
+    //    }
+    //}
 }
 
