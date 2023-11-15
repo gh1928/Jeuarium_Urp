@@ -150,9 +150,9 @@ public partial class ANM_GoghYellowhouse_Letter : GrabbableEvents
 partial class ANM_GoghYellowhouse_Letter
 {
     [Header("OPEN ==================================================")]
-    [SerializeField] Animator   Open_animator;
-    [SerializeField] Canvas     Open_canvas;
-    [SerializeField] TMP_Text   Open_text;
+    [SerializeField] Animator       Open_animator;
+    [SerializeField] List<Canvas>   Open_canvases;
+    [SerializeField] TMP_Text       Open_text;
 
     ////////// Getter & Setter  //////////
 
@@ -166,15 +166,19 @@ partial class ANM_GoghYellowhouse_Letter
     //
     bool ANM_Open_Init()
     {
-        bool res = false;
+        bool res = true;
 
-        if (Open_canvas.worldCamera != null)
+        for(int i = 0; i < Open_canvases.Count; i++)
         {
-            Open_canvas.gameObject.SetActive(false);
-            res = true;
-        }
-        else
-        {
+            if (Open_canvases[i].worldCamera != null)
+            {
+                Open_canvases[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                res = false;
+                break;
+            }
         }
 
         return res;
@@ -247,7 +251,11 @@ partial class ANM_GoghYellowhouse_Letter
     public void ANM_Move_Setting(int _num)
     {
         Open_animator.gameObject.SetActive(false);
-        Open_canvas.gameObject.SetActive(false);
+
+        for (int i = 0; i < Open_canvases.Count; i++)
+        {
+            Open_canvases[i].gameObject.SetActive(false);
+        }
         this.gameObject.SetActive(true);
 
         Basic_phase = PHASE.MOVE_START;
