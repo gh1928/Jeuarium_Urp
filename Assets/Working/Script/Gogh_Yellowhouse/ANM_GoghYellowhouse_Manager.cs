@@ -172,25 +172,28 @@ partial class ANM_GoghYellowhouse_Manager
         Color color = Knife_mixMat.material.GetColor("_BaseColor");
 
         //
-        Knife_tmp.text = "";
-        for (int i = 0; i < Brush_selectDatas.Count; i++)
+        if (Knife_tmp != null)
         {
-            if(Brush_selectDatas[i].ANM_Basic_paintBarrelTrigger.ANM_Basic_isDone)
+            Knife_tmp.text = "";
+            for (int i = 0; i < Brush_selectDatas.Count; i++)
             {
-                Knife_tmp.text += "¡Ü ";
+                if (Brush_selectDatas[i].ANM_Basic_paintBarrelTrigger.ANM_Basic_isDone)
+                {
+                    Knife_tmp.text += "¡Ü ";
+                }
+                else if (Brush_selectDatas[i].ANM_Basic_color.Equals(color))
+                {
+                    Knife_tmp.text += "¡Ý ";
+                }
+                else
+                {
+                    Knife_tmp.text += "¡Û ";
+                }
+                Knife_tmp.text += Brush_selectDatas[i].ANM_Basic_colorStr + "\n";
             }
-            else if (Brush_selectDatas[i].ANM_Basic_color.Equals(color))
-            {
-                Knife_tmp.text += "¡Ý ";
-            }
-            else
-            {
-                Knife_tmp.text += "¡Û ";
-            }
-            Knife_tmp.text += Brush_selectDatas[i].ANM_Basic_colorStr + "\n";
+            Knife_tmp.text += "\n";
+            Knife_tmp.text += ANM_Knife_Text__Value((int)Knife_red, (int)Knife_green, (int)Knife_blue);
         }
-        Knife_tmp.text += "\n";
-        Knife_tmp.text += ANM_Knife_Text__Value((int)Knife_red, (int)Knife_green, (int)Knife_blue);
     }
 
     string ANM_Knife_Text__Value(int _r, int _g, int _b)

@@ -26,7 +26,10 @@ public class ANM_GoghYellowhouse_Paint : MonoBehaviour
             Basic_value = Basic_valueTime;
 
             //
-            Basic_Manager.ANM_Event_Trigger(this.gameObject);
+            if (Basic_Manager != null)
+            {
+                Basic_Manager.ANM_Event_Trigger(this.gameObject);
+            }
             this.enabled = false;
         }
 
