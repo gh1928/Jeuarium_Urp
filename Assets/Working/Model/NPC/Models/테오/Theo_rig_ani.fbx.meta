@@ -1,29 +1,32 @@
 fileFormatVersion: 2
-guid: 8a223d8ef63902145a53cb6a98eac39c
+guid: 70d1aad7a55812f43a9ce75c53f231c6
 ModelImporter:
   serializedVersion: 20300
   internalIDToNameTable:
   - first:
-      74: -6842666708266138392
-    second: Armature|Armature.001|mixamo.com|Layer0
+      74: -8945691123924629249
+    second: Armature|Idle
   - first:
-      74: 6759086803382991731
-    second: Armature|Armature|Armature|Armature|mixamo.com|Layer0
+      74: -123400888147246483
+    second: Armature|Talk
+  - first:
+      74: 8349542763059015795
+    second: Armature|Walk
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Theo_body.001
+      name: Theo_body
     second: {fileID: 2100000, guid: 1be1ce51c7987504cbb18fa89f880d07, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Theo_face.001
+      name: Theo_face
     second: {fileID: 2100000, guid: 41f3bf80b73f5984d9fbed3355a3c793, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Theo_hair.001
+      name: Theo_hair
     second: {fileID: 2100000, guid: e12457e0e2138544e8c2b7962463ee6b, type: 2}
   materials:
     materialImportMode: 2
