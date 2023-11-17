@@ -33,6 +33,9 @@ public class EndingSub : MonoBehaviour
     }
     IEnumerator TextFadeCoroutine(bool fadeIn)
     {
+        if(fadeIn)
+            yield return new WaitForSeconds(0.7f);
+
         float timer = 0f;
 
         while (timer < fadeTime)
