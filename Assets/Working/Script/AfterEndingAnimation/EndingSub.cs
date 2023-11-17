@@ -33,8 +33,10 @@ public class EndingSub : MonoBehaviour
     }
     IEnumerator TextFadeCoroutine(bool fadeIn)
     {
-        if(fadeIn)
-            yield return new WaitForSeconds(0.7f);
+        canvasGroup.alpha = fadeIn ? 0f : 1.0f;
+
+        if (fadeIn)
+            yield return new WaitForSeconds(2f);
 
         float timer = 0f;
 
