@@ -278,3 +278,4 @@ Material:
     - _Splat5_STn: {r: 1, g: 1, b: 3.81, a: 1.06}
     - _Splat6_STn: {r: 1, g: 1, b: 1, a: 1.68}
     - _Splat7_STn: {r: 1, g: 1, b: 1, a: 1.68}
+  m_BuildTextureStacks: []
