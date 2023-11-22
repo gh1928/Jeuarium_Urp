@@ -46,11 +46,14 @@ partial class ANM_GoghYellowhouse_Manager
         {
             float min = 1;
 
-            if ((Basic_color.r != 0.0f  ) && (min > Basic_color.r   ))  { min = Basic_color.r;  }
-            if ((Basic_color.g != 0.0f  ) && (min > Basic_color.g   ))  { min = Basic_color.g;  }
-            if ((Basic_color.b != 0.0f  ) && (min > Basic_color.b   ))  { min = Basic_color.b;  }
+            float cyan      = 1.0f - Basic_color.r;
+            float magenta   = 1.0f - Basic_color.g;
+            float yellow    = 1.0f - Basic_color.b;
+            if ((cyan       != 0.0f ) && (min > cyan    ))  { min = cyan;       }
+            if ((magenta    != 0.0f ) && (min > magenta ))  { min = magenta;    }
+            if ((yellow     != 0.0f ) && (min > yellow  ))  { min = yellow;     }
 
-            Basic_colorStr = _method_text((int)(Basic_color.r / min), (int)(Basic_color.g / min), (int)(Basic_color.b / min));
+            Basic_colorStr = _method_text((int)(cyan / min), (int)(magenta / min), (int)(yellow / min));
         }
 
         ////////// Unity            //////////
@@ -120,9 +123,9 @@ partial class ANM_GoghYellowhouse_Manager
     [SerializeField] TMPro.TextMeshProUGUI Knife_tmp;
 
     [Header("RUNNING")]
-    [SerializeField] float Knife_red;
-    [SerializeField] float Knife_green;
-    [SerializeField] float Knife_blue;
+    [SerializeField] float Knife_cyan;
+    [SerializeField] float Knife_magenta;
+    [SerializeField] float Knife_yellow;
 
     [SerializeField] float Knife_max;
 
@@ -141,17 +144,17 @@ partial class ANM_GoghYellowhouse_Manager
         Color color1 = Knife_knifePaintMR.material.GetColor("_BaseColor");
 
         //
-        Knife_red += color1.r;
-        if (Knife_red > Knife_max)  { Knife_max = Knife_red;    }
+        Knife_cyan += 1.0f - color1.r;
+        if (Knife_cyan > Knife_max)  { Knife_max = Knife_cyan;    }
 
-        Knife_green += color1.g;
-        if(Knife_green > Knife_max) { Knife_max = Knife_green;  }
+        Knife_magenta += 1.0f - color1.g;
+        if(Knife_magenta > Knife_max) { Knife_max = Knife_magenta;  }
 
-        Knife_blue  += color1.b;
-        if (Knife_blue > Knife_max) { Knife_max = Knife_blue;   }
+        Knife_yellow += 1.0f - color1.b;
+        if (Knife_yellow > Knife_max) { Knife_max = Knife_yellow;   }
 
         //
-        Color color0 = new Color(Knife_red / Knife_max, Knife_green / Knife_max, Knife_blue / Knife_max, 1.0f);
+        Color color0 = new Color(1.0f - (Knife_cyan / Knife_max), 1.0f - (Knife_magenta / Knife_max), 1.0f - (Knife_yellow / Knife_max), 1.0f);
 
         Knife_mixMat.material.SetColor("_BaseColor", color0);
 
@@ -161,7 +164,7 @@ partial class ANM_GoghYellowhouse_Manager
 
     public void ANM_Knife_Reset()
     {
-        Knife_red = Knife_green = Knife_blue = 0.0f;
+        Knife_cyan = Knife_magenta = Knife_yellow = 0.0f;
 
         Knife_mixMat.material.SetColor("_BaseColor", Color.white);
         ANM_Knife_Text();
@@ -192,13 +195,13 @@ partial class ANM_GoghYellowhouse_Manager
                 Knife_tmp.text += Brush_selectDatas[i].ANM_Basic_colorStr + "\n";
             }
             Knife_tmp.text += "\n";
-            Knife_tmp.text += ANM_Knife_Text__Value((int)Knife_red, (int)Knife_green, (int)Knife_blue);
+            Knife_tmp.text += ANM_Knife_Text__Value((int)Knife_cyan, (int)Knife_magenta, (int)Knife_yellow);
         }
     }
 
-    string ANM_Knife_Text__Value(int _r, int _g, int _b)
+    string ANM_Knife_Text__Value(int _c, int _m, int _y)
     {
-        return "<color=#FF0000>бс</color>:" + _r + ", <color=#00FF00>бс</color>:" + _g + ", <color=#0000FF>бс</color>:" + _b;
+        return "<color=#00FFFF>бс</color>:" + _c + ", <color=#FF00FF>бс</color>:" + _m + ", <color=#FFFF00>бс</color>:" + _y;
     }
 
     ////////// Unity            //////////

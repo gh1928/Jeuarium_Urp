@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/BruteForce-GrassShader/Documentation.url.meta
 guid: d0ef63da943df6944aed5122f8f6a95d
+========
+guid: 3a3dce88a34ba394ebc9ce1bd29e0068
+folderAsset: yes
+>>>>>>>> hyj:Assets/Working/UI.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
