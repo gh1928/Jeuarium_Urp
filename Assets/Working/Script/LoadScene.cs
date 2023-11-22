@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class LoadScene : MonoBehaviour
 {
     [SerializeField] bool Basic_isEnd;
+    [SerializeField] bool Basic_isLoad;
 
     BNG.InputBridge input;
     bool ANM_isDebug = false;
@@ -37,7 +38,12 @@ public class LoadScene : MonoBehaviour
         {
             if (Basic_isEnd)
             {
+                PlayerPrefs.SetInt("NextScene", -1);
                 LoadMainScene();
+            }
+            else if(Basic_isLoad)
+            {
+                ANM_LoadSaveScene();
             }
             else
             {
@@ -48,7 +54,16 @@ public class LoadScene : MonoBehaviour
 
     public void ANM_LoadNextScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        PlayerPrefs.SetInt("NextScene", SceneManager.GetActiveScene().buildIndex + 1);
+        ANM_LoadSaveScene();
+    }
+
+    public void ANM_LoadSaveScene()
+    {
+        if (PlayerPrefs.GetInt("NextScene", -1) != -1)
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("NextScene"));
+        }
     }
 
     public void LoadMainScene()
