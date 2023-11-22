@@ -41,7 +41,7 @@ partial class ANM_Gallery_Manager
 
     public void ANM_UI_BtnLoad()
     {
-
+        this.GetComponent<ANM_LoadScene_Gallery>().ANM_LoadSaveScene();
     }
 
     public void ANM_UI_BtnOption()

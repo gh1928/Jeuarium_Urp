@@ -38,6 +38,7 @@ public class LoadScene : MonoBehaviour
         {
             if (Basic_isEnd)
             {
+                PlayerPrefs.SetInt("NextScene", -1);
                 LoadMainScene();
             }
             else if(Basic_isLoad)
@@ -57,9 +58,12 @@ public class LoadScene : MonoBehaviour
         ANM_LoadSaveScene();
     }
 
-    void ANM_LoadSaveScene()
+    public void ANM_LoadSaveScene()
     {
-        SceneManager.LoadScene(PlayerPrefs.GetInt("NextScene"));
+        if (PlayerPrefs.GetInt("NextScene", -1) != -1)
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("NextScene"));
+        }
     }
 
     public void LoadMainScene()
