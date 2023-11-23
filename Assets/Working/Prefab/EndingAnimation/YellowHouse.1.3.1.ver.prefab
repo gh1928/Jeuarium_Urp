@@ -12127,6 +12127,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: YH_Prob.1.0
       objectReference: {fileID: 0}
+    - target: {fileID: 5148817236446094103, guid: a430764e0b35c914189cf9451f51a380,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a430764e0b35c914189cf9451f51a380, type: 3}
 --- !u!4 &2821167695650315683 stripped
