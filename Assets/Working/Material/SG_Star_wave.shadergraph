@@ -1554,7 +1554,7 @@
     "m_ShaderOutputName": "Offset",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 7.489999771118164,
+        "x": 0.0,
         "y": 0.0
     },
     "m_DefaultValue": {
