@@ -1425,8 +1425,18 @@ PrefabInstance:
       objectReference: {fileID: 735700972}
     - target: {fileID: 7141737179020934274, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
+      propertyPath: totalEvtTime
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141737179020934274, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
       propertyPath: crowds.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141737179020934274, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: opacityChangeTime
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7141737179020934274, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
