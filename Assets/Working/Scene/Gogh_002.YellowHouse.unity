@@ -630,6 +630,7 @@ MonoBehaviour:
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
   Brush_manager: {fileID: 0}
+  Brush_paintingDatas: []
 --- !u!82 &81426792
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6714,6 +6715,10 @@ MonoBehaviour:
   - {fileID: 752492319262309027, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
   Brush_manager: {fileID: 1660487569}
+  Brush_paintingDatas:
+  - Basic_mr: {fileID: 1105895467}
+    Basic_matCount: 0
+    Basic_mat: {fileID: 2100000, guid: a1c1fba29a057e24c817a9150dbf2eb3, type: 2}
 --- !u!1 &602249765
 GameObject:
   m_ObjectHideFlags: 0
@@ -9342,6 +9347,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6b52b2b11d6006e40b2d257320892bbd, type: 2}
   isSky: 1
   Brush_manager: {fileID: 1660487569}
+  Brush_paintingDatas: []
 --- !u!1 &811412760
 GameObject:
   m_ObjectHideFlags: 0
@@ -9569,6 +9575,7 @@ MonoBehaviour:
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
   Brush_manager: {fileID: 0}
+  Brush_paintingDatas: []
 --- !u!1 &816475475
 GameObject:
   m_ObjectHideFlags: 0
@@ -15974,6 +15981,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6b52b2b11d6006e40b2d257320892bbd, type: 2}
   isSky: 1
   Brush_manager: {fileID: 0}
+  Brush_paintingDatas: []
 --- !u!1 &906383719
 GameObject:
   m_ObjectHideFlags: 0
@@ -21999,6 +22007,13 @@ MonoBehaviour:
   - {fileID: -8583780622465393609, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
   Brush_manager: {fileID: 1660487569}
+  Brush_paintingDatas:
+  - Basic_mr: {fileID: 1105895466}
+    Basic_matCount: 0
+    Basic_mat: {fileID: 2100000, guid: a7b46b9e3acff4f469fd9a28fa8c57af, type: 2}
+  - Basic_mr: {fileID: 1105895466}
+    Basic_matCount: 1
+    Basic_mat: {fileID: 2100000, guid: cacff35246a5c7f4483dd323c2c6b075, type: 2}
 --- !u!1001 &1105895463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22006,11 +22021,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 322882420228525103, guid: 11634407914285f4cb237eebde7b960a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127230769583687122, guid: 11634407914285f4cb237eebde7b960a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 814e07e9e2b816e45bfc92ef451bc8fb, type: 2}
+    - target: {fileID: 2877033743979209909, guid: 11634407914285f4cb237eebde7b960a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3211489011906110733, guid: 11634407914285f4cb237eebde7b960a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 25bb7c1d15471a1439a3d63b2de9f48a, type: 2}
     - target: {fileID: 5624473774311104001, guid: 11634407914285f4cb237eebde7b960a,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6025795155708446255, guid: 11634407914285f4cb237eebde7b960a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d1f74ac905177334a9d7f9c526db770d, type: 2}
+    - target: {fileID: 6025795155708446255, guid: 11634407914285f4cb237eebde7b960a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 530deb9a1a790cd489b392d34a4e7452, type: 2}
     - target: {fileID: 7348926385125668204, guid: 11634407914285f4cb237eebde7b960a,
         type: 3}
       propertyPath: m_Name
@@ -22093,6 +22138,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11634407914285f4cb237eebde7b960a, type: 3}
+--- !u!1 &1105895464 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7482785276066077023, guid: 11634407914285f4cb237eebde7b960a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1105895463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1105895465
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105895464}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4579454407841743219, guid: a430764e0b35c914189cf9451f51a380, type: 3}
+--- !u!23 &1105895466 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6025795155708446255, guid: 11634407914285f4cb237eebde7b960a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1105895463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1105895467 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2127230769583687122, guid: 11634407914285f4cb237eebde7b960a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1105895463}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1129396784
 GameObject:
   m_ObjectHideFlags: 0
@@ -22383,6 +22460,7 @@ MonoBehaviour:
   - {fileID: 752492319262309027, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
   Brush_manager: {fileID: 0}
+  Brush_paintingDatas: []
 --- !u!114 &1185065808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31530,7 +31608,7 @@ MonoBehaviour:
   Brush_painter: {fileID: 358526417}
   Brush_selectDatas:
   - Basic_paintBarrelTrigger: {fileID: 1098652481}
-    Basic_color: {r: 0, g: 0, b: 0, a: 1}
+    Basic_color: {r: 0, g: 1, b: 0, a: 1}
     Basic_colorStr: 
   - Basic_paintBarrelTrigger: {fileID: 799617166}
     Basic_color: {r: 0, g: 1, b: 1, a: 1}
@@ -32530,6 +32608,7 @@ MonoBehaviour:
   - {fileID: 752492319262309027, guid: 32402780d9bb9784597b3718630b38bc, type: 3}
   isSky: 0
   Brush_manager: {fileID: 0}
+  Brush_paintingDatas: []
 --- !u!114 &1885226965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34454,6 +34533,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6b52b2b11d6006e40b2d257320892bbd, type: 2}
   isSky: 1
   Brush_manager: {fileID: 0}
+  Brush_paintingDatas: []
 --- !u!114 &2105931996
 MonoBehaviour:
   m_ObjectHideFlags: 0
