@@ -15,20 +15,12 @@ public class AquariusEvent : CaffeEventDeafault
     private string materialOpacity = "Opaticity";
     public float opacityChangeTime = 2f;
 
-    public Color startSkyEmmitColor;
-    public Color endSkyEmmitColor;
+    public float skyChangeTime = 4f;
 
-    public float skyEmmitChangeTime = 4f;
+    public MeshRenderer skyFader;
 
-    public MeshRenderer skyRenderer;
+    private Coroutine aquariusActive;
 
-    private EmissionmapController controller = new EmissionmapController();
-
-    private void Start()
-    {
-        controller.SetMaterial(skyRenderer.material);
-        controller.SetEmissionColorOnly(startSkyEmmitColor);
-    }
     public override void OnEvent(List<PuzzleElement> elements)
     {
         instancedAquarius = Instantiate(aquariusPrefab, aquariusPivot);
@@ -44,7 +36,7 @@ public class AquariusEvent : CaffeEventDeafault
             StartCoroutine(TrailTransCoroutine(trail, instancedAquarius.starPositions[i]));
         }
 
-        Invoke(nameof(AquariusActiveEvent), totalEvtTime - opacityChangeTime);
+        //Invoke(nameof(AquariusActiveEvent), totalEvtTime - opacityChangeTime);
     }
 
     private IEnumerator TrailTransCoroutine(GameObject trail, Transform target)
@@ -56,7 +48,7 @@ public class AquariusEvent : CaffeEventDeafault
         Vector3 destPos = target.position;
 
         float timer = 0f;
-        float trailTime = totalEvtTime - (waitBeforeTrans + waitAfterTrans + opacityChangeTime);
+        float trailTime = 3f;
 
         float inverseTrailTime = 1 / trailTime;
 
@@ -68,7 +60,13 @@ public class AquariusEvent : CaffeEventDeafault
             yield return null;
         }
 
-        trailTrasform.position = destPos;        
+        trailTrasform.position = destPos;
+
+        if (aquariusActive == null)
+        {
+            instancedAquarius.gameObject.SetActive(true);
+            aquariusActive = StartCoroutine(AquariusChangeOpacity());
+        }
     }
     private void AquariusActiveEvent()
     {
@@ -89,8 +87,37 @@ public class AquariusEvent : CaffeEventDeafault
 
         aquariusMaterial.SetFloat(materialOpacity, 1);
 
-        StartCoroutine(controller.ChageEmissionColorCoroutine(skyEmmitChangeTime, startSkyEmmitColor, endSkyEmmitColor));
+        StartCoroutine(DeacreseSkyFaderOpacityCoroutine());
 
+        //while (timer > 0f)
+        //{
+        //    aquariusMaterial.SetFloat(materialOpacity, timer / opacityChangeTime);
+        //    timer -= Time.deltaTime;
+        //    yield return null;
+        //}
+
+        //aquariusMaterial.SetFloat(materialOpacity, 0f);
+
+        yield break;
+    }
+
+    private IEnumerator DeacreseSkyFaderOpacityCoroutine()
+    {
+        var material = skyFader.material;
+        float timer = 0f;
+        float recipSkyChangeTime = 1 / skyChangeTime;
+        Color startColor = material.color;
+        Color endColor = startColor;
+        endColor.a = 0f;
+
+        while(timer < skyChangeTime)
+        {
+            material.color = Color.Lerp(startColor, endColor, timer * recipSkyChangeTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        material.color = endColor;
         yield break;
     }
 }

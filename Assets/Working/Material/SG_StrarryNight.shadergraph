@@ -5,6 +5,9 @@
     "m_Properties": [
         {
             "m_Id": "cf317c7ec5bd41328a4a1c2b71700baf"
+        },
+        {
+            "m_Id": "e90b18d5474b4b94a4b425d4b489f12c"
         }
     ],
     "m_Keywords": [],
@@ -875,7 +878,7 @@
     },
     "m_Name": "Emission",
     "m_DefaultReferenceName": "Vector1_cf317c7ec5bd41328a4a1c2b71700baf",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "Vector1",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -1016,6 +1019,30 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "VertexDescription.Tangent"
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "e90b18d5474b4b94a4b425d4b489f12c",
+    "m_Guid": {
+        "m_GuidSerialized": "e7dd10de-6488-4cb8-b51c-154ca47772fe"
+    },
+    "m_Name": "Color",
+    "m_DefaultReferenceName": "Color_e90b18d5474b4b94a4b425d4b489f12c",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "m_ColorMode": 0
 }
 
 {

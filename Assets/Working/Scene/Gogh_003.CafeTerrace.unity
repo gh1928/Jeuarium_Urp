@@ -1225,6 +1225,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554483534526036134, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
+      propertyPath: directLight
+      value: 
+      objectReference: {fileID: 1867361571}
+    - target: {fileID: 2554483534526036134, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
       propertyPath: startColor.a
       value: 1
       objectReference: {fileID: 0}
@@ -1243,6 +1248,31 @@ PrefabInstance:
       propertyPath: floorRenderer
       value: 
       objectReference: {fileID: 2043166677}
+    - target: {fileID: 2554483534526036134, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: directLightEndColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554483534526036134, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: directLightEndColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554483534526036134, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: directLightEndColor.g
+      value: 0.6784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554483534526036134, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: directLightEndColor.r
+      value: 0.5058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554483534526036134, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: directLightStartColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5099332581664256902, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
       propertyPath: m_Name
@@ -1370,14 +1400,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357323980922435846, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
+      propertyPath: skyFader
+      value: 
+      objectReference: {fileID: 2122436816}
+    - target: {fileID: 5357323980922435846, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
       propertyPath: skyRenderer
       value: 
       objectReference: {fileID: 1571368087}
     - target: {fileID: 5357323980922435846, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
+      propertyPath: totalEvtTime
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357323980922435846, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
       propertyPath: aquariusPivot
       value: 
       objectReference: {fileID: 1629337649}
+    - target: {fileID: 5357323980922435846, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: skyChangeTime
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5357323980922435846, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
       propertyPath: endSkyEmmitColor.a
@@ -1492,25 +1537,25 @@ PrefabInstance:
         type: 3}
       propertyPath: puzzleDatas.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b,
+      objectReference: {fileID: 11400000, guid: 6aef953b2f6acc445bf95a812fab1e4f,
         type: 2}
     - target: {fileID: 7434342309670066250, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
       propertyPath: puzzleDatas.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 6aef953b2f6acc445bf95a812fab1e4f,
+      objectReference: {fileID: 11400000, guid: ba18d4e7fed57c74bb5b989af9b8f1f7,
         type: 2}
     - target: {fileID: 7434342309670066250, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
       propertyPath: puzzleDatas.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: ba18d4e7fed57c74bb5b989af9b8f1f7,
+      objectReference: {fileID: 11400000, guid: 3305dd66c6bcc7a4a83ecc15e2ee562c,
         type: 2}
     - target: {fileID: 7434342309670066250, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
       propertyPath: puzzleDatas.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 3305dd66c6bcc7a4a83ecc15e2ee562c,
+      objectReference: {fileID: 11400000, guid: 825de28e4f1f82240b58cd751f6dc67b,
         type: 2}
     - target: {fileID: 7434342309670066250, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
@@ -3624,13 +3669,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629337648}
-  m_LocalRotation: {x: 0.7419606, y: -0, z: -0, w: 0.6704435}
-  m_LocalPosition: {x: -4.011814, y: 7.98, z: -3.19}
+  m_LocalRotation: {x: 0.9739974, y: -0, z: -0, w: 0.22655909}
+  m_LocalPosition: {x: -4.011814, y: 19.68, z: -1.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 95.797, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 153.811, y: 0, z: 0}
 --- !u!4 &1636714643 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6306360563199254220, guid: 79777ae0bfe4829409a6a8db9a83b871,
@@ -3830,7 +3875,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.504717, g: 0.67952293, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -4581,6 +4626,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 529731270092939778, guid: dbf23f31eb6f0644181101508bafdcc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 48e8063d0eb5d1d4691b32ba5847daac, type: 2}
     - target: {fileID: 819408899016130399, guid: dbf23f31eb6f0644181101508bafdcc5,
         type: 3}
       propertyPath: m_Name
@@ -4839,6 +4889,93 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!4 &2099813289 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 529730392045464272, guid: dbf23f31eb6f0644181101508bafdcc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2043166676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2122436814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2122436815}
+  - component: {fileID: 2122436817}
+  - component: {fileID: 2122436816}
+  m_Layer: 0
+  m_Name: skyFader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2122436815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122436814}
+  m_LocalRotation: {x: 0.1366103, y: 0.012614937, z: 0.9855519, w: 0.09932777}
+  m_LocalPosition: {x: -18.33549, y: -39.41807, z: -28.900002}
+  m_LocalScale: {x: 0.201294, y: 0.201294, z: 0.201294}
+  m_Children: []
+  m_Father: {fileID: 2099813289}
+  m_RootOrder: 158
+  m_LocalEulerAnglesHint: {x: 0.13, y: 15.77, z: 168.508}
+--- !u!23 &2122436816
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122436814}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6545d0212c68b3b4f96fe260bfc3d6ec, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2122436817
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122436814}
+  m_Mesh: {fileID: 6519003460824902247, guid: 37432206116375c44a24fa51cbb09aad, type: 3}
 --- !u!4 &2143835403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400016, guid: 8b83018900d13bb4f8e0ad895cb004e5,
