@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.81733745, g: 0.52873576, b: 0.33950472, a: 1}
+  m_IndirectSpecularColor: {r: 0.81733423, g: 0.5287343, b: 0.33950457, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1733,6 +1733,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Caf\xE9 Terrace at Night"
       objectReference: {fileID: 0}
+    - target: {fileID: 7514318496440013376, guid: 88523213dcc625f4a985d17b0182aebd,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 437309955115709277, guid: ed6c36ef1f54c2b43b6213969dcc7f45,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88523213dcc625f4a985d17b0182aebd, type: 3}
 --- !u!4 &465839322 stripped
@@ -2040,7 +2046,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-517414
+  m_Name: pb_Mesh-16832
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
