@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PuzzleMaker : MonoBehaviour
@@ -37,6 +36,8 @@ public class PuzzleMaker : MonoBehaviour
     public PuzzleElement[] elementPrefabs;
     private List<PuzzleElement> instancedElements = new List<PuzzleElement>();
 
+    public Vector3 rot;
+
     private Vector3 scale;
 
     private void Awake()
@@ -68,7 +69,8 @@ public class PuzzleMaker : MonoBehaviour
         ReadElemtnsInfo();
 
         rect.localScale = scale;
-        lookAtConstraints.enabled = true;
+        rect.rotation = Quaternion.Euler(rot);
+        //lookAtConstraints.enabled = true;
 
         var button = enterPoint.GetComponent<Button>();
         GetComponent<PuzzlePlayer>().AddToButtonStartPlay(button);

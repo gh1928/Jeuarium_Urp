@@ -15,6 +15,20 @@ public class AquariusEvent : CaffeEventDeafault
     private string materialOpacity = "Opaticity";
     public float opacityChangeTime = 2f;
 
+    public Color startSkyEmmitColor;
+    public Color endSkyEmmitColor;
+
+    public float skyEmmitChangeTime = 4f;
+
+    public MeshRenderer skyRenderer;
+
+    private EmissionmapController controller = new EmissionmapController();
+
+    private void Start()
+    {
+        controller.SetMaterial(skyRenderer.material);
+        controller.SetEmissionColorOnly(startSkyEmmitColor);
+    }
     public override void OnEvent(List<PuzzleElement> elements)
     {
         instancedAquarius = Instantiate(aquariusPrefab, aquariusPivot);
@@ -74,5 +88,9 @@ public class AquariusEvent : CaffeEventDeafault
         }
 
         aquariusMaterial.SetFloat(materialOpacity, 1);
+
+        StartCoroutine(controller.ChageEmissionColorCoroutine(skyEmmitChangeTime, startSkyEmmitColor, endSkyEmmitColor));
+
+        yield break;
     }
 }
