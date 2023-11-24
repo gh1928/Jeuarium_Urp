@@ -31,7 +31,6 @@ public class ANM_GoghYellowhouse_Sponge : ANM_GoghYellowhouse_Tool
                     if (!_other.GetComponent<ANM_GoghYellowhouse_Paint>().enabled)
                     {
                         MeshRenderer mr = _other.GetComponent<MeshRenderer>();
-                        Debug.Log(mr.material.name);
                         switch (mr.material.name)
                         {
                             case "Paint_Mix (Instance)":

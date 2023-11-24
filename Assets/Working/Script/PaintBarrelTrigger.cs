@@ -79,8 +79,30 @@ partial class PaintBarrelTrigger
 
 partial class PaintBarrelTrigger
 {
+    [System.Serializable]
+    public class Brush_PaintingData
+    {
+        [SerializeField] MeshRenderer   Basic_mr;
+        [SerializeField] int            Basic_matCount;
+        [SerializeField] Material       Basic_mat;
+
+        ////////// Getter & Setter  //////////
+
+        ////////// Method           //////////
+        public void ANM_Basic_ChangeMaterial()
+        {
+            Material[] mats = Basic_mr.materials;
+            mats[Basic_matCount] = Basic_mat;
+            Basic_mr.materials = mats;
+        }
+
+        ////////// Unity            //////////
+    }
+
     [Header("BRUSH ==================================================")]
     [SerializeField] ANM_Manager Brush_manager;
+    [SerializeField] List<Brush_PaintingData> Brush_paintingDatas;
+
 
     ////////// Getter & Setter  //////////
 
@@ -100,10 +122,14 @@ partial class PaintBarrelTrigger
             paint.SetActive(true);
             if (!isSky)
             {
-                foreach (MeshRenderer mr in obj.transform.GetComponentsInChildren<MeshRenderer>())
+                //foreach (MeshRenderer mr in obj.transform.GetComponentsInChildren<MeshRenderer>())
+                //{
+                //    mr.materials = list_Mat.GetRange(i, mr.materials.Length).ToArray();
+                //    i += mr.materials.Length;
+                //}
+                for(int i = 0; i < Brush_paintingDatas.Count; i++)
                 {
-                    mr.materials = list_Mat.GetRange(i, mr.materials.Length).ToArray();
-                    i += mr.materials.Length;
+                    Brush_paintingDatas[i].ANM_Basic_ChangeMaterial();
                 }
             }
             else
