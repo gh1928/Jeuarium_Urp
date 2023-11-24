@@ -1273,6 +1273,11 @@ PrefabInstance:
       propertyPath: directLightStartColor.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5099332581664256901, guid: 6b55d45487c31f243b600820c7ad7f43,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5099332581664256902, guid: 6b55d45487c31f243b600820c7ad7f43,
         type: 3}
       propertyPath: m_Name

@@ -17,6 +17,9 @@ public class LanternElement : PuzzleElement
     private bool readyPlaySound = true;
     private float soundCoolDown = 1f;
     private float startSoundCoolDown = 1f;
+
+    public float rotSpeed = 3f;
+
     public override void OnWorked()
     {
         if(readyPlaySound)
@@ -43,6 +46,8 @@ public class LanternElement : PuzzleElement
     private void Update()
     {
         readyPlaySound = (Time.time - startSoundCoolDown) > soundCoolDown;
+
+        transform.Rotate(rotSpeed * Time.deltaTime * Vector3.forward);
     }
 
     //private IEnumerator SuccessEffectCoroutine()
