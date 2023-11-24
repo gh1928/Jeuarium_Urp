@@ -6,22 +6,40 @@ using UnityEngine;
 public class LanternLightEvent : CaffeEventDeafault
 {
     public GameObject trailPrefab;
-    public Transform target;
+
+    public Light[] lights;
 
     public float waitBeforeTrans = 3f;
     public float waitAfterTrans = 1f;
+
+    public float intensity = 2f;
+    public float increaseTime = 2f;
+
+    private Coroutine lightOnCoroutine;
+
+    private void Start()
+    {
+        SetLightsInetnsity(0f);
+    }
     public override void OnEvent(List<PuzzleElement> elements)
     {
-        foreach (PuzzleElement element in elements)
-        {
-            var startPos = element.transform.position - element.transform.forward * 0.3f;
+        //foreach (PuzzleElement element in elements)
+        //{
+        //    var startPos = element.transform.position - element.transform.forward * 0.3f;
 
+        //    var trail = Instantiate(trailPrefab, startPos, Quaternion.identity);
+        //    StartCoroutine(TrailTransCoroutine(trail));
+        //}        
+
+        for(int i =0; i < elements.Count; i++)
+        {
+            var startPos = elements[i].transform.position - elements[i].transform.forward * 0.3f;
             var trail = Instantiate(trailPrefab, startPos, Quaternion.identity);
-            StartCoroutine(TrailTransCoroutine(trail));
-        }        
+            StartCoroutine(TrailTransCoroutine(trail, lights[1 - i].transform));
+        }
     }
 
-    private IEnumerator TrailTransCoroutine(GameObject trail)
+    private IEnumerator TrailTransCoroutine(GameObject trail, Transform target)
     {
         yield return new WaitForSeconds(waitBeforeTrans);
 
@@ -43,6 +61,39 @@ public class LanternLightEvent : CaffeEventDeafault
         }
 
         trailTrasform.position = destPos;
-        Destroy(trail, 5f);
+        Destroy(trail);
+
+
+
+        if (lightOnCoroutine == null)
+            lightOnCoroutine = StartCoroutine(IncreaseLigthIntensityCoroutine());
+
+        yield break;
+    }
+
+    private IEnumerator IncreaseLigthIntensityCoroutine()
+    {
+        float timer = 0f;
+        float recipIncreaseTime = 1 / increaseTime;
+
+        while(timer < increaseTime)
+        {
+            float newIntensity = Mathf.Lerp(0f, intensity, timer * recipIncreaseTime);
+            SetLightsInetnsity(newIntensity);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        SetLightsInetnsity(intensity);
+
+        yield break;
+    }
+
+    private void SetLightsInetnsity(float newIntensity)
+    {
+        foreach(var light in lights)
+        {
+            light.intensity = newIntensity;
+        }
     }
 }

@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class CrowdEvent : CaffeEventDeafault
 {
+    public GameObject crowdsHolder;
+
     public GameObject[] crowds;
     public float opacityChangeTime = 3f;
 
-    private List<Material> crowdsMaterials = new List<Material>();
+    public List<Material> crowdsMaterials = new List<Material>();
     private void Start()
     {
-        for(int i = 0; i < crowds.Length; i++)
-        {
-            AddMaterialsToList(crowds[i], crowdsMaterials);
-        }
+        SetMaterials();
+        ChangeMaterialsSurfaceType(1f);
+        ChangeCrowdsOpacity(0f);
     }
-    private void AddMaterialsToList(GameObject go,List<Material> materials)
-    {
-        var renders = go.GetComponentsInChildren<Renderer>();
+    //private void AddMaterialsToList(GameObject go,List<Material> materials)
+    //{
+    //    var renders = go.GetComponentsInChildren<Renderer>();
 
-        for(int i = 0; i < renders.Length;i++)
+    //    for(int i = 0; i < renders.Length;i++)
+    //    {
+    //        materials.AddRange(renders[i].materials);
+    //    }
+    //}
+    private void SetMaterials()
+    {
+        var renderers = crowdsHolder.GetComponentsInChildren<MeshRenderer>();
+
+        foreach (var renderer in renderers)
         {
-            materials.AddRange(renders[i].materials);
+            crowdsMaterials.Add(renderer.material);
         }
     }
 
@@ -43,10 +53,10 @@ public class CrowdEvent : CaffeEventDeafault
     }
     public override void OnEvent(List<PuzzleElement> _)
     {
-        StartCoroutine(CrowdFadeIn());
+        StartCoroutine(IncreaseOpacityCoroutine());
     }
 
-    private IEnumerator CrowdFadeIn()
+    private IEnumerator IncreaseOpacityCoroutine()
     {
         float timer = 0f;
         float reverseChangeTime = 1 / opacityChangeTime;
@@ -55,12 +65,12 @@ public class CrowdEvent : CaffeEventDeafault
 
         while (timer < opacityChangeTime)
         {
-            ChangeCrowdsOpacity(timer * opacityChangeTime);
+            ChangeCrowdsOpacity(timer * reverseChangeTime);
             timer += Time.deltaTime;
             yield return null;
         }
 
-        ChangeMaterialsSurfaceType(0f);
+        //ChangeMaterialsSurfaceType(0f);
         ChangeCrowdsOpacity(1f);
     }
 
