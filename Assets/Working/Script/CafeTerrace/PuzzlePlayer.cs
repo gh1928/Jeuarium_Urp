@@ -49,6 +49,7 @@ public class PuzzlePlayer : MonoBehaviour
 
     public float failEffectDelay = 2f;
 
+    public GameObject door;
     private void Awake()
     {
         Instance = this;
@@ -209,7 +210,8 @@ public class PuzzlePlayer : MonoBehaviour
     }
     private void ClearGame()
     {
-        Debug.Log("게임 클리어");
+        //Debug.Log("게임 클리어");
+        door.SetActive(true);
     }
     private IEnumerator PuzzleFadeCoroutine(bool inToOut)
     {

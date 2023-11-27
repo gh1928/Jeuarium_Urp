@@ -9,6 +9,8 @@ public class CrowdEvent : CaffeEventDeafault
     public GameObject[] crowds;
     public float opacityChangeTime = 3f;
 
+    public GameObject crowdsSound;
+
     public List<Material> crowdsMaterials = new List<Material>();
     private void Start()
     {
@@ -53,6 +55,7 @@ public class CrowdEvent : CaffeEventDeafault
     }
     public override void OnEvent(List<PuzzleElement> _)
     {
+        crowdsSound.SetActive(true);
         StartCoroutine(IncreaseOpacityCoroutine());
     }
 
